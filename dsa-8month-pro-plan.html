@@ -1,0 +1,3193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8-Month Google DSA Plan — Working Professional Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #f5f2eb;
+  --bg2: #ede9e0;
+  --surface: #ffffff;
+  --surface2: #faf8f4;
+  --border: #d8d2c4;
+  --border2: #c8c0af;
+  --ink: #1a1814;
+  --ink2: #3d3830;
+  --muted: #8a8070;
+  --accent: #c84b1f;       /* burnt orange */
+  --accent2: #2d6a4f;      /* forest green */
+  --accent3: #1a4a7a;      /* deep blue */
+  --accent4: #6b3d8a;      /* deep purple */
+  --accent5: #8b4513;      /* saddle brown */
+  --gold: #b8860b;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--ink);
+  padding: 0 2rem;
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  color: var(--accent); letter-spacing: 2px;
+  padding: 1rem 1.5rem 1rem 0;
+  border-right: 1px solid #333;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}
+.nav a {
+  font-family: var(--mono); font-size: 10px; color: #888;
+  text-decoration: none; padding: 1rem 0.75rem;
+  letter-spacing: 1px; white-space: nowrap;
+  transition: color 0.2s;
+}
+.nav a:hover { color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  padding: 6rem 2rem 5rem;
+  max-width: 1100px; margin: 0 auto;
+  position: relative;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 2px;
+  margin-bottom: 2rem;
+}
+.hero h1 {
+  font-family: var(--serif); font-weight: 900;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 1.0; letter-spacing: -2px;
+  margin-bottom: 1.5rem; color: var(--ink);
+}
+.hero h1 em {
+  font-style: italic; color: var(--accent);
+}
+.hero h1 .outline {
+  -webkit-text-stroke: 2px var(--ink);
+  color: transparent;
+}
+.hero-desc {
+  font-size: 1.05rem; color: var(--ink2);
+  max-width: 600px; margin-bottom: 3rem;
+  line-height: 1.8;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--border2);
+}
+.meta-item { }
+.meta-num {
+  font-family: var(--serif); font-size: 2.5rem; font-weight: 900;
+  color: var(--accent); display: block; line-height: 1;
+}
+.meta-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted); letter-spacing: 2px;
+  text-transform: uppercase; display: block;
+  margin-top: 4px;
+}
+
+/* ── HOURS REALITY BOX ── */
+.reality-box {
+  background: var(--ink); color: #e8e4dc;
+  border-radius: 4px; padding: 2.5rem;
+  margin: 4rem auto; max-width: 1100px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+@media (max-width: 700px) { .reality-box { grid-template-columns: 1fr; } }
+.reality-box h2 {
+  font-family: var(--serif); font-weight: 900;
+  font-size: 1.6rem; color: #fff;
+  margin-bottom: 1rem; grid-column: 1/-1;
+  line-height: 1.2;
+}
+.reality-box h2 span { color: var(--accent); font-style: italic; }
+.hours-grid { display: grid; gap: 0.75rem; }
+.hours-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #333; border-radius: 3px;
+}
+.hours-day { font-family: var(--mono); font-size: 10px; color: #888; width: 90px; flex-shrink: 0; }
+.hours-bar { flex: 1; height: 4px; background: #333; border-radius: 2px; position: relative; }
+.hours-bar-fill { height: 100%; border-radius: 2px; }
+.hours-num { font-family: var(--mono); font-size: 11px; font-weight: 600; color: #ccc; }
+.reality-notes h3 { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 2px; margin-bottom: 1rem; }
+.reality-notes ul { list-style: none; }
+.reality-notes ul li {
+  padding: 0.5rem 0; font-size: 0.875rem; color: #bbb;
+  border-bottom: 1px solid #222;
+  display: flex; gap: 0.75rem;
+}
+.reality-notes ul li::before { content: '▸'; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+/* ── SECTION ── */
+section { padding: 5rem 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-eyebrow {
+  font-family: var(--mono); font-size: 10px; color: var(--accent);
+  letter-spacing: 3px; text-transform: uppercase;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 0.75rem;
+}
+.section-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+.section-title {
+  font-family: var(--serif); font-weight: 900;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -1px; line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.section-sub { color: var(--muted); font-size: 0.95rem; max-width: 600px; margin-bottom: 3rem; }
+
+/* ── TOPIC MAP ── */
+.topic-flow {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0;
+  margin: 2rem 0; padding: 2rem;
+  background: var(--surface); border: 2px solid var(--border2);
+}
+.topic-node {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; padding: 0.75rem 1rem; text-align: center;
+  min-width: 90px;
+}
+.topic-node .t-icon { font-size: 1.5rem; }
+.topic-node .t-name {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--ink2); letter-spacing: 1px;
+  text-transform: uppercase; line-height: 1.3;
+}
+.topic-node .t-month {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted);
+}
+.topic-arrow {
+  font-family: var(--mono); color: var(--border2);
+  font-size: 1.2rem; padding: 0 4px;
+  align-self: center;
+}
+
+/* ── DUAL-AXIS LEGEND ── */
+.axis-legend {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-bottom: 3rem;
+}
+@media (max-width: 600px) { .axis-legend { grid-template-columns: 1fr; } }
+.axis-card {
+  padding: 1.5rem;
+  border-radius: 3px;
+}
+.axis-card.topic-axis { background: #e8f4ee; border-left: 4px solid var(--accent2); }
+.axis-card.pattern-axis { background: #e8eef8; border-left: 4px solid var(--accent3); }
+.axis-card h3 { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
+.axis-card.topic-axis h3 { color: var(--accent2); }
+.axis-card.pattern-axis h3 { color: var(--accent3); }
+.axis-card p { font-size: 0.875rem; color: var(--ink2); }
+
+/* ── PHASE HEADER ── */
+.phase-header {
+  background: var(--ink); color: #fff;
+  padding: 2.5rem 3rem; margin-bottom: 0;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 2rem; align-items: center;
+}
+@media (max-width: 600px) { .phase-header { grid-template-columns: 1fr; gap: 1rem; } }
+.phase-num {
+  font-family: var(--serif); font-size: 5rem; font-weight: 900;
+  color: #333; line-height: 1;
+}
+.phase-info h2 {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 900;
+  color: #fff; margin-bottom: 0.4rem; line-height: 1.2;
+}
+.phase-info p { color: #888; font-size: 0.875rem; }
+.phase-stats { text-align: right; }
+.phase-stats .ps-num {
+  font-family: var(--serif); font-size: 2rem; font-weight: 900;
+  color: var(--accent); display: block;
+}
+.phase-stats .ps-label {
+  font-family: var(--mono); font-size: 9px;
+  color: #666; letter-spacing: 2px; text-transform: uppercase;
+}
+
+/* ── MONTH CARD ── */
+.month-card {
+  border: 2px solid var(--border2);
+  background: var(--surface);
+  margin-bottom: 4rem;
+}
+.month-card-header {
+  padding: 1.8rem 2.5rem;
+  border-bottom: 2px solid var(--border2);
+  display: flex; align-items: flex-start; gap: 2rem;
+  background: var(--surface2);
+  flex-wrap: wrap;
+}
+.month-num-small {
+  font-family: var(--serif); font-size: 3rem; font-weight: 900;
+  color: var(--border2); line-height: 1; flex-shrink: 0;
+}
+.month-header-info { flex: 1; min-width: 200px; }
+.month-header-info h3 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 900;
+  color: var(--ink); margin-bottom: 0.3rem;
+}
+.month-header-info .month-topics {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent2); letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 0.3rem;
+}
+.month-header-info .month-patterns {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent3); letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.month-hours-box {
+  background: var(--ink); color: #fff;
+  padding: 1rem 1.5rem; text-align: center; border-radius: 2px;
+  flex-shrink: 0;
+}
+.month-hours-box .mh-num {
+  font-family: var(--serif); font-size: 1.8rem; font-weight: 900;
+  color: var(--accent); display: block; line-height: 1;
+}
+.month-hours-box .mh-label {
+  font-family: var(--mono); font-size: 9px;
+  color: #888; letter-spacing: 1.5px;
+}
+.month-card-body { padding: 2.5rem; }
+
+/* ── WEEK ── */
+.week-block {
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--border);
+}
+.week-block:last-child { margin-bottom: 0; }
+.week-header {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 1.5rem; align-items: center;
+  padding: 1.2rem 1.8rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; user-select: none;
+  flex-wrap: wrap;
+}
+.week-tag {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--accent); background: rgba(200,75,31,0.1);
+  border: 1px solid rgba(200,75,31,0.25);
+  padding: 3px 10px; letter-spacing: 2px; text-transform: uppercase;
+  white-space: nowrap;
+}
+.week-title-block { }
+.week-title {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
+  color: var(--ink);
+}
+.week-subtitle {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 1px; margin-top: 3px;
+}
+.week-difficulty {
+  font-family: var(--mono); font-size: 9px;
+  padding: 3px 10px; border-radius: 2px;
+  letter-spacing: 1px; text-transform: uppercase; white-space: nowrap;
+}
+.diff-easy { background: #e8f5e9; color: #2d6a4f; border: 1px solid #a8d5b5; }
+.diff-med { background: #fff8e1; color: #8b6914; border: 1px solid #dcc86a; }
+.diff-hard { background: #fce8e8; color: #8b1f1f; border: 1px solid #e8a0a0; }
+
+.week-body {
+  padding: 1.8rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 700px) { .week-body { grid-template-columns: 1fr; } }
+
+/* ── DUAL AXIS BADGE ── */
+.dual-axis {
+  grid-column: 1/-1;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  padding: 1rem 1.2rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.axis-badge {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 1px;
+}
+.axis-badge .ab-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.axis-badge .ab-label { color: var(--muted); text-transform: uppercase; }
+.axis-badge .ab-value { font-weight: 600; }
+.ab-topic .ab-dot { background: var(--accent2); }
+.ab-topic .ab-value { color: var(--accent2); }
+.ab-pattern .ab-dot { background: var(--accent3); }
+.ab-pattern .ab-value { color: var(--accent3); }
+
+/* ── WEEK SECTION ── */
+.ws { }
+.ws h4 {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.ws ul { list-style: none; }
+.ws ul li {
+  font-size: 0.855rem; padding: 3px 0;
+  display: flex; align-items: flex-start; gap: 8px;
+  color: var(--ink2);
+}
+.ws ul li::before {
+  content: '▸'; color: var(--accent);
+  font-size: 0.7rem; margin-top: 3px; flex-shrink: 0;
+}
+.ws-full { grid-column: 1/-1; }
+
+/* ── DAILY PLAN ── */
+.daily-strip {
+  grid-column: 1/-1;
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+@media (max-width: 600px) { .daily-strip { grid-template-columns: repeat(4, 1fr); } }
+.day-cell {
+  padding: 0.9rem 0.7rem; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.day-cell:last-child { border-right: none; }
+.dc-name {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 5px;
+}
+.dc-type {
+  font-family: var(--sans); font-size: 0.78rem;
+  font-weight: 600; color: var(--ink); margin-bottom: 4px;
+}
+.dc-hours {
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+  margin-bottom: 5px;
+}
+.dc-task { font-size: 0.72rem; color: var(--muted); line-height: 1.35; }
+.day-cell.weekend { background: #fef9ee; }
+.day-cell.weekend .dc-hours { color: var(--gold); }
+
+/* ── PROBLEMS ── */
+.problems-list { grid-column: 1/-1; }
+.prob-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px; margin-top: 0.5rem;
+}
+.prob {
+  font-family: var(--mono); font-size: 10px;
+  padding: 5px 10px; border-radius: 2px;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  border: 1px solid;
+}
+.prob-badge {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.prob.easy { color: #2d6a4f; border-color: rgba(45,106,79,0.25); background: rgba(45,106,79,0.05); }
+.prob.easy .prob-badge { background: #2d6a4f; }
+.prob.med { color: #7a5c00; border-color: rgba(122,92,0,0.25); background: rgba(122,92,0,0.05); }
+.prob.med .prob-badge { background: #c49a00; }
+.prob.hard { color: #8b1f1f; border-color: rgba(139,31,31,0.25); background: rgba(139,31,31,0.05); }
+.prob.hard .prob-badge { background: #c84b1f; }
+.prob-count {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ── C++ TIP BOX ── */
+.cpp-tip {
+  grid-column: 1/-1;
+  background: #f0f4ff; border-left: 3px solid var(--accent3);
+  padding: 1rem 1.2rem;
+}
+.cpp-tip h4 {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent3); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.cpp-tip code, .cpp-code-block {
+  font-family: var(--mono); font-size: 12px;
+  background: #1e1e2e; color: #a8c0e8;
+  display: block; padding: 0.8rem 1rem;
+  border-radius: 2px; margin-top: 0.5rem;
+  line-height: 1.6; overflow-x: auto;
+  white-space: pre;
+}
+.cpp-code-block .k { color: #c084fc; }
+.cpp-code-block .t { color: #f9c74f; }
+.cpp-code-block .f { color: #80ffea; }
+.cpp-code-block .c { color: #666; font-style: italic; }
+.cpp-code-block .s { color: #a8ff78; }
+
+/* ── MILESTONE ── */
+.milestone {
+  margin: 2rem 0;
+  border: 2px solid var(--accent);
+  padding: 1.8rem 2rem;
+  background: rgba(200,75,31,0.04);
+}
+.milestone h3 {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
+  color: var(--accent); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.milestone-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.milestone-item {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 0.8rem 1rem; font-size: 0.85rem; color: var(--ink2);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.milestone-item::before { content: '✓'; color: var(--accent2); font-weight: 700; flex-shrink: 0; }
+
+/* ── MONTHLY CALENDAR ── */
+.monthly-calendar {
+  grid-column: 1/-1;
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 1.2rem;
+}
+.mc-title {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--gold); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.mc-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+@media (max-width: 600px) { .mc-grid { grid-template-columns: 1fr 1fr; } }
+.mc-item {
+  background: var(--ink); color: #ccc;
+  padding: 0.7rem 0.9rem; font-size: 0.8rem;
+  border-left: 3px solid;
+}
+.mc-item .mc-num { font-family: var(--mono); font-size: 9px; color: #666; margin-bottom: 4px; }
+.mc-item.mock-item { border-color: var(--accent); }
+.mc-item.lc-item { border-color: var(--gold); }
+.mc-item.cf-item { border-color: var(--accent2); }
+.mc-item.sd-item { border-color: var(--accent3); }
+
+/* ── PATTERN MATRIX ── */
+.pattern-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+  margin: 2rem 0;
+}
+.pm-cell {
+  background: var(--surface);
+  padding: 1rem 1.2rem;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.pm-month {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 1px;
+  text-transform: uppercase; min-width: 60px; flex-shrink: 0;
+  margin-top: 2px;
+}
+.pm-info { }
+.pm-pattern {
+  font-family: var(--sans); font-size: 0.88rem;
+  font-weight: 600; color: var(--ink); margin-bottom: 2px;
+}
+.pm-topic {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--accent2); letter-spacing: 1px;
+}
+
+/* ── GOOGLE FRAMEWORK ── */
+.framework-steps {
+  counter-reset: fstep;
+  display: flex; flex-direction: column; gap: 1.5rem;
+  margin: 2rem 0;
+}
+.fstep {
+  counter-increment: fstep;
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 1.5rem; align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+.fstep-num {
+  font-family: var(--serif); font-size: 2.5rem; font-weight: 900;
+  color: var(--border2); line-height: 1; min-width: 50px;
+}
+.fstep-content h3 {
+  font-family: var(--sans); font-size: 1rem; font-weight: 600;
+  color: var(--accent); margin-bottom: 0.75rem;
+  font-style: normal;
+}
+.fstep-content ul { list-style: none; }
+.fstep-content ul li {
+  font-size: 0.875rem; padding: 4px 0;
+  display: flex; gap: 8px; color: var(--ink2);
+  border-bottom: 1px solid var(--border);
+}
+.fstep-content ul li:last-child { border-bottom: none; }
+.fstep-content ul li::before { content: '–'; color: var(--muted); flex-shrink: 0; }
+
+/* ── C++ TRACK SECTION ── */
+.cpp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem; margin: 2rem 0;
+}
+.cpp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+.cpp-card h4 {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent3); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.cpp-card ul { list-style: none; }
+.cpp-card ul li {
+  font-size: 0.85rem; padding: 3px 0;
+  display: flex; gap: 8px; color: var(--ink2);
+}
+.cpp-card ul li::before { content: '◆'; color: var(--accent3); font-size: 0.5rem; margin-top: 5px; flex-shrink: 0; }
+
+/* ── RESOURCES ── */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.res-card {
+  background: var(--surface); padding: 1.5rem;
+}
+.res-card h4 {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 0.75rem;
+}
+.res-card ul { list-style: none; }
+.res-card ul li {
+  font-size: 0.85rem; padding: 4px 0;
+  display: flex; gap: 8px; color: var(--ink2);
+  border-bottom: 1px solid var(--border);
+}
+.res-card ul li:last-child { border-bottom: none; }
+.res-card ul li::before { content: '→'; color: var(--accent2); flex-shrink: 0; }
+
+/* ── MISTAKES ── */
+.mistakes-grid {
+  display: grid; gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.mistake-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--surface);
+}
+@media (max-width: 600px) { .mistake-row { grid-template-columns: 1fr; } }
+.mistake-col { padding: 1.2rem 1.5rem; }
+.mistake-col.bad { border-right: 1px solid var(--border); background: rgba(200,75,31,0.03); }
+.mistake-col.good { background: rgba(45,106,79,0.03); }
+.mistake-col h4 {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 0.5rem; padding-bottom: 5px;
+  border-bottom: 1px solid;
+}
+.mistake-col.bad h4 { color: var(--accent); border-color: rgba(200,75,31,0.2); }
+.mistake-col.good h4 { color: var(--accent2); border-color: rgba(45,106,79,0.2); }
+.mistake-col p { font-size: 0.855rem; color: var(--ink2); line-height: 1.6; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink); color: #555;
+  padding: 3rem 2rem; text-align: center;
+}
+footer strong { color: #888; }
+footer p { font-family: var(--mono); font-size: 11px; line-height: 2; }
+
+/* ── DIVIDER ── */
+hr { border: none; border-top: 2px solid var(--border2); margin: 3rem 0; }
+
+.tag-pill {
+  display: inline-block;
+  font-family: var(--mono); font-size: 9px;
+  padding: 2px 8px; letter-spacing: 1px; text-transform: uppercase;
+  border: 1px solid; border-radius: 2px; margin: 2px;
+}
+.tag-green { color: var(--accent2); border-color: rgba(45,106,79,0.3); background: rgba(45,106,79,0.06); }
+.tag-blue { color: var(--accent3); border-color: rgba(26,74,122,0.3); background: rgba(26,74,122,0.06); }
+.tag-orange { color: var(--accent); border-color: rgba(200,75,31,0.3); background: rgba(200,75,31,0.06); }
+.tag-gold { color: var(--gold); border-color: rgba(184,134,11,0.3); background: rgba(184,134,11,0.06); }
+.tag-purple { color: var(--accent4); border-color: rgba(107,61,138,0.3); background: rgba(107,61,138,0.06); }
+
+/* ── PROGRESS TRACKER ── */
+.progress-track {
+  display: flex; flex-direction: column; gap: 6px;
+  margin: 1.5rem 0;
+}
+.pt-row {
+  display: grid; grid-template-columns: 110px 1fr 50px;
+  align-items: center; gap: 1rem;
+}
+.pt-label { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.pt-bar { height: 6px; background: var(--border); border-radius: 0; }
+.pt-fill { height: 100%; border-radius: 0; }
+.pt-num { font-family: var(--mono); font-size: 10px; color: var(--ink2); text-align: right; }
+
+/* ── ALL-PATTERNS GRID ── */
+.all-patterns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin: 2rem 0;
+}
+.ap-cell {
+  background: var(--surface);
+  padding: 0.9rem 1.2rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.ap-num {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--border2); min-width: 24px;
+}
+.ap-name { font-size: 0.855rem; color: var(--ink2); }
+.ap-when { font-family: var(--mono); font-size: 9px; color: var(--muted); margin-left: auto; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">DSA·PRO</div>
+  <a href="#overview">Overview</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#m1">M1: Arrays</a>
+  <a href="#m2">M2: Window+BS</a>
+  <a href="#m3">M3: LL+Stack</a>
+  <a href="#m4">M4: Trees</a>
+  <a href="#m5">M5: Graphs</a>
+  <a href="#m6">M6: Heap+Greedy</a>
+  <a href="#m7">M7: DP</a>
+  <a href="#m8">M8: Simulation</a>
+  <a href="#cpp">C++ Track</a>
+  <a href="#strategy">Strategy</a>
+  <a href="#patterns">All Patterns</a>
+  <a href="#resources">Resources</a>
+  <a href="#mistakes">Mistakes</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="overview">
+  <div class="hero-tag">Working Professional Edition · C++ · 7 YoE</div>
+  <h1>Zero to<br><em>Google-Ready</em><br><span class="outline">in 8 Months</span></h1>
+  <p class="hero-desc">
+    A dual-axis study plan built for senior engineers with limited time. <strong>Every week teaches both a topic AND a pattern simultaneously</strong> — so you always know what data structure you're using and why. Calibrated for <strong>1hr weekdays + 3hrs each weekend day = 11 hrs/week</strong>.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item"><span class="meta-num">32</span><span class="meta-label">Weeks</span></div>
+    <div class="meta-item"><span class="meta-num">11</span><span class="meta-label">Hrs / Week</span></div>
+    <div class="meta-item"><span class="meta-num">350+</span><span class="meta-label">Curated Problems</span></div>
+    <div class="meta-item"><span class="meta-num">47</span><span class="meta-label">Patterns</span></div>
+    <div class="meta-item"><span class="meta-num">8</span><span class="meta-label">Topics Covered</span></div>
+    <div class="meta-item"><span class="meta-num">8</span><span class="meta-label">Full Mock Tests</span></div>
+  </div>
+</div>
+
+<!-- HOURS REALITY -->
+<div class="reality-box" id="schedule">
+  <h2>Your Real Weekly Budget —<br><span>11 hrs/week. Used with surgical precision.</span></h2>
+  <div>
+    <div class="hours-grid">
+      <div class="hours-row">
+        <span class="hours-day">MON – FRI</span>
+        <div class="hours-bar"><div class="hours-bar-fill" style="width:25%;background:#c84b1f"></div></div>
+        <span class="hours-num">1hr/day</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">SATURDAY</span>
+        <div class="hours-bar"><div class="hours-bar-fill" style="width:75%;background:#c49a00"></div></div>
+        <span class="hours-num">3hrs</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">SUNDAY</span>
+        <div class="hours-bar"><div class="hours-bar-fill" style="width:75%;background:#c49a00"></div></div>
+        <span class="hours-num">3hrs</span>
+      </div>
+      <div class="hours-row" style="border-color:#555">
+        <span class="hours-day">TOTAL/WK</span>
+        <div class="hours-bar"><div class="hours-bar-fill" style="width:100%;background:linear-gradient(90deg,#c84b1f,#c49a00)"></div></div>
+        <span class="hours-num" style="color:#fff">11hrs</span>
+      </div>
+    </div>
+  </div>
+  <div class="reality-notes">
+    <h3>How Each Day is Spent</h3>
+    <ul>
+      <li><strong>Mon:</strong> Learn concept + 1–2 easy problems (theory-first day)</li>
+      <li><strong>Tue:</strong> 2 medium problems. Timed 30min each. No hints.</li>
+      <li><strong>Wed:</strong> 1 medium + C++ STL focus for this topic</li>
+      <li><strong>Thu:</strong> 1 harder problem + read 1 hard problem editorial</li>
+      <li><strong>Fri:</strong> 1 mixed-pattern problem from previous weeks</li>
+      <li><strong>Sat:</strong> Deep practice — 4 problems, varied difficulty. Topic drill.</li>
+      <li><strong>Sun:</strong> 90min mock (2 problems timed) + 90min revision/flashcards</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TOPIC FLOW -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">Topic Progression</div>
+    <h2 class="section-title">8-Month Topic Roadmap</h2>
+    <p class="section-sub">Each topic builds on the previous. Patterns layer on top. You always learn the data structure and its interview patterns together.</p>
+
+    <div class="axis-legend">
+      <div class="axis-card topic-axis">
+        <h3>🟢 Topic Axis (What)</h3>
+        <p>The data structure or algorithm category. Arrays, Linked Lists, Trees, Graphs etc. This gives you the <em>vocabulary</em> and <em>implementation knowledge</em>.</p>
+      </div>
+      <div class="axis-card pattern-axis">
+        <h3>🔵 Pattern Axis (How)</h3>
+        <p>The technique or paradigm applied to solve problems. Two Pointers, BFS, DP, Sliding Window etc. This gives you the <em>problem-solving lens</em>.</p>
+      </div>
+    </div>
+
+    <div class="topic-flow">
+      <div class="topic-node"><div class="t-icon">📊</div><div class="t-name">Arrays &amp;<br>Strings</div><div class="t-month">M1</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🪟</div><div class="t-name">Sliding Window &amp;<br>Binary Search</div><div class="t-month">M2</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🔗</div><div class="t-name">Linked Lists<br>+ Stacks</div><div class="t-month">M3</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🌳</div><div class="t-name">Trees &amp;<br>Tries</div><div class="t-month">M4</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🕸️</div><div class="t-name">Graphs &amp;<br>Paths</div><div class="t-month">M5</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">⛏️</div><div class="t-name">Heaps &amp;<br>Greedy</div><div class="t-month">M6</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🧠</div><div class="t-name">Dynamic<br>Programming</div><div class="t-month">M7</div></div>
+      <div class="topic-arrow">→</div>
+      <div class="topic-node"><div class="t-icon">🎯</div><div class="t-name">Google<br>Simulation</div><div class="t-month">M8</div></div>
+    </div>
+
+    <div class="progress-track">
+      <div class="pt-row"><span class="pt-label">Arrays</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent2)"></div></div><span class="pt-num">M1</span></div>
+      <div class="pt-row"><span class="pt-label">Strings</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent2)"></div></div><span class="pt-num">M1</span></div>
+      <div class="pt-row"><span class="pt-label">Sliding Window</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent3)"></div></div><span class="pt-num">M2</span></div>
+      <div class="pt-row"><span class="pt-label">Binary Search</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent3)"></div></div><span class="pt-num">M2</span></div>      
+      <div class="pt-row"><span class="pt-label">Linked Lists</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent2)"></div></div><span class="pt-num">M3</span></div>
+      <div class="pt-row"><span class="pt-label">Stacks/Queues</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent2)"></div></div><span class="pt-num">M3</span></div>
+      <div class="pt-row"><span class="pt-label">Binary Trees</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent3)"></div></div><span class="pt-num">M4</span></div>
+      <div class="pt-row"><span class="pt-label">BST + Trie</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent3)"></div></div><span class="pt-num">M4</span></div>
+      <div class="pt-row"><span class="pt-label">Graphs</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent4)"></div></div><span class="pt-num">M5</span></div>
+      <div class="pt-row"><span class="pt-label">Heaps + Seg Tree</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent4)"></div></div><span class="pt-num">M6</span></div>
+      <div class="pt-row"><span class="pt-label">Dynamic Programming</span><div class="pt-bar"><div class="pt-fill" style="width:100%;background:var(--accent)"></div></div><span class="pt-num">M7</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MONTH 1 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section id="m1" style="padding-top:2rem">
+  <div class="container">
+    <div class="phase-header">
+      <div class="phase-num">01</div>
+      <div class="phase-info">
+        <h2>Arrays &amp; Strings — Foundations</h2>
+        <p>Topic: Arrays, Strings, Hash Maps &nbsp;|&nbsp; Patterns: Hashing, Two Pointers, Prefix Sum, Recursion &amp; Backtracking</p>
+      </div>
+      <div class="phase-stats">
+        <span class="ps-num">44</span>
+        <span class="ps-label">hrs total</span>
+      </div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-card-header">
+        <div class="month-num-small">W1</div>
+        <div class="month-header-info">
+          <div class="month-topics">📊 TOPIC: Arrays · C++ Setup · Big-O</div>
+          <div class="month-patterns">🔵 PATTERNS: Linear Scan · Min/Max Tracking · Index Tracking</div>
+          <h3>Arrays + C++ Environment Setup</h3>
+        </div>
+        <div class="month-hours-box">
+          <span class="mh-num">11</span>
+          <span class="mh-label">hrs this week</span>
+        </div>
+      </div>
+      <div class="month-card-body">
+        <div class="week-block">
+          <div class="week-header">
+            <span class="week-tag">Week 01</span>
+            <div class="week-title-block">
+              <div class="week-title">C++ Setup · Arrays · Big-O Thinking</div>
+              <div class="week-subtitle">Topic: Arrays · Pattern: Linear Scan / Min-Max Tracking</div>
+            </div>
+            <span class="week-difficulty diff-easy">Beginner</span>
+          </div>
+          <div class="week-body">
+            <div class="dual-axis">
+              <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Arrays &amp; vectors in C++</span></div>
+              <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Linear Scan · Min/Max Tracking · Counting</span></div>
+            </div>
+            <div class="ws">
+              <h4>Concepts This Week</h4>
+              <ul>
+                <li>C++ setup: VSCode + GCC or CLion. Get comfortable compiling.</li>
+                <li>Data types: int, long long, float, double, bool, char</li>
+                <li>Arrays: static int arr[] vs dynamic vector&lt;int&gt;</li>
+                <li>Big-O: O(1), O(log n), O(n), O(n log n), O(n²) — internalize these</li>
+                <li>STL: vector (push_back, size, [], at, begin, end)</li>
+                <li>Pairs: pair&lt;int,int&gt;, auto, range-based for loops</li>
+              </ul>
+            </div>
+            <div class="ws">
+              <h4>Daily Plan (Mon–Fri: 1hr each)</h4>
+              <ul>
+                <li><strong>Mon:</strong> Setup C++. Read Big-O. Write "hello array" program.</li>
+                <li><strong>Tue:</strong> Solve Two Sum + Best Time to Buy Stock (timed 30min each)</li>
+                <li><strong>Wed:</strong> Solve Contains Duplicate + Single Number. Learn XOR trick.</li>
+                <li><strong>Thu:</strong> Solve Maximum Subarray (Kadane's). Understand the pattern.</li>
+                <li><strong>Fri:</strong> Solve Move Zeroes. Review all 5 problems — can you explain each?</li>
+              </ul>
+            </div>
+            <div class="daily-strip">
+              <div class="day-cell"><div class="dc-name">Mon</div><div class="dc-type">Setup</div><div class="dc-hours">1hr</div><div class="dc-task">C++ env + Big-O reading</div></div>
+              <div class="day-cell"><div class="dc-name">Tue</div><div class="dc-type">Easy ×2</div><div class="dc-hours">1hr</div><div class="dc-task">Two Sum, Buy/Sell Stock</div></div>
+              <div class="day-cell"><div class="dc-name">Wed</div><div class="dc-type">Easy ×2</div><div class="dc-hours">1hr</div><div class="dc-task">Duplicates, Single Number</div></div>
+              <div class="day-cell"><div class="dc-name">Thu</div><div class="dc-type">Medium</div><div class="dc-hours">1hr</div><div class="dc-task">Max Subarray (Kadane's)</div></div>
+              <div class="day-cell"><div class="dc-name">Fri</div><div class="dc-type">Review</div><div class="dc-hours">1hr</div><div class="dc-task">Move Zeroes + re-explain all</div></div>
+              <div class="day-cell weekend"><div class="dc-name">Sat</div><div class="dc-type">Deep Drill</div><div class="dc-hours">3hrs</div><div class="dc-task">4 medium problems. Timed. Product Except Self, Rotate Array, Merge Intervals, Find Duplicate</div></div>
+              <div class="day-cell weekend"><div class="dc-name">Sun</div><div class="dc-type">Mock + Rev</div><div class="dc-hours">3hrs</div><div class="dc-task">90min mock (Two Sum + Kadane's). 90min: write pattern templates in notebook.</div></div>
+            </div>
+            <div class="problems-list ws">
+              <h4>10 Problems (Easy → Medium · This Week)</h4>
+              <div class="prob-grid">
+                <div class="prob easy"><span class="prob-badge"></span>Two Sum</div>
+                <div class="prob easy"><span class="prob-badge"></span>Best Time to Buy/Sell Stock</div>
+                <div class="prob easy"><span class="prob-badge"></span>Contains Duplicate</div>
+                <div class="prob easy"><span class="prob-badge"></span>Single Number (XOR)</div>
+                <div class="prob easy"><span class="prob-badge"></span>Move Zeroes</div>
+                <div class="prob med"><span class="prob-badge"></span>Maximum Subarray (Kadane's)</div>
+                <div class="prob med"><span class="prob-badge"></span>Product of Array Except Self</div>
+                <div class="prob med"><span class="prob-badge"></span>Rotate Array</div>
+                <div class="prob med"><span class="prob-badge"></span>Merge Intervals</div>
+                <div class="prob med"><span class="prob-badge"></span>Find the Duplicate Number</div>
+              </div>
+              <div class="prob-count">Target: all 10 solved by Sunday. ✓ = solved without hint. ◑ = solved with hint. ✗ = not solved (add to revision list)</div>
+            </div>
+            <div class="cpp-tip">
+              <h4>⚙️ C++ This Week</h4>
+              <div class="cpp-code-block"><span class="c">// Essential vector operations</span>
+<span class="t">vector</span>&lt;<span class="t">int</span>&gt; v = {3, 1, 4, 1, 5};
+v.<span class="f">push_back</span>(9);          <span class="c">// add to end</span>
+<span class="f">sort</span>(v.<span class="f">begin</span>(), v.<span class="f">end</span>()); <span class="c">// sort ascending</span>
+<span class="k">for</span> (<span class="k">auto</span>& x : v) x *= 2;  <span class="c">// in-place modify</span>
+<span class="c">// Kadane's template</span>
+<span class="t">int</span> <span class="f">maxSubarray</span>(<span class="t">vector</span>&lt;<span class="t">int</span>&gt;& a) {
+    <span class="t">int</span> cur = a[0], best = a[0];
+    <span class="k">for</span> (<span class="t">int</span> i = 1; i &lt; a.<span class="f">size</span>(); i++) {
+        cur = <span class="f">max</span>(a[i], cur + a[i]);
+        best = <span class="f">max</span>(best, cur);
+    }
+    <span class="k">return</span> best;
+}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEEK 2 -->
+        <div class="week-block">
+          <div class="week-header">
+            <span class="week-tag">Week 02</span>
+            <div class="week-title-block">
+              <div class="week-title">Strings · Hashing · Frequency Counting</div>
+              <div class="week-subtitle">Topic: Strings, Hash Maps, Hash Sets · Pattern: Frequency Map, Seen-Before, Anagram Detection</div>
+            </div>
+            <span class="week-difficulty diff-easy">Easy–Medium</span>
+          </div>
+          <div class="week-body">
+            <div class="dual-axis">
+              <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Strings · unordered_map · unordered_set</span></div>
+              <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Frequency Count · Seen-Before · char[26] trick</span></div>
+            </div>
+            <div class="ws">
+              <h4>Concepts This Week</h4>
+              <ul>
+                <li>C++ string: substr, find, length, stoi, to_string, s[i]</li>
+                <li>unordered_map&lt;char,int&gt;: freq counting — O(1) average</li>
+                <li>unordered_set&lt;string&gt;: seen-before — O(1) average</li>
+                <li>int freq[26] = {}; trick for lowercase alphabet</li>
+                <li>When to sort string as key (anagram grouping)</li>
+                <li>map vs unordered_map: ordered vs O(1) avg</li>
+              </ul>
+            </div>
+            <div class="ws">
+              <h4>Pattern Deep Dive</h4>
+              <ul>
+                <li><strong>Frequency Map:</strong> iterate → count chars → check condition</li>
+                <li><strong>Seen-Before:</strong> as you scan, check if element was seen</li>
+                <li><strong>Anagram key:</strong> sort string → use as hashmap key</li>
+                <li><strong>Group Anagrams:</strong> map&lt;string, vector&lt;string&gt;&gt; grouped</li>
+                <li><strong>When freq counts help:</strong> subarray sum K uses prefix + map</li>
+              </ul>
+            </div>
+            <div class="problems-list ws">
+              <h4>12 Problems (Easy → Medium → Hard)</h4>
+              <div class="prob-grid">
+                <div class="prob easy"><span class="prob-badge"></span>Valid Anagram</div>
+                <div class="prob easy"><span class="prob-badge"></span>Ransom Note</div>
+                <div class="prob easy"><span class="prob-badge"></span>First Unique Character</div>
+                <div class="prob easy"><span class="prob-badge"></span>Isomorphic Strings</div>
+                <div class="prob easy"><span class="prob-badge"></span>Word Pattern</div>
+                <div class="prob med"><span class="prob-badge"></span>Group Anagrams</div>
+                <div class="prob med"><span class="prob-badge"></span>Top K Frequent Elements</div>
+                <div class="prob med"><span class="prob-badge"></span>Subarray Sum Equals K</div>
+                <div class="prob med"><span class="prob-badge"></span>Longest Consecutive Sequence</div>
+                <div class="prob med"><span class="prob-badge"></span>Encode and Decode Strings</div>
+                <div class="prob hard"><span class="prob-badge"></span>Minimum Window Substring</div>
+                <div class="prob hard"><span class="prob-badge"></span>Substring with All Words</div>
+              </div>
+            </div>
+            <div class="cpp-tip">
+              <h4>⚙️ C++ This Week — unordered_map Mastery</h4>
+              <div class="cpp-code-block"><span class="t">unordered_map</span>&lt;<span class="t">char</span>,<span class="t">int</span>&gt; freq;
+<span class="k">for</span> (<span class="t">char</span> c : s) freq[c]++;       <span class="c">// build freq map</span>
+<span class="k">if</span> (freq.<span class="f">count</span>(<span class="s">'a'</span>)) { ... }       <span class="c">// check existence</span>
+freq.<span class="f">erase</span>(<span class="s">'b'</span>);                   <span class="c">// delete key</span>
+<span class="c">// Anagram grouping — sort string as key</span>
+<span class="t">unordered_map</span>&lt;<span class="t">string</span>,<span class="t">vector</span>&lt;<span class="t">string</span>&gt;&gt; groups;
+<span class="k">for</span> (<span class="k">auto</span>& w : words) {
+    <span class="t">string</span> key = w;
+    <span class="f">sort</span>(key.<span class="f">begin</span>(), key.<span class="f">end</span>());
+    groups[key].<span class="f">push_back</span>(w);
+}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEEK 3 -->
+        <div class="week-block">
+          <div class="week-header">
+            <span class="week-tag">Week 03</span>
+            <div class="week-title-block">
+              <div class="week-title">Arrays · Two Pointers Pattern</div>
+              <div class="week-subtitle">Topic: Sorted Arrays, In-place Ops · Pattern: Two Pointers (opposite ends, same direction), Dutch National Flag</div>
+            </div>
+            <span class="week-difficulty diff-med">Medium</span>
+          </div>
+          <div class="week-body">
+            <div class="dual-axis">
+              <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Sorted Arrays · In-place Partitioning</span></div>
+              <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Two Pointers · Dutch National Flag · Palindrome Check</span></div>
+            </div>
+            <div class="ws">
+              <h4>Concepts + Patterns</h4>
+              <ul>
+                <li><strong>Opposite ends:</strong> left=0, right=n-1, converge. Used in: Two Sum II, Container Water, Trapping Rain</li>
+                <li><strong>Same direction:</strong> slow and fast. Used in: Remove Duplicates, Move Zeroes</li>
+                <li><strong>Three-way partition:</strong> low, mid, high pointers (DNF / Sort Colors)</li>
+                <li><strong>Palindrome check:</strong> left++, right-- while equal</li>
+                <li><strong>3Sum pattern:</strong> sort + outer loop + inner two-pointer</li>
+              </ul>
+            </div>
+            <div class="ws">
+              <h4>When to Recognize This Pattern</h4>
+              <ul>
+                <li>Array is sorted OR you can sort it without losing info</li>
+                <li>Looking for pairs/triplets that sum to target</li>
+                <li>Need to remove/partition elements in-place</li>
+                <li>Check if string/array is palindrome</li>
+                <li>Need O(1) space solution for linear scan</li>
+              </ul>
+            </div>
+            <div class="problems-list ws">
+              <h4>12 Problems</h4>
+              <div class="prob-grid">
+                <div class="prob easy"><span class="prob-badge"></span>Two Sum II (Sorted)</div>
+                <div class="prob easy"><span class="prob-badge"></span>Valid Palindrome</div>
+                <div class="prob easy"><span class="prob-badge"></span>Remove Duplicates from Sorted</div>
+                <div class="prob med"><span class="prob-badge"></span>3Sum</div>
+                <div class="prob med"><span class="prob-badge"></span>Container With Most Water</div>
+                <div class="prob med"><span class="prob-badge"></span>Sort Colors (DNF)</div>
+                <div class="prob med"><span class="prob-badge"></span>Remove Element</div>
+                <div class="prob med"><span class="prob-badge"></span>Squares of Sorted Array</div>
+                <div class="prob med"><span class="prob-badge"></span>Backspace String Compare</div>
+                <div class="prob med"><span class="prob-badge"></span>3Sum Closest</div>
+                <div class="prob hard"><span class="prob-badge"></span>Trapping Rain Water</div>
+                <div class="prob hard"><span class="prob-badge"></span>4Sum</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WEEK 4 -->
+        <div class="week-block">
+          <div class="week-header">
+            <span class="week-tag">Week 04</span>
+            <div class="week-title-block">
+              <div class="week-title">Recursion + Backtracking on Arrays/Strings</div>
+              <div class="week-subtitle">Topic: Recursion, Backtracking · Pattern: Subsets, Permutations, Combinations, Pruning</div>
+            </div>
+            <span class="week-difficulty diff-med">Medium–Hard</span>
+          </div>
+          <div class="week-body">
+            <div class="dual-axis">
+              <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Recursion · Call Stack · Backtracking Framework</span></div>
+              <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Choose–Explore–Unchoose · Pruning · State Reset</span></div>
+            </div>
+            <div class="ws">
+              <h4>The Backtracking Template</h4>
+              <ul>
+                <li>Every backtracking problem = same 3 steps: Choose → Explore → Unchoose</li>
+                <li>Build candidate solution incrementally</li>
+                <li>Prune: if constraint violated, return early without exploring</li>
+                <li>State reset: undo the choice before next iteration</li>
+                <li>Result collected at valid leaf nodes</li>
+              </ul>
+            </div>
+            <div class="ws">
+              <h4>Concepts</h4>
+              <ul>
+                <li>Call stack: each recursive call is a stack frame</li>
+                <li>Recursion tree: visualize before coding</li>
+                <li>Memoization preview: store results to avoid recompute</li>
+                <li>Pass vector by reference to avoid copying</li>
+                <li>Handle duplicates: sort first, skip same-level duplicates</li>
+              </ul>
+            </div>
+            <div class="problems-list ws">
+              <h4>12 Problems</h4>
+              <div class="prob-grid">
+                <div class="prob easy"><span class="prob-badge"></span>Fibonacci (memoized)</div>
+                <div class="prob easy"><span class="prob-badge"></span>Power(x, n)</div>
+                <div class="prob med"><span class="prob-badge"></span>Subsets</div>
+                <div class="prob med"><span class="prob-badge"></span>Subsets II (with dups)</div>
+                <div class="prob med"><span class="prob-badge"></span>Permutations</div>
+                <div class="prob med"><span class="prob-badge"></span>Permutations II</div>
+                <div class="prob med"><span class="prob-badge"></span>Combination Sum</div>
+                <div class="prob med"><span class="prob-badge"></span>Combination Sum II</div>
+                <div class="prob med"><span class="prob-badge"></span>Letter Combinations Phone</div>
+                <div class="prob med"><span class="prob-badge"></span>Generate Parentheses</div>
+                <div class="prob hard"><span class="prob-badge"></span>N-Queens</div>
+                <div class="prob hard"><span class="prob-badge"></span>Sudoku Solver</div>
+              </div>
+            </div>
+            <div class="cpp-tip">
+              <h4>⚙️ C++ — Backtracking Template</h4>
+              <div class="cpp-code-block"><span class="k">void</span> <span class="f">backtrack</span>(<span class="t">vector</span>&lt;<span class="t">int</span>&gt;& candidates, <span class="t">int</span> start,
+              <span class="t">vector</span>&lt;<span class="t">int</span>&gt;& current, <span class="t">vector</span>&lt;<span class="t">vector</span>&lt;<span class="t">int</span>&gt;&gt;& result, <span class="t">int</span> target) {
+    <span class="k">if</span> (target == 0) { result.<span class="f">push_back</span>(current); <span class="k">return</span>; }
+    <span class="k">for</span> (<span class="t">int</span> i = start; i &lt; candidates.<span class="f">size</span>(); i++) {
+        <span class="k">if</span> (candidates[i] > target) <span class="k">break</span>; <span class="c">// prune</span>
+        current.<span class="f">push_back</span>(candidates[i]);              <span class="c">// choose</span>
+        <span class="f">backtrack</span>(candidates, i, current, result, target - candidates[i]); <span class="c">// explore</span>
+        current.<span class="f">pop_back</span>();                             <span class="c">// unchoose</span>
+    }
+}</div>
+            </div>
+            <div class="ws ws-full">
+              <h4>Month 1 — Monthly Schedule</h4>
+              <div class="mc-grid">
+                <div class="mc-item mock-item"><div class="mc-num">END OF MONTH</div>Full 2-hr Google-style mock: 3 problems (1 easy, 1 med, 1 hard). Topics: arrays, hashing, two pointers, backtracking.</div>
+                <div class="mc-item lc-item"><div class="mc-num">LEETCODE CONTEST</div>Join one Weekly Contest. Target: solve A (easy) within time. Bonus if you get B.</div>
+                <div class="mc-item cf-item"><div class="mc-num">CODEFORCES</div>Div. 3 or Div. 4 contest. Solve A + B problems. Don't stress rank yet.</div>
+                <div class="mc-item sd-item"><div class="mc-num">SYSTEM DESIGN</div>45-min intro: Read about scalability, load balancing, and REST APIs. No deep dive yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="milestone">
+          <h3>🎯 Month 1 Milestone — Check Before Month 2</h3>
+          <div class="milestone-grid">
+            <div class="milestone-item">Solve any easy problem in under 10 minutes</div>
+            <div class="milestone-item">Identify hashing and two-pointer patterns on sight</div>
+            <div class="milestone-item">Write backtracking template from memory</div>
+            <div class="milestone-item">Comfortable with vector, unordered_map, string STL</div>
+            <div class="milestone-item">44 problems attempted, 30+ solved independently</div>
+            <div class="milestone-item">Pattern notebook: each problem labeled with its pattern</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONTH 2 -->
+<section id="m2" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">02</div>
+    <div class="phase-info">
+      <h2>Sliding Window + Binary Search</h2>
+      <p>Topic: Subarrays, Search Space · Patterns: Fixed/Dynamic Window, BS on Answer, Prefix Sum</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 05</span>
+          <div class="week-title-block">
+            <div class="week-title">Prefix Sum on Arrays</div>
+            <div class="week-subtitle">Topic: Arrays · Pattern: Prefix Sum, Running Sum, 2D Prefix</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Arrays — range queries, cumulative sums</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Prefix Sum · Prefix+HashMap · 2D Prefix Sum</span></div>
+          </div>
+          <div class="ws">
+            <h4>Key Insight</h4>
+            <ul>
+              <li>prefix[i] = sum of arr[0..i-1]. Then sum(l,r) = prefix[r+1] - prefix[l]</li>
+              <li>Subarray sum = K: prefix + hashmap. Count prefix sums seen so far.</li>
+              <li>2D prefix: matrix queries in O(1) after O(mn) build time</li>
+              <li>This pattern converts O(n) range queries to O(1)</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>When to Use</h4>
+            <ul>
+              <li>Multiple range sum queries on static array</li>
+              <li>"How many subarrays sum to K" type questions</li>
+              <li>2D matrix region sum queries</li>
+              <li>Running count / product queries</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>10 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Running Sum of 1D Array</div>
+              <div class="prob easy"><span class="prob-badge"></span>Range Sum Query - Immutable</div>
+              <div class="prob easy"><span class="prob-badge"></span>Find Pivot Index</div>
+              <div class="prob med"><span class="prob-badge"></span>Subarray Sum Equals K</div>
+              <div class="prob med"><span class="prob-badge"></span>Product of Array Except Self</div>
+              <div class="prob med"><span class="prob-badge"></span>Continuous Subarray Sum</div>
+              <div class="prob med"><span class="prob-badge"></span>Count Number of Nice Subarrays</div>
+              <div class="prob med"><span class="prob-badge"></span>Range Sum Query 2D</div>
+              <div class="prob hard"><span class="prob-badge"></span>Max Sum Rectangle ≤ K</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count of Range Sum</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 06</span>
+          <div class="week-title-block">
+            <div class="week-title">Sliding Window — Fixed + Dynamic</div>
+            <div class="week-subtitle">Topic: Subarrays/Substrings · Pattern: Fixed Window, Dynamic Shrink-Left, At Most K distinct</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Subarrays, Substrings — contiguous segments</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Fixed Window · Dynamic Window · Shrink from Left</span></div>
+          </div>
+          <div class="ws">
+            <h4>The Two Window Templates</h4>
+            <ul>
+              <li><strong>Fixed:</strong> maintain window of size k. Slide right. Track max/min/sum.</li>
+              <li><strong>Dynamic:</strong> right++ always. When constraint broken: left++ until fixed.</li>
+              <li>Window state: often a hashmap or sum variable</li>
+              <li><strong>Trigger words:</strong> "contiguous", "substring", "subarray", "window"</li>
+              <li>Beats O(n²) brute force to O(n)</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>Fixed window: max average of k elements, sum of k elements</li>
+              <li>Dynamic: longest substring with at most K distinct chars</li>
+              <li>Dynamic + exact: "exactly K" = "at most K" - "at most K-1"</li>
+              <li>Anagram/permutation in string → sliding window with freq map</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Maximum Average Subarray I</div>
+              <div class="prob easy"><span class="prob-badge"></span>Max Consecutive Ones III</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Substring Without Repeating</div>
+              <div class="prob med"><span class="prob-badge"></span>Fruit Into Baskets</div>
+              <div class="prob med"><span class="prob-badge"></span>Permutation in String</div>
+              <div class="prob med"><span class="prob-badge"></span>Find All Anagrams in String</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Repeating Char Replace</div>
+              <div class="prob med"><span class="prob-badge"></span>Subarray Product Less Than K</div>
+              <div class="prob med"><span class="prob-badge"></span>Max Erasure Value</div>
+              <div class="prob med"><span class="prob-badge"></span>Count Subarrays Score &lt; K</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Window Substring</div>
+              <div class="prob hard"><span class="prob-badge"></span>Sliding Window Maximum (Deque)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Subarrays with K Different Ints</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 07</span>
+          <div class="week-title-block">
+            <div class="week-title">Binary Search — Classic + Rotated</div>
+            <div class="week-subtitle">Topic: Sorted Arrays, Search · Pattern: Classic BS, Lower/Upper Bound, Rotated Array BS</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Sorted Arrays · Monotonic Functions</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Classic BS · Lower/Upper Bound · Rotated Search</span></div>
+          </div>
+          <div class="ws">
+            <h4>The One Template</h4>
+            <ul>
+              <li>lo=0, hi=n-1. mid = lo + (hi-lo)/2 (prevents overflow!)</li>
+              <li>Condition on mid determines which half to discard</li>
+              <li>Loop: while (lo &lt;= hi) for exact match</li>
+              <li>Loop: while (lo &lt; hi) for boundary finding</li>
+              <li>Rotated: check which half is sorted, then compare target</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>"Find in sorted" → classic binary search</li>
+              <li>"First/last position of X" → lower_bound / upper_bound</li>
+              <li>"Array rotated at unknown pivot" → check sorted half</li>
+              <li>"Find peak element" → move toward higher side</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>12 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Binary Search</div>
+              <div class="prob easy"><span class="prob-badge"></span>First Bad Version</div>
+              <div class="prob easy"><span class="prob-badge"></span>Guess Number Higher/Lower</div>
+              <div class="prob easy"><span class="prob-badge"></span>Sqrt(x)</div>
+              <div class="prob med"><span class="prob-badge"></span>Find First and Last Position</div>
+              <div class="prob med"><span class="prob-badge"></span>Search in Rotated Array</div>
+              <div class="prob med"><span class="prob-badge"></span>Find Minimum in Rotated Array</div>
+              <div class="prob med"><span class="prob-badge"></span>Find Peak Element</div>
+              <div class="prob med"><span class="prob-badge"></span>Search 2D Matrix</div>
+              <div class="prob med"><span class="prob-badge"></span>Search 2D Matrix II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find in Mountain Array</div>
+              <div class="prob hard"><span class="prob-badge"></span>Median of Two Sorted Arrays</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 08</span>
+          <div class="week-title-block">
+            <div class="week-title">Binary Search on Answer (Most Powerful)</div>
+            <div class="week-subtitle">Topic: Optimization Problems · Pattern: Parametric Search — "Is it possible with value X?"</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Optimization Problems — min of max, max of min</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Pattern</span><span class="ab-value">Parametric Search: Binary search on the ANSWER value</span></div>
+          </div>
+          <div class="ws">
+            <h4>The Big Idea</h4>
+            <ul>
+              <li>Instead of searching in array, binary search on the <em>answer value</em></li>
+              <li>Key check: "Is it feasible to achieve answer ≤ X?" must be monotonic</li>
+              <li>If feasible(X) is true, try smaller X. Else try larger X.</li>
+              <li>Common form: "minimize the maximum" or "maximize the minimum"</li>
+              <li>This transforms hard optimization to O(n log n) easily</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Trigger Words</h4>
+            <ul>
+              <li>"Koko eating bananas" → minimize hours → binary search on rate</li>
+              <li>"Ship packages in D days" → binary search on capacity</li>
+              <li>"Split array largest sum" → binary search on max sum</li>
+              <li>"Minimum days to make bouquets" → binary search on days</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>10 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Koko Eating Bananas</div>
+              <div class="prob med"><span class="prob-badge"></span>Capacity to Ship Packages</div>
+              <div class="prob med"><span class="prob-badge"></span>Minimum Days to Make Bouquets</div>
+              <div class="prob med"><span class="prob-badge"></span>Minimum Time to Complete Trips</div>
+              <div class="prob med"><span class="prob-badge"></span>Magnetic Force Between Balls</div>
+              <div class="prob med"><span class="prob-badge"></span>Find Kth Smallest Pair Distance</div>
+              <div class="prob hard"><span class="prob-badge"></span>Split Array Largest Sum</div>
+              <div class="prob hard"><span class="prob-badge"></span>Cutting Ribbons</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimize Max Distance to Gas Station</div>
+              <div class="prob hard"><span class="prob-badge"></span>Smallest Divisor Given Threshold</div>
+            </div>
+          </div>
+          <div class="ws ws-full">
+            <h4>Month 2 — Monthly Schedule</h4>
+            <div class="mc-grid">
+              <div class="mc-item mock-item"><div class="mc-num">END OF MONTH</div>Full mock: 3 problems. Topics: sliding window + binary search. 90 min. Think aloud. Aim to finish 2/3.</div>
+              <div class="mc-item lc-item"><div class="mc-num">LEETCODE CONTEST</div>Weekly contest. Target: 2 problems solved. Notice which patterns you recognize fast now.</div>
+              <div class="mc-item cf-item"><div class="mc-num">CODEFORCES</div>Div. 3 contest. Target: A + B + C. Binary search should appear in C.</div>
+              <div class="mc-item sd-item"><div class="mc-num">SYSTEM DESIGN</div>45-min: Understand what a cache is, CDN, database sharding (high level only).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 2 Milestone</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Identify sliding window instantly: fixed vs dynamic</div>
+          <div class="milestone-item">Write binary search on answer from scratch</div>
+          <div class="milestone-item">Prefix sum + hashmap for subarray count problems</div>
+          <div class="milestone-item">~90 problems total attempted</div>
+          <div class="milestone-item">Codeforces: solved Div.3 C-level problem</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 3 -->
+<section id="m3" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">03</div>
+    <div class="phase-info">
+      <h2>Linked Lists · Stacks · Queues</h2>
+      <p>Topic: Linked Lists, Stacks, Queues, Deques · Patterns: Fast/Slow Pointers, Reversal, Monotonic Stack, BFS Intro</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 09</span>
+          <div class="week-title-block">
+            <div class="week-title">Linked Lists — Fast &amp; Slow Pointers</div>
+            <div class="week-subtitle">Topic: Singly Linked Lists · Pattern: Fast/Slow (Floyd's), Middle Detection, Cycle Detection</div>
+          </div>
+          <span class="week-difficulty diff-med">Easy–Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">ListNode struct · pointer traversal · null checks</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Fast/Slow · Cycle Detection · Nth from End</span></div>
+          </div>
+          <div class="ws">
+            <h4>Concepts</h4>
+            <ul>
+              <li>ListNode struct: val + next pointer</li>
+              <li>Traverse: while(node) { process(node); node=node->next; }</li>
+              <li>Dummy head: eliminates edge cases for head deletion</li>
+              <li>Fast ptr moves 2x speed. Slow moves 1x. They meet inside cycle.</li>
+              <li>Find middle: when fast reaches end, slow is at middle</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>"Is there a cycle?" → fast &amp; slow</li>
+              <li>"Find cycle start?" → Floyd's: after meeting, reset one to head, both move 1x</li>
+              <li>"Find middle?" → fast &amp; slow</li>
+              <li>"Nth node from end?" → two pointers, N apart</li>
+              <li>"Palindrome list?" → find mid, reverse second half, compare</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Linked List Cycle</div>
+              <div class="prob easy"><span class="prob-badge"></span>Middle of Linked List</div>
+              <div class="prob easy"><span class="prob-badge"></span>Reverse Linked List</div>
+              <div class="prob easy"><span class="prob-badge"></span>Merge Two Sorted Lists</div>
+              <div class="prob med"><span class="prob-badge"></span>Linked List Cycle II</div>
+              <div class="prob med"><span class="prob-badge"></span>Remove Nth Node from End</div>
+              <div class="prob med"><span class="prob-badge"></span>Palindrome Linked List</div>
+              <div class="prob med"><span class="prob-badge"></span>Happy Number (fast/slow on numbers!)</div>
+              <div class="prob med"><span class="prob-badge"></span>Reorder List</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find the Duplicate Number (LL cycle)</div>
+              <div class="prob hard"><span class="prob-badge"></span>LRU Cache</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 10</span>
+          <div class="week-title-block">
+            <div class="week-title">Linked Lists — Reversal, Merge, Advanced</div>
+            <div class="week-subtitle">Topic: Doubly Linked Lists, Complex Pointer Ops · Pattern: In-Place Reversal, Merge K Sorted, Copy with Random</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Doubly Linked List · Complex pointer manipulation</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">In-Place Reversal · K-Group Reversal · Copy with HashMap</span></div>
+          </div>
+          <div class="ws">
+            <h4>In-Place Reversal Template</h4>
+            <ul>
+              <li>Three pointers: prev=null, curr=head, next=null</li>
+              <li>next=curr->next; curr->next=prev; prev=curr; curr=next</li>
+              <li>Reverse in groups of k: count k nodes, reverse, recurse</li>
+              <li>Copy with random: two-pass with hashmap (old node → new node)</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Concepts</h4>
+            <ul>
+              <li>Sort list: merge sort on linked list (O(n log n), O(1) extra)</li>
+              <li>Add two numbers: simulate addition with carry</li>
+              <li>Rotate list: find tail, connect to head, find new head</li>
+              <li>Intersection: two pointers advance then switch lists</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Swap Nodes in Pairs</div>
+              <div class="prob med"><span class="prob-badge"></span>Odd Even Linked List</div>
+              <div class="prob med"><span class="prob-badge"></span>Add Two Numbers</div>
+              <div class="prob med"><span class="prob-badge"></span>Add Two Numbers II</div>
+              <div class="prob med"><span class="prob-badge"></span>Copy List with Random Pointer</div>
+              <div class="prob med"><span class="prob-badge"></span>Sort List</div>
+              <div class="prob med"><span class="prob-badge"></span>Rotate List</div>
+              <div class="prob med"><span class="prob-badge"></span>Intersection of Two Lists</div>
+              <div class="prob hard"><span class="prob-badge"></span>Reverse Nodes in k-Group</div>
+              <div class="prob hard"><span class="prob-badge"></span>Merge k Sorted Lists</div>
+              <div class="prob hard"><span class="prob-badge"></span>Flatten Multilevel Doubly LL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 11</span>
+          <div class="week-title-block">
+            <div class="week-title">Stacks · Monotonic Stack Pattern</div>
+            <div class="week-subtitle">Topic: Stack, Deque · Pattern: Valid Parentheses, Next Greater Element, Monotonic Decreasing/Increasing Stack</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Stack (LIFO) · Deque · Parenthesis matching</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Monotonic Stack · Next Greater · Histogram Largest Rect</span></div>
+          </div>
+          <div class="ws">
+            <h4>Monotonic Stack Key Insight</h4>
+            <ul>
+              <li>Maintain a stack that is always increasing or always decreasing</li>
+              <li>When new element breaks monotonicity → process elements popped off</li>
+              <li>Monotonic DECREASING stack → finds next GREATER element</li>
+              <li>Monotonic INCREASING stack → finds next SMALLER element</li>
+              <li>Each element pushed and popped exactly once → O(n) total</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Classic Applications</h4>
+            <ul>
+              <li>Next Greater Element: pop when arr[i] &gt; stack.top()</li>
+              <li>Daily Temperatures: same pattern, store indices</li>
+              <li>Largest Rect in Histogram: popping gives bounded rectangles</li>
+              <li>Stock Span: count days where price ≤ current</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>12 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Valid Parentheses</div>
+              <div class="prob easy"><span class="prob-badge"></span>Min Stack</div>
+              <div class="prob med"><span class="prob-badge"></span>Next Greater Element I</div>
+              <div class="prob med"><span class="prob-badge"></span>Next Greater Element II (circular)</div>
+              <div class="prob med"><span class="prob-badge"></span>Daily Temperatures</div>
+              <div class="prob med"><span class="prob-badge"></span>Online Stock Span</div>
+              <div class="prob med"><span class="prob-badge"></span>Decode String</div>
+              <div class="prob med"><span class="prob-badge"></span>Asteroid Collision</div>
+              <div class="prob med"><span class="prob-badge"></span>Remove K Digits</div>
+              <div class="prob med"><span class="prob-badge"></span>132 Pattern</div>
+              <div class="prob hard"><span class="prob-badge"></span>Largest Rectangle in Histogram</div>
+              <div class="prob hard"><span class="prob-badge"></span>Maximal Rectangle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 12</span>
+          <div class="week-title-block">
+            <div class="week-title">Queues · Deque · BFS Introduction</div>
+            <div class="week-subtitle">Topic: Queue, Deque · Pattern: BFS Level-Order, Sliding Window Max (Deque), Multi-Source BFS intro</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Queue (FIFO) · Deque (double-ended) · Level processing</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">BFS Level Order · Sliding Window Max (Deque)</span></div>
+          </div>
+          <div class="ws">
+            <h4>Concepts</h4>
+            <ul>
+              <li>queue&lt;T&gt;: front(), push(), pop() — O(1) all operations</li>
+              <li>deque&lt;T&gt;: push_front, push_back, pop_front, pop_back</li>
+              <li>BFS: use queue. Process current level before next level.</li>
+              <li>Sliding window max: monotonic deque (decreasing). Front = current max.</li>
+              <li>Circular queue / queue using stacks</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>BFS Template Preview</h4>
+            <ul>
+              <li>Enqueue start node. Mark visited. While queue not empty: process front, enqueue neighbors.</li>
+              <li>Level-order: track size at each level. Inner loop processes one full level.</li>
+              <li>This foundation is critical for Month 4 (trees) and Month 5 (graphs)</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>10 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Implement Queue Using Stacks</div>
+              <div class="prob easy"><span class="prob-badge"></span>Implement Stack Using Queues</div>
+              <div class="prob easy"><span class="prob-badge"></span>Number of Recent Calls</div>
+              <div class="prob med"><span class="prob-badge"></span>Design Circular Queue</div>
+              <div class="prob med"><span class="prob-badge"></span>Task Scheduler Preview</div>
+              <div class="prob med"><span class="prob-badge"></span>Design Hit Counter</div>
+              <div class="prob med"><span class="prob-badge"></span>Moving Average from Data Stream</div>
+              <div class="prob hard"><span class="prob-badge"></span>Sliding Window Maximum</div>
+              <div class="prob hard"><span class="prob-badge"></span>Shortest Subarray with Sum ≥ K</div>
+              <div class="prob hard"><span class="prob-badge"></span>Jump Game VI (Deque DP)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 3 Milestone</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Implement linked list reversal without looking</div>
+          <div class="milestone-item">Monotonic stack: identify direction (inc vs dec) correctly</div>
+          <div class="milestone-item">Write Floyd's cycle detection from memory</div>
+          <div class="milestone-item">~135 total problems attempted</div>
+          <div class="milestone-item">Comfortable using stack&lt;&gt;, queue&lt;&gt;, deque&lt;&gt; in C++</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 4: TREES -->
+<section id="m4" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">04</div>
+    <div class="phase-info">
+      <h2>Trees · BST · Tries</h2>
+      <p>Topic: Binary Trees, BST, Trie · Patterns: Tree DFS (top-down/bottom-up), BFS, BST properties, Trie insert/search</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 13</span>
+          <div class="week-title-block">
+            <div class="week-title">Binary Trees — DFS Traversals (All 4)</div>
+            <div class="week-subtitle">Topic: Binary Trees · Pattern: Pre/In/Post DFS (recursive + iterative), Level-Order BFS</div>
+          </div>
+          <span class="week-difficulty diff-easy">Easy–Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">TreeNode structure · height · depth · null checks</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Top-Down DFS · Bottom-Up DFS · Level-Order BFS</span></div>
+          </div>
+          <div class="ws">
+            <h4>The Two DFS Mindsets</h4>
+            <ul>
+              <li><strong>Top-down:</strong> pass info from parent to children. Good for: path sum, max depth, diameter.</li>
+              <li><strong>Bottom-up:</strong> combine results from children. Good for: size, height, balanced check.</li>
+              <li>Return value from DFS = results from subtrees</li>
+              <li>Global variable trick: when you need a single answer across the whole tree</li>
+              <li>Level-order: use queue, process level by level</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>"Max path sum through any node" → bottom-up, global max variable</li>
+              <li>"Right side view" → BFS level order, take last of each level</li>
+              <li>"Count nodes in complete tree" → binary search on height</li>
+              <li>"Diameter" → bottom-up: at each node, left_height + right_height</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Invert Binary Tree</div>
+              <div class="prob easy"><span class="prob-badge"></span>Maximum Depth of Binary Tree</div>
+              <div class="prob easy"><span class="prob-badge"></span>Symmetric Tree</div>
+              <div class="prob easy"><span class="prob-badge"></span>Path Sum</div>
+              <div class="prob easy"><span class="prob-badge"></span>Same Tree</div>
+              <div class="prob med"><span class="prob-badge"></span>Level Order Traversal</div>
+              <div class="prob med"><span class="prob-badge"></span>Zigzag Level Order</div>
+              <div class="prob med"><span class="prob-badge"></span>Right Side View</div>
+              <div class="prob med"><span class="prob-badge"></span>Path Sum II</div>
+              <div class="prob med"><span class="prob-badge"></span>Diameter of Binary Tree</div>
+              <div class="prob med"><span class="prob-badge"></span>Balanced Binary Tree</div>
+              <div class="prob hard"><span class="prob-badge"></span>Binary Tree Maximum Path Sum</div>
+              <div class="prob hard"><span class="prob-badge"></span>Serialize and Deserialize BT</div>
+            </div>
+          </div>
+          <div class="cpp-tip">
+            <h4>⚙️ C++ — Tree Templates</h4>
+            <div class="cpp-code-block"><span class="c">// Top-down DFS (pass depth)</span>
+<span class="k">void</span> <span class="f">dfs</span>(<span class="t">TreeNode</span>* node, <span class="t">int</span> depth, <span class="t">int</span>& maxDepth) {
+    <span class="k">if</span> (!node) <span class="k">return</span>;
+    maxDepth = <span class="f">max</span>(maxDepth, depth);
+    <span class="f">dfs</span>(node->left, depth+1, maxDepth);
+    <span class="f">dfs</span>(node->right, depth+1, maxDepth);
+}
+<span class="c">// Bottom-up DFS (return height)</span>
+<span class="t">int</span> <span class="f">height</span>(<span class="t">TreeNode</span>* node) {
+    <span class="k">if</span> (!node) <span class="k">return</span> 0;
+    <span class="t">int</span> L = <span class="f">height</span>(node->left);
+    <span class="t">int</span> R = <span class="f">height</span>(node->right);
+    <span class="k">return</span> 1 + <span class="f">max</span>(L, R);
+}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 14</span>
+          <div class="week-title-block">
+            <div class="week-title">Binary Trees — Advanced Problems</div>
+            <div class="week-subtitle">Topic: LCA, Tree Construction, Flatten · Pattern: LCA (binary lifting preview), Build from traversals</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">LCA · Tree construction from arrays · Path problems</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">LCA via recursion · Build-from-traversal · Flatten (Morris)</span></div>
+          </div>
+          <div class="ws">
+            <h4>Key Patterns</h4>
+            <ul>
+              <li><strong>LCA:</strong> if root is p or q, return root. Recurse left and right. If both non-null, root is LCA.</li>
+              <li><strong>Build from preorder+inorder:</strong> preorder[0] is root. Find root in inorder to split left/right.</li>
+              <li><strong>Count Good Nodes:</strong> pass max seen so far top-down</li>
+              <li><strong>Flatten to LL:</strong> recursively flatten, connect right to left, left to null</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Concepts</h4>
+            <ul>
+              <li>Construct BT from preorder+inorder (hashmap for inorder index)</li>
+              <li>Construct BT from inorder+postorder</li>
+              <li>LCA: works for both BT and BST differently</li>
+              <li>Node-to-root path tracking</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>12 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Lowest Common Ancestor of BT</div>
+              <div class="prob med"><span class="prob-badge"></span>Count Good Nodes in BT</div>
+              <div class="prob med"><span class="prob-badge"></span>Path Sum III</div>
+              <div class="prob med"><span class="prob-badge"></span>Sum Root to Leaf Numbers</div>
+              <div class="prob med"><span class="prob-badge"></span>Flatten BT to Linked List</div>
+              <div class="prob med"><span class="prob-badge"></span>Populating Next Right Pointers</div>
+              <div class="prob med"><span class="prob-badge"></span>Construct BT from Pre+Inorder</div>
+              <div class="prob med"><span class="prob-badge"></span>Construct BT from In+Postorder</div>
+              <div class="prob med"><span class="prob-badge"></span>Subtree of Another Tree</div>
+              <div class="prob hard"><span class="prob-badge"></span>Binary Tree Cameras</div>
+              <div class="prob hard"><span class="prob-badge"></span>Distribute Coins in BT</div>
+              <div class="prob hard"><span class="prob-badge"></span>Maximum Width of Binary Tree</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 15</span>
+          <div class="week-title-block">
+            <div class="week-title">Binary Search Trees — All Patterns</div>
+            <div class="week-subtitle">Topic: BST · Pattern: Inorder = Sorted, Kth Smallest, Validate, BST Insert/Delete</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">BST: left &lt; root &lt; right. Inorder traversal = sorted array.</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Inorder for Kth · Bounds for Validate · LCA via comparison</span></div>
+          </div>
+          <div class="ws">
+            <h4>BST Core Insight</h4>
+            <ul>
+              <li>Inorder traversal of BST gives sorted sequence — use this!</li>
+              <li>Validate BST: pass min/max bounds (not just parent comparison)</li>
+              <li>LCA in BST: if both p,q &lt; root → go left. Both &gt; root → go right. Else root is LCA.</li>
+              <li>Insert: recurse until null, create node</li>
+              <li>Delete: 3 cases — leaf, one child, two children (find inorder successor)</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Problems</h4>
+            <ul>
+              <li>Kth Smallest: inorder DFS, count k steps</li>
+              <li>Convert Sorted Array to BST: always pick middle as root</li>
+              <li>BST Iterator: use stack for inorder traversal lazily</li>
+              <li>Recover BST: two swapped nodes in inorder sequence</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Search in BST</div>
+              <div class="prob easy"><span class="prob-badge"></span>Insert into BST</div>
+              <div class="prob easy"><span class="prob-badge"></span>Range Sum of BST</div>
+              <div class="prob med"><span class="prob-badge"></span>Validate BST</div>
+              <div class="prob med"><span class="prob-badge"></span>Kth Smallest in BST</div>
+              <div class="prob med"><span class="prob-badge"></span>BST Iterator</div>
+              <div class="prob med"><span class="prob-badge"></span>Delete Node in BST</div>
+              <div class="prob med"><span class="prob-badge"></span>LCA of BST</div>
+              <div class="prob med"><span class="prob-badge"></span>Convert Sorted Array to BST</div>
+              <div class="prob med"><span class="prob-badge"></span>Balance a BST</div>
+              <div class="prob hard"><span class="prob-badge"></span>Recover BST</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 16</span>
+          <div class="week-title-block">
+            <div class="week-title">Trie (Prefix Tree) — Complete</div>
+            <div class="week-subtitle">Topic: Trie Data Structure · Pattern: Trie Insert/Search/StartsWith, Trie + DFS (Word Search II)</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Trie: TrieNode with children[26] + isEnd flag</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Prefix Search · Autocomplete · Trie+DFS for Word Search</span></div>
+          </div>
+          <div class="ws">
+            <h4>Trie Structure</h4>
+            <ul>
+              <li>TrieNode: children[26] (or unordered_map for non-alpha), isEnd bool</li>
+              <li>Insert: for each char, create child if null, advance pointer, mark isEnd</li>
+              <li>Search: traverse chars, return false if null child, return isEnd at end</li>
+              <li>StartsWith: same as search but return true at end (don't check isEnd)</li>
+              <li>Why Trie?: O(L) per operation where L = word length. vs O(L * log N) for set</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Advanced Applications</h4>
+            <ul>
+              <li>Word Search II: build Trie from word list, DFS on board, prune with Trie</li>
+              <li>Replace Words: find shortest root prefix in Trie</li>
+              <li>Maximum XOR: binary Trie for XOR tricks</li>
+              <li>Design Search Autocomplete System</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Implement Trie (Prefix Tree)</div>
+              <div class="prob med"><span class="prob-badge"></span>Design Add and Search Words</div>
+              <div class="prob med"><span class="prob-badge"></span>Map Sum Pairs</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Word in Dictionary</div>
+              <div class="prob med"><span class="prob-badge"></span>Replace Words</div>
+              <div class="prob med"><span class="prob-badge"></span>Index Pairs of String</div>
+              <div class="prob hard"><span class="prob-badge"></span>Word Search II (Trie + DFS)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Maximum XOR of Two Numbers</div>
+              <div class="prob hard"><span class="prob-badge"></span>Design Search Autocomplete</div>
+              <div class="prob hard"><span class="prob-badge"></span>Concatenated Words</div>
+              <div class="prob hard"><span class="prob-badge"></span>Palindrome Pairs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 4 Milestone</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">DFS top-down vs bottom-up: know which to use</div>
+          <div class="milestone-item">Implement Trie with insert/search/startsWith from memory</div>
+          <div class="milestone-item">BST: validate with bounds (not parent comparison!)</div>
+          <div class="milestone-item">~180 total problems attempted</div>
+          <div class="milestone-item">Solved at least one hard tree problem this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 5: GRAPHS -->
+<section id="m5" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">05</div>
+    <div class="phase-info">
+      <h2>Graphs · Shortest Paths · Union-Find · Topological Sort</h2>
+      <p>Topic: Graphs (directed, undirected, weighted) · Patterns: BFS, DFS, Union-Find, Topo Sort, Dijkstra, Bellman-Ford</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 17</span>
+          <div class="week-title-block">
+            <div class="week-title">Graph BFS + DFS · Island Problems</div>
+            <div class="week-subtitle">Topic: Adjacency List/Matrix · Pattern: BFS (shortest path), DFS (connectivity), Multi-Source BFS, Flood Fill</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Graph as adjacency list · visited array · component counting</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">BFS shortest path · DFS flood fill · Multi-source BFS</span></div>
+          </div>
+          <div class="ws">
+            <h4>Graph Templates</h4>
+            <ul>
+              <li><strong>BFS:</strong> queue + visited set. Each level = one edge farther. Use for: shortest path in unweighted graph.</li>
+              <li><strong>DFS:</strong> recursive or stack. Use for: connectivity, cycle detection, flood fill.</li>
+              <li><strong>Multi-source BFS:</strong> enqueue ALL sources at start. Rotting Oranges, 01 Matrix.</li>
+              <li>Grid graph: 4 directions (up/down/left/right) = neighbors</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>Count islands / connected components → DFS/BFS from each unvisited</li>
+              <li>Shortest distance from multiple sources → multi-source BFS</li>
+              <li>Can reach from A to B? → DFS/BFS from A, check B visited</li>
+              <li>Bipartite check → 2-coloring BFS</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Number of Islands</div>
+              <div class="prob med"><span class="prob-badge"></span>Max Area of Island</div>
+              <div class="prob med"><span class="prob-badge"></span>Flood Fill</div>
+              <div class="prob med"><span class="prob-badge"></span>Clone Graph</div>
+              <div class="prob med"><span class="prob-badge"></span>Rotting Oranges (multi-BFS)</div>
+              <div class="prob med"><span class="prob-badge"></span>01 Matrix</div>
+              <div class="prob med"><span class="prob-badge"></span>Pacific Atlantic Waterflow</div>
+              <div class="prob med"><span class="prob-badge"></span>Is Graph Bipartite?</div>
+              <div class="prob med"><span class="prob-badge"></span>Number of Provinces</div>
+              <div class="prob med"><span class="prob-badge"></span>Surrounded Regions</div>
+              <div class="prob hard"><span class="prob-badge"></span>Word Ladder</div>
+              <div class="prob hard"><span class="prob-badge"></span>Open the Lock</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Knight Moves</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 18</span>
+          <div class="week-title-block">
+            <div class="week-title">Union-Find (Disjoint Set Union)</div>
+            <div class="week-subtitle">Topic: DSU Data Structure · Pattern: Path Compression + Union by Rank, Dynamic Connectivity</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">DSU: parent[] + rank[]. find() with path compression. union() by rank.</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Connected Components · Cycle Detection (undirected) · Merging Groups</span></div>
+          </div>
+          <div class="ws">
+            <h4>DSU Template (Memorize This)</h4>
+            <ul>
+              <li>find(x): if parent[x]==x, return x. Else parent[x]=find(parent[x]); return parent[x];</li>
+              <li>union(x,y): rootX=find(x), rootY=find(y). Attach smaller rank to larger rank.</li>
+              <li>Nearly O(1) per operation with both optimizations (inverse Ackermann function)</li>
+              <li>Count components: start with n components, decrement on successful union</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>When to Use Over BFS/DFS</h4>
+            <ul>
+              <li>Dynamic connectivity: edges added one by one, query connectivity</li>
+              <li>"Merge groups" or "connect components" operations</li>
+              <li>Cycle detection in undirected graph (if same component → cycle)</li>
+              <li>Kruskal's MST algorithm uses DSU</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Number of Provinces (Union-Find)</div>
+              <div class="prob med"><span class="prob-badge"></span>Graph Valid Tree</div>
+              <div class="prob med"><span class="prob-badge"></span>Redundant Connection</div>
+              <div class="prob med"><span class="prob-badge"></span>Number of Connected Components</div>
+              <div class="prob med"><span class="prob-badge"></span>Find if Path Exists in Graph</div>
+              <div class="prob med"><span class="prob-badge"></span>Most Stones Removed (DSU)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Accounts Merge</div>
+              <div class="prob hard"><span class="prob-badge"></span>Making a Large Island</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Islands II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Swim in Rising Water</div>
+              <div class="prob hard"><span class="prob-badge"></span>Satisfiability of Equality Equations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 19</span>
+          <div class="week-title-block">
+            <div class="week-title">Topological Sort</div>
+            <div class="week-subtitle">Topic: DAGs, Dependencies · Pattern: Kahn's BFS (in-degree), DFS-based Topo (DFS + visited states)</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">DAGs · in-degree · cycle detection in directed graphs</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Kahn's Algo · DFS with 3-color visited · Alien Dictionary</span></div>
+          </div>
+          <div class="ws">
+            <h4>Two Approaches</h4>
+            <ul>
+              <li><strong>Kahn's BFS:</strong> compute in-degrees. Enqueue 0-indegree nodes. Process: decrement neighbors, enqueue if 0. Cycle = result size &lt; n.</li>
+              <li><strong>DFS:</strong> white(0)/gray(1)/black(2) states. Gray neighbor = cycle. Push to stack on finish.</li>
+              <li>Kahn's is easier to implement. DFS gives reverse topological order on stack.</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Trigger Words</h4>
+            <ul>
+              <li>"Course prerequisites", "build order", "task dependencies"</li>
+              <li>"Alien dictionary" → extract ordering constraints from sorted words</li>
+              <li>"Find cycle in directed graph"</li>
+              <li>"Longest path in DAG"</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Course Schedule</div>
+              <div class="prob med"><span class="prob-badge"></span>Course Schedule II</div>
+              <div class="prob med"><span class="prob-badge"></span>Parallel Courses</div>
+              <div class="prob med"><span class="prob-badge"></span>Find Eventual Safe States</div>
+              <div class="prob med"><span class="prob-badge"></span>Minimum Height Trees</div>
+              <div class="prob hard"><span class="prob-badge"></span>Alien Dictionary</div>
+              <div class="prob hard"><span class="prob-badge"></span>Sequence Reconstruction</div>
+              <div class="prob hard"><span class="prob-badge"></span>Sort Items by Groups</div>
+              <div class="prob hard"><span class="prob-badge"></span>Longest Inc. Path in Matrix</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find All Possible Recipes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Largest Color Value in DAG</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 20</span>
+          <div class="week-title-block">
+            <div class="week-title">Shortest Paths — Dijkstra, Bellman-Ford, Floyd</div>
+            <div class="week-subtitle">Topic: Weighted Graphs · Pattern: Dijkstra (PQ), Bellman-Ford (negative), Floyd (all-pairs), Modified Dijkstra</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Weighted edges · dist[] array · relaxation</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Dijkstra w/ min-heap · Bellman-Ford iterations · 0-1 BFS</span></div>
+          </div>
+          <div class="ws">
+            <h4>Algorithm Selection</h4>
+            <ul>
+              <li><strong>Dijkstra:</strong> non-negative weights, O((V+E)logV). Use: 99% of interview graph problems.</li>
+              <li><strong>Bellman-Ford:</strong> handles negative weights, O(VE). Use: negative edges, detect negative cycles.</li>
+              <li><strong>Floyd-Warshall:</strong> all-pairs O(V³). Use: small graph, all pairs needed.</li>
+              <li><strong>0-1 BFS:</strong> edges have weight 0 or 1. Use deque: 0-edges to front, 1-edges to back.</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Modified Dijkstra Patterns</h4>
+            <ul>
+              <li>State = (cost, node) or (cost, node, extra_state)</li>
+              <li>"Cheapest flight with at most K stops" → (cost, node, stops_remaining)</li>
+              <li>"Path with max probability" → max-heap, multiply instead of add</li>
+              <li>"Min effort path" → binary search + BFS or modified Dijkstra</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Network Delay Time</div>
+              <div class="prob med"><span class="prob-badge"></span>Path with Minimum Effort</div>
+              <div class="prob med"><span class="prob-badge"></span>Path with Max Probability</div>
+              <div class="prob med"><span class="prob-badge"></span>Cheapest Flights Within K Stops</div>
+              <div class="prob med"><span class="prob-badge"></span>Min Cost to Connect All Points (MST)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find the City (Floyd-Warshall)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Shortest Path Obstacles Elimination</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Weighted Subgraph</div>
+              <div class="prob hard"><span class="prob-badge"></span>K-th Shortest Path</div>
+              <div class="prob hard"><span class="prob-badge"></span>Reachable Nodes in Graph</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Cost Reach Destination</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 5 Milestone</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Implement Dijkstra with priority_queue from memory</div>
+          <div class="milestone-item">DSU with path compression + rank — 15 minutes</div>
+          <div class="milestone-item">Topological sort: Kahn's and DFS, both methods</div>
+          <div class="milestone-item">~230 total problems attempted</div>
+          <div class="milestone-item">Codeforces: solved a Div.2 C problem involving graphs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 6: HEAPS + GREEDY + SEG TREE -->
+<section id="m6" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">06</div>
+    <div class="phase-info">
+      <h2>Heaps · Greedy · Segment Tree · Fenwick Tree</h2>
+      <p>Topic: Priority Queue, Interval problems, Range queries · Patterns: Top-K, Two-Heap, Greedy Exchange Argument, Range Query</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 21</span>
+          <div class="week-title-block">
+            <div class="week-title">Heaps / Priority Queue — All Patterns</div>
+            <div class="week-subtitle">Topic: Min-Heap, Max-Heap, Custom PQ · Pattern: Top-K, Merge K Sorted, Two-Heap (Median), Task Scheduling</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">priority_queue — max-heap default, min-heap with greater&lt;T&gt;</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Top-K Elements · Two-Heap Median · Merge K Sorted · Scheduling</span></div>
+          </div>
+          <div class="ws">
+            <h4>Key Patterns</h4>
+            <ul>
+              <li><strong>Top-K smallest:</strong> max-heap of size K. If new &lt; top, replace. O(n log k).</li>
+              <li><strong>Top-K largest:</strong> min-heap of size K. Same logic.</li>
+              <li><strong>Median stream:</strong> max-heap for lower half, min-heap for upper half. Balance sizes.</li>
+              <li><strong>Merge K sorted:</strong> min-heap with (val, listIndex, elemIndex). O(n log k).</li>
+              <li><strong>Greedy scheduling:</strong> max-heap of task counts. Process most frequent.</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>C++ PQ Tricks</h4>
+            <ul>
+              <li>Max-heap: priority_queue&lt;int&gt; pq;</li>
+              <li>Min-heap: priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;</li>
+              <li>Custom: lambda comparator or struct with operator()</li>
+              <li>Pair in PQ: sorts by first element first (use negative for max)</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Last Stone Weight</div>
+              <div class="prob med"><span class="prob-badge"></span>Kth Largest Element in Array</div>
+              <div class="prob med"><span class="prob-badge"></span>K Closest Points to Origin</div>
+              <div class="prob med"><span class="prob-badge"></span>Top K Frequent Elements</div>
+              <div class="prob med"><span class="prob-badge"></span>Top K Frequent Words</div>
+              <div class="prob med"><span class="prob-badge"></span>Reorganize String</div>
+              <div class="prob med"><span class="prob-badge"></span>Task Scheduler</div>
+              <div class="prob med"><span class="prob-badge"></span>Merge k Sorted Lists</div>
+              <div class="prob med"><span class="prob-badge"></span>Kth Smallest in Sorted Matrix</div>
+              <div class="prob med"><span class="prob-badge"></span>Find K Pairs with Smallest Sums</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find Median from Data Stream</div>
+              <div class="prob hard"><span class="prob-badge"></span>Sliding Window Median</div>
+              <div class="prob hard"><span class="prob-badge"></span>IPO (Maximize Capital)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 22</span>
+          <div class="week-title-block">
+            <div class="week-title">Greedy Algorithms</div>
+            <div class="week-subtitle">Topic: Interval Problems, Optimization · Pattern: Sort + Scan, Exchange Argument, Activity Selection</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Interval scheduling · Jump problems · Coin greedy</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Sort by end time · Reach farthest · Gas station circular</span></div>
+          </div>
+          <div class="ws">
+            <h4>Greedy Key Insight</h4>
+            <ul>
+              <li>Greedy works when: local optimal → global optimal (exchange argument)</li>
+              <li>Almost always involves sorting first</li>
+              <li>Jump Game: track max_reach. If i &gt; max_reach → stuck.</li>
+              <li>Interval scheduling: sort by END time. Greedy pick non-overlapping.</li>
+              <li>When greedy fails: can usually prove counterexample → then DP</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Pattern Recognition</h4>
+            <ul>
+              <li>"Remove minimum intervals to make non-overlapping" → sort by end, greedy</li>
+              <li>"Can you reach end of array?" → Jump Game, track reach</li>
+              <li>"Complete circular route?" → Gas Station: prefix sum greedy</li>
+              <li>"Minimum arrows to burst balloons" → interval overlap greedy</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>12 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Assign Cookies</div>
+              <div class="prob easy"><span class="prob-badge"></span>Lemonade Change</div>
+              <div class="prob med"><span class="prob-badge"></span>Jump Game</div>
+              <div class="prob med"><span class="prob-badge"></span>Jump Game II</div>
+              <div class="prob med"><span class="prob-badge"></span>Gas Station</div>
+              <div class="prob med"><span class="prob-badge"></span>Non-overlapping Intervals</div>
+              <div class="prob med"><span class="prob-badge"></span>Minimum Arrows to Burst Balloons</div>
+              <div class="prob med"><span class="prob-badge"></span>Partition Labels</div>
+              <div class="prob med"><span class="prob-badge"></span>Queue Reconstruction by Height</div>
+              <div class="prob med"><span class="prob-badge"></span>Candy</div>
+              <div class="prob hard"><span class="prob-badge"></span>Course Schedule III (Greedy+Heap)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Cost to Connect Ropes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 23</span>
+          <div class="week-title-block">
+            <div class="week-title">Segment Tree + Fenwick Tree (BIT)</div>
+            <div class="week-subtitle">Topic: Range Query Data Structures · Pattern: Point Update/Range Query, Range Update, Count Inversions</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Segment Tree (tree array) · Fenwick Tree (BIT) · Lazy Propagation</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Range Sum Query · Count Inversions · 2D BIT</span></div>
+          </div>
+          <div class="ws">
+            <h4>When to Use</h4>
+            <ul>
+              <li>Frequent range sum/min/max queries with updates → Segment Tree O(log n) each</li>
+              <li>Point updates + prefix sum queries → Fenwick Tree (simpler code)</li>
+              <li>Count inversions → BIT on sorted values</li>
+              <li>Range updates with lazy propagation → Segment Tree</li>
+              <li>If array is static (no updates) → just use prefix sum</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Fenwick Tree Template</h4>
+            <ul>
+              <li>update(i, delta): while i&lt;=n: tree[i]+=delta, i+=i&amp;(-i)</li>
+              <li>query(i): while i&gt;0: sum+=tree[i], i-=i&amp;(-i); return sum</li>
+              <li>Range query [l,r]: query(r) - query(l-1)</li>
+              <li>1-indexed! Remember to adjust.</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Range Sum Query - Mutable</div>
+              <div class="prob med"><span class="prob-badge"></span>Range Sum Query 2D - Mutable</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count of Smaller Numbers After Self</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count of Range Sum</div>
+              <div class="prob hard"><span class="prob-badge"></span>Reverse Pairs</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Longest Increasing Sub.</div>
+              <div class="prob hard"><span class="prob-badge"></span>My Calendar III</div>
+              <div class="prob hard"><span class="prob-badge"></span>Falling Squares</div>
+              <div class="prob hard"><span class="prob-badge"></span>Rectangle Area II (Sweep Line)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count Inversions (via merge sort)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Queries on Number of Points Inside</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 24</span>
+          <div class="week-title-block">
+            <div class="week-title">Backtracking Deep Dive + Pattern Consolidation</div>
+            <div class="week-subtitle">Topic: Constraint Satisfaction · Pattern: Advanced Backtracking with pruning, Trie+BT combo, Word Search</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">CSP problems · Advanced pruning · Multiple constraint backtracking</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Hard backtracking · Backtracking + graph DFS · Expression building</span></div>
+          </div>
+          <div class="ws">
+            <h4>Hard Backtracking Patterns</h4>
+            <ul>
+              <li>Word Search II: Trie + DFS on grid (prune: if prefix not in trie, stop)</li>
+              <li>Expression add operators: track current value to avoid recalc</li>
+              <li>Split string into palindromes: check palindrome at each split</li>
+              <li>Multiple constraints: check all constraints at each step before recursing</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Optimization Techniques</h4>
+            <ul>
+              <li>Sort candidates ascending to enable early break when sum exceeds target</li>
+              <li>Memoize intermediate states if same state reachable multiple ways</li>
+              <li>Bit mask to track "used" elements in permutation problems</li>
+              <li>Global result vs pass-by-ref: prefer pass-by-ref to avoid copies</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>11 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Word Search</div>
+              <div class="prob med"><span class="prob-badge"></span>Palindrome Partitioning</div>
+              <div class="prob med"><span class="prob-badge"></span>Restore IP Addresses</div>
+              <div class="prob med"><span class="prob-badge"></span>Remove Invalid Parentheses</div>
+              <div class="prob med"><span class="prob-badge"></span>Letter Tile Possibilities</div>
+              <div class="prob hard"><span class="prob-badge"></span>N-Queens II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Expression Add Operators</div>
+              <div class="prob hard"><span class="prob-badge"></span>Zuma Game</div>
+              <div class="prob hard"><span class="prob-badge"></span>24 Game</div>
+              <div class="prob hard"><span class="prob-badge"></span>Strobogrammatic Number II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Beautiful Arrangement</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 6 Milestone</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Two-heap median pattern: implement from scratch</div>
+          <div class="milestone-item">Greedy: correctly identify exchange argument</div>
+          <div class="milestone-item">BIT: update and query functions from memory</div>
+          <div class="milestone-item">~280 total problems attempted</div>
+          <div class="milestone-item">Successfully completed a hard backtracking problem this month</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 7: DYNAMIC PROGRAMMING -->
+<section id="m7" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">07</div>
+    <div class="phase-info">
+      <h2>Dynamic Programming — Full Spectrum</h2>
+      <p>Topic: All DP paradigms · Patterns: 1D DP, Knapsack, LIS/LCS, Grid DP, Interval DP, Tree DP, State Machine DP, Bitmask DP</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 25</span>
+          <div class="week-title-block">
+            <div class="week-title">DP Foundations + 1D Linear DP</div>
+            <div class="week-subtitle">Topic: DP mindset · Pattern: Fibonacci family, House Robber, State Machine DP (Buy/Sell stocks)</div>
+          </div>
+          <span class="week-difficulty diff-med">Medium</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Overlapping subproblems + optimal substructure = DP applies</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Linear DP · State Machine · Rolling Array optimization</span></div>
+          </div>
+          <div class="ws">
+            <h4>DP Mindset Framework</h4>
+            <ul>
+              <li><strong>Step 1:</strong> Define dp[i] — what does this value mean?</li>
+              <li><strong>Step 2:</strong> Find the recurrence — how does dp[i] relate to smaller subproblems?</li>
+              <li><strong>Step 3:</strong> Base cases — smallest inputs where answer is trivial</li>
+              <li><strong>Step 4:</strong> Fill order — ensure dependencies computed first</li>
+              <li><strong>Step 5:</strong> Space optimize — often O(n) → O(1) with rolling vars</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>State Machine DP</h4>
+            <ul>
+              <li>Buy/Sell stocks: states = {holding, not_holding}. Transition = buy or sell.</li>
+              <li>With cooldown: states = {rest, holding, sold}. Day i transition from day i-1.</li>
+              <li>k transactions: dp[i][k][0/1] — day i, k transactions, holding or not</li>
+              <li>Draw state diagram first. Then code transitions directly.</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>14 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Climbing Stairs</div>
+              <div class="prob easy"><span class="prob-badge"></span>Min Cost Climbing Stairs</div>
+              <div class="prob easy"><span class="prob-badge"></span>Tribonacci Number</div>
+              <div class="prob med"><span class="prob-badge"></span>House Robber</div>
+              <div class="prob med"><span class="prob-badge"></span>House Robber II (circular)</div>
+              <div class="prob med"><span class="prob-badge"></span>Decode Ways</div>
+              <div class="prob med"><span class="prob-badge"></span>Coin Change</div>
+              <div class="prob med"><span class="prob-badge"></span>Coin Change II</div>
+              <div class="prob med"><span class="prob-badge"></span>Word Break</div>
+              <div class="prob med"><span class="prob-badge"></span>Best Time Buy/Sell III (2 trans)</div>
+              <div class="prob med"><span class="prob-badge"></span>Best Time Buy/Sell w/ Cooldown</div>
+              <div class="prob med"><span class="prob-badge"></span>Best Time Buy/Sell w/ Fee</div>
+              <div class="prob hard"><span class="prob-badge"></span>Best Time Buy/Sell IV (k trans)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Paint House III</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 26</span>
+          <div class="week-title-block">
+            <div class="week-title">Knapsack DP (0/1, Unbounded) + LIS</div>
+            <div class="week-subtitle">Topic: Subset/partition problems, Sequence problems · Pattern: 0/1 Knapsack, Unbounded Knapsack, LIS O(n log n)</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Subset partitioning · Sequence optimization</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">0/1 Knapsack · Unbounded Knapsack · LIS (patience sort)</span></div>
+          </div>
+          <div class="ws">
+            <h4>Knapsack Variants</h4>
+            <ul>
+              <li><strong>0/1:</strong> each item used once. dp[i][w] = max val using items[0..i] with weight ≤ w. Reverse inner loop if 1D.</li>
+              <li><strong>Unbounded:</strong> items reusable. Inner loop forward (allows reuse).</li>
+              <li><strong>Partition subset:</strong> dp[i][s] = can we get sum s from first i elements?</li>
+              <li><strong>Target sum:</strong> count ways. dp[s] += dp[s-num]</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>LIS O(n log n)</h4>
+            <ul>
+              <li>Maintain "tails" array: tails[i] = smallest tail of IS of length i+1</li>
+              <li>For each num: binary search in tails to find insertion position</li>
+              <li>Length of LIS = tails.size()</li>
+              <li>Russian Dolls = sort by width, LIS on height</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Partition Equal Subset Sum</div>
+              <div class="prob med"><span class="prob-badge"></span>Target Sum</div>
+              <div class="prob med"><span class="prob-badge"></span>Ones and Zeroes</div>
+              <div class="prob med"><span class="prob-badge"></span>Last Stone Weight II</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Increasing Subsequence</div>
+              <div class="prob med"><span class="prob-badge"></span>Number of LIS</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Divisible Subset</div>
+              <div class="prob med"><span class="prob-badge"></span>Maximum Length of Pair Chain</div>
+              <div class="prob med"><span class="prob-badge"></span>Uncrossed Lines</div>
+              <div class="prob hard"><span class="prob-badge"></span>Russian Doll Envelopes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count Square Submatrices</div>
+              <div class="prob hard"><span class="prob-badge"></span>Profitable Schemes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Dice Rolls with Target Sum</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 27</span>
+          <div class="week-title-block">
+            <div class="week-title">LCS · Edit Distance · Grid DP</div>
+            <div class="week-subtitle">Topic: Two-sequence DP, Grid Paths · Pattern: LCS dp[i][j], Edit Distance, Min Path Sum, Maximal Square</div>
+          </div>
+          <span class="week-difficulty diff-hard">Medium–Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Two-sequence problems · Grid path problems</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">LCS dp[i][j] · Edit Distance 3-way DP · Grid DP with obstacles</span></div>
+          </div>
+          <div class="ws">
+            <h4>LCS + Edit Distance Family</h4>
+            <ul>
+              <li><strong>LCS:</strong> dp[i][j] = LCS of s1[0..i], s2[0..j]. If chars match, dp[i][j]=dp[i-1][j-1]+1. Else max of left/top.</li>
+              <li><strong>Edit Distance:</strong> if match→dp[i-1][j-1]. Else 1+min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]).</li>
+              <li><strong>Distinct Subsequences:</strong> dp[i][j] = ways to match t[0..j] in s[0..i]</li>
+              <li><strong>Uncrossed Lines:</strong> exactly same as LCS!</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Grid DP Patterns</h4>
+            <ul>
+              <li>Unique paths: dp[i][j] = dp[i-1][j] + dp[i][j-1]</li>
+              <li>With obstacles: if obstacle, dp[i][j]=0</li>
+              <li>Min path sum: dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])</li>
+              <li>Maximal square: dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob easy"><span class="prob-badge"></span>Unique Paths</div>
+              <div class="prob med"><span class="prob-badge"></span>Unique Paths II (obstacles)</div>
+              <div class="prob med"><span class="prob-badge"></span>Minimum Path Sum</div>
+              <div class="prob med"><span class="prob-badge"></span>Longest Common Subsequence</div>
+              <div class="prob med"><span class="prob-badge"></span>Delete Op for Two Strings</div>
+              <div class="prob med"><span class="prob-badge"></span>Edit Distance</div>
+              <div class="prob med"><span class="prob-badge"></span>Distinct Subsequences</div>
+              <div class="prob med"><span class="prob-badge"></span>Maximal Square</div>
+              <div class="prob med"><span class="prob-badge"></span>Triangle (min path)</div>
+              <div class="prob med"><span class="prob-badge"></span>Interleaving String</div>
+              <div class="prob hard"><span class="prob-badge"></span>Dungeon Game</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum ASCII Delete Sum</div>
+              <div class="prob hard"><span class="prob-badge"></span>Cherry Pickup</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 28</span>
+          <div class="week-title-block">
+            <div class="week-title">Interval DP + Tree DP + Bitmask DP</div>
+            <div class="week-subtitle">Topic: Interval subproblems, Tree DP, Subset enumeration · Pattern: Burst Balloons, DP on trees, Bitmask TSP</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="dual-axis">
+            <div class="axis-badge ab-topic"><span class="ab-dot"></span><span class="ab-label">Topic</span><span class="ab-value">Interval subproblems · Tree state DP · Subset enumeration</span></div>
+            <div class="axis-badge ab-pattern"><span class="ab-dot"></span><span class="ab-label">Patterns</span><span class="ab-value">Interval DP dp[l][r] · Tree DP post-order · Bitmask dp[mask][i]</span></div>
+          </div>
+          <div class="ws">
+            <h4>Interval DP</h4>
+            <ul>
+              <li>dp[l][r] = answer for subarray/subproblem from index l to r</li>
+              <li>Iterate by length: for len in 2..n: for l in 0..n-len: r=l+len-1</li>
+              <li>For each (l,r), try all split points k in (l,r)</li>
+              <li>Classic: Burst Balloons, Matrix Chain, Palindrome Partitioning</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Bitmask DP</h4>
+            <ul>
+              <li>State = bitmask of which elements are "used"</li>
+              <li>dp[mask][last] = best way to reach "last" having visited elements in mask</li>
+              <li>Enumerate submasks: for(sub=mask; sub; sub=(sub-1)&amp;mask)</li>
+              <li>Works for n≤20. O(2^n × n) or O(3^n) for submask enum.</li>
+            </ul>
+          </div>
+          <div class="problems-list ws">
+            <h4>13 Problems</h4>
+            <div class="prob-grid">
+              <div class="prob med"><span class="prob-badge"></span>Palindromic Substrings</div>
+              <div class="prob med"><span class="prob-badge"></span>House Robber III (Tree DP)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Burst Balloons</div>
+              <div class="prob hard"><span class="prob-badge"></span>Strange Printer</div>
+              <div class="prob hard"><span class="prob-badge"></span>Remove Boxes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Palindrome Partitioning II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Binary Tree Cameras (Tree DP)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Shortest Path Visiting All Nodes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Ways to Wear Hats</div>
+              <div class="prob hard"><span class="prob-badge"></span>Maximize Score After N Ops</div>
+              <div class="prob hard"><span class="prob-badge"></span>Stickers to Spell Word</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum XOR Sum Arrays</div>
+              <div class="prob hard"><span class="prob-badge"></span>Max Profit in Job Scheduling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Month 7 Milestone — DP Mastery Check</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Solve Coin Change, LCS, Edit Distance from scratch — no hints</div>
+          <div class="milestone-item">Identify knapsack variant (0/1 vs unbounded) in 2 minutes</div>
+          <div class="milestone-item">Implement state machine DP for stock problems</div>
+          <div class="milestone-item">~340 total problems attempted</div>
+          <div class="milestone-item">Bitmask DP: solved TSP-style problem independently</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MONTH 8: GOOGLE SIMULATION -->
+<section id="m8" style="padding-top:1rem">
+<div class="container">
+  <div class="phase-header">
+    <div class="phase-num">08</div>
+    <div class="phase-info">
+      <h2>Google Simulation Sprint</h2>
+      <p>No new patterns. Only integration, speed, and polish. Four weeks of full Google-style simulations.</p>
+    </div>
+    <div class="phase-stats"><span class="ps-num">44</span><span class="ps-label">hrs total</span></div>
+  </div>
+  <div class="month-card">
+    <div class="month-card-body">
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 29</span>
+          <div class="week-title-block">
+            <div class="week-title">Mixed Pattern Integration — Hard Problems</div>
+            <div class="week-subtitle">Topic: Cross-pattern problems · Pattern: Problems that blend 2+ techniques — identify the combo</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="ws ws-full">
+            <h4>Focus: Identify the pattern blend. State it before coding.</h4>
+          </div>
+          <div class="problems-list ws">
+            <h4>14 Mixed Hard Problems</h4>
+            <div class="prob-grid">
+              <div class="prob hard"><span class="prob-badge"></span>Frog Jump (DP + HashSet)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Bus Routes (BFS on sets)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Concatenated Words (Trie + DP)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Word Ladder II (BFS + DFS)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Atoms (Stack + Map)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Max Points on a Line (Hashing)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Jump Game VI (Deque DP)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count Submatrices with Sum K</div>
+              <div class="prob hard"><span class="prob-badge"></span>Race Car (BFS/DP)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Max Sum of Rectangle ≤ K</div>
+              <div class="prob hard"><span class="prob-badge"></span>Special Binary String (Stack)</div>
+              <div class="prob hard"><span class="prob-badge"></span>Strange Printer II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Make Array Strictly Increasing</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Difficulty of Job Schedule</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 30</span>
+          <div class="week-title-block">
+            <div class="week-title">Google-Tagged Problem Bank</div>
+            <div class="week-subtitle">Commonly reported in Google phone/onsite rounds — sourced from Glassdoor, Blind, LC discussions</div>
+          </div>
+          <span class="week-difficulty diff-hard">Hard</span>
+        </div>
+        <div class="week-body">
+          <div class="problems-list ws ws-full">
+            <h4>15 Google-Specific Problems</h4>
+            <div class="prob-grid">
+              <div class="prob hard"><span class="prob-badge"></span>Text Justification</div>
+              <div class="prob hard"><span class="prob-badge"></span>Minimum Window Subsequence</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count Different Palindromic Subseq</div>
+              <div class="prob hard"><span class="prob-badge"></span>Smallest Good Base</div>
+              <div class="prob hard"><span class="prob-badge"></span>Remove Boxes</div>
+              <div class="prob hard"><span class="prob-badge"></span>Cherry Pickup II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Number of Music Playlists</div>
+              <div class="prob hard"><span class="prob-badge"></span>Strobogrammatic Number II</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find Shortest Superstring</div>
+              <div class="prob hard"><span class="prob-badge"></span>Painting Grid with 3 Colors</div>
+              <div class="prob hard"><span class="prob-badge"></span>Stone Game VII</div>
+              <div class="prob hard"><span class="prob-badge"></span>Smallest Rectangle Enclosing Black</div>
+              <div class="prob hard"><span class="prob-badge"></span>Find K-th Smallest Pair Distance</div>
+              <div class="prob hard"><span class="prob-badge"></span>Largest Color Value in DAG</div>
+              <div class="prob hard"><span class="prob-badge"></span>Count Vowels Permutation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 31</span>
+          <div class="week-title-block">
+            <div class="week-title">Mock Interview Blitz — 3 Full Mocks</div>
+            <div class="week-subtitle">Simulate real Google interview conditions. No external help. Think aloud the entire time.</div>
+          </div>
+          <span class="week-difficulty diff-hard">Simulation</span>
+        </div>
+        <div class="week-body">
+          <div class="ws">
+            <h4>Mock Session Format (Each)</h4>
+            <ul>
+              <li>Problem 1: 45 min. Easy-Medium. Should finish with 10 min to spare.</li>
+              <li>Problem 2: 45 min. Medium-Hard. Aim to get optimal approach even if code incomplete.</li>
+              <li>5 min: Explain time/space complexity. Handle 2 follow-up questions.</li>
+              <li>Rule: If stuck for 5 min, try a different approach. Never stay silent.</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Week 31 Schedule</h4>
+            <ul>
+              <li><strong>Tue:</strong> Mock 1 — Arrays + DP pattern mix</li>
+              <li><strong>Thu:</strong> Mock 2 — Trees + Graphs pattern mix</li>
+              <li><strong>Sat:</strong> Mock 3 — Hard patterns, 4 problems in 2.5 hours</li>
+              <li><strong>Sun:</strong> Debrief all 3 mocks. Fix every weakness identified.</li>
+              <li><strong>Daily:</strong> 1 hard problem, blind, timed 40 min</li>
+            </ul>
+          </div>
+          <div class="ws ws-full">
+            <h4>After-Mock Review Checklist</h4>
+            <ul>
+              <li>Did I identify the pattern within 5 minutes of reading the problem?</li>
+              <li>Did I state the brute force approach and its complexity before optimizing?</li>
+              <li>Was my variable naming clean? (no i, j, x, y, a, b as main variables)</li>
+              <li>Did I check edge cases: empty input, single element, negative numbers, integer overflow?</li>
+              <li>Could I explain every line of code clearly if asked?</li>
+              <li>Did I handle the follow-up question confidently, even if partially?</li>
+              <li>Did I think aloud throughout — no silent pauses longer than 30 seconds?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="week-block">
+        <div class="week-header">
+          <span class="week-tag">Week 32</span>
+          <div class="week-title-block">
+            <div class="week-title">Final Review + System Design Overview</div>
+            <div class="week-subtitle">Consolidation week. Re-solve your 20 hardest mistakes. Light system design concepts.</div>
+          </div>
+          <span class="week-difficulty diff-easy">Consolidation</span>
+        </div>
+        <div class="week-body">
+          <div class="ws">
+            <h4>Final Week Plan</h4>
+            <ul>
+              <li><strong>Mon–Fri:</strong> Re-solve 1 "mistake" problem per day (problems you got wrong in mocks)</li>
+              <li><strong>Sat:</strong> Final full 4-problem Google mock, 2.5 hours, no breaks</li>
+              <li><strong>Sun:</strong> Review all 47 pattern templates. Flashcards only. No new problems.</li>
+              <li>Re-read: Google-style problem solving framework (below)</li>
+              <li>Light system design: review 5 key concepts (see below)</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>System Design Light Topics (M8 only)</h4>
+            <ul>
+              <li>URL Shortener — hashing, databases, load balancing</li>
+              <li>Rate Limiter — sliding window counter, token bucket</li>
+              <li>Key-Value Store — consistent hashing, replication</li>
+              <li>Chat System — WebSockets, message queues, fan-out</li>
+              <li>Search Autocomplete — Trie, top-K caching, CDN</li>
+            </ul>
+          </div>
+          <div class="ws">
+            <h4>Mental Preparation</h4>
+            <ul>
+              <li>Sleep 8hrs for 3 days before interview. Non-negotiable.</li>
+              <li>"Think out loud" is a skill — practice narrating while coding alone</li>
+              <li>First 5 min: clarify, restate, confirm examples. Never skip this.</li>
+              <li>If stuck: "Let me step back and think about this differently..." — never say "I don't know" and stop</li>
+              <li>You have 7 YoE — communicate like an engineer, not a student</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestone">
+        <h3>🎯 Final Goal — You're Google-Ready When:</h3>
+        <div class="milestone-grid">
+          <div class="milestone-item">Any medium in under 25 minutes. Consistently.</div>
+          <div class="milestone-item">Most hards: identify approach within 10 min, code within 40</div>
+          <div class="milestone-item">Name the pattern for 300+ problems by heart</div>
+          <div class="milestone-item">Write clean, bug-free C++ code on the first attempt</div>
+          <div class="milestone-item">Handle every follow-up with structured reasoning</div>
+          <div class="milestone-item">LeetCode: 1800+ rating / consistent top 20% weekly</div>
+          <div class="milestone-item">350+ total problems solved across 8 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- C++ TRACK -->
+<section id="cpp">
+<div class="container">
+  <div class="section-eyebrow">Integrated C++ Track</div>
+  <h2 class="section-title">C++ Mastery — Month by Month</h2>
+  <p class="section-sub">C++ is taught alongside each topic, not as a separate track. Here's when each skill is introduced.</p>
+
+  <div class="cpp-grid">
+    <div class="cpp-card">
+      <h4>M1: STL Fundamentals</h4>
+      <ul>
+        <li>vector: push_back, size, [], reserve, emplace_back</li>
+        <li>string: substr, find, stoi, to_string, s[i], s.length()</li>
+        <li>unordered_map: [], find, count, erase, operator[]</li>
+        <li>unordered_set: insert, count, erase</li>
+        <li>sort(): default + custom lambda comparator</li>
+        <li>Range-based for: for(auto& x : v)</li>
+        <li>auto keyword: type deduction</li>
+      </ul>
+    </div>
+    <div class="cpp-card">
+      <h4>M2: Ordered Containers + Iterators</h4>
+      <ul>
+        <li>map&lt;K,V&gt;: ordered, O(log n). When to use vs unordered.</li>
+        <li>set&lt;T&gt;: ordered, unique. lower_bound, upper_bound</li>
+        <li>multiset: allow duplicates. erase(find(x)) removes one copy.</li>
+        <li>Iterators: begin(), end(), rbegin(), rend()</li>
+        <li>lower_bound(arr.begin(), arr.end(), x): returns iterator to first ≥ x</li>
+        <li>INT_MAX, LLONG_MAX, numeric_limits</li>
+      </ul>
+    </div>
+    <div class="cpp-card">
+      <h4>M3: Pointers + Linked List Nodes</h4>
+      <ul>
+        <li>Raw pointers: *, &amp;, -&gt;, nullptr (always nullptr, not NULL)</li>
+        <li>ListNode struct definition and allocation</li>
+        <li>unique_ptr&lt;T&gt;: RAII, auto-delete. std::make_unique</li>
+        <li>shared_ptr: ref-counted. For trees in some implementations.</li>
+        <li>stack&lt;T&gt;, queue&lt;T&gt;, deque&lt;T&gt;: all operations</li>
+        <li>Pass by reference: void fn(vector&lt;int&gt;&amp; v) — avoids O(n) copy</li>
+      </ul>
+    </div>
+    <div class="cpp-card">
+      <h4>M4: Lambdas + Functional Patterns</h4>
+      <ul>
+        <li>Lambda syntax: [capture](params) -&gt; return { body }</li>
+        <li>Capture: [=] copy, [&amp;] reference, [x] specific variable</li>
+        <li>function&lt;int(int)&gt; for recursive lambdas</li>
+        <li>Comparator lambdas for sort, priority_queue</li>
+        <li>transform(), for_each() with lambdas</li>
+        <li>constexpr: compile-time evaluation for constants</li>
+      </ul>
+    </div>
+    <div class="cpp-card">
+      <h4>M5: Priority Queue + Custom Comparators</h4>
+      <ul>
+        <li>Max-heap: priority_queue&lt;int&gt; pq;</li>
+        <li>Min-heap: priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;</li>
+        <li>Custom struct comparator: operator() for complex types</li>
+        <li>pair in PQ: sorts by first, then second</li>
+        <li>Negating values trick for min-heap with max-heap</li>
+        <li>Adjacency list: vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; adj(n);</li>
+      </ul>
+    </div>
+    <div class="cpp-card">
+      <h4>M6–M8: Optimization + Templates</h4>
+      <ul>
+        <li>Bitwise: x&gt;&gt;1 ÷2, x&lt;&lt;1 ×2, x&amp;1 odd check, x&amp;(x-1) remove LSB</li>
+        <li>__builtin_popcount(x): count set bits</li>
+        <li>Modular arithmetic: ((long long)a*b) % MOD</li>
+        <li>Fast I/O: ios::sync_with_stdio(false); cin.tie(NULL);</li>
+        <li>Template functions: template&lt;typename T&gt;</li>
+        <li>Avoid TLE: reserve(), emplace_back() vs push_back()</li>
+        <li>Memory: stack overflow prevention (deep recursion → iterative)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cpp-tip" style="margin-top:2rem;background:#f0f4ff;border-left:4px solid var(--accent3)">
+    <h4>⚙️ The C++ Cheat Patterns You'll Use Every Week</h4>
+    <div class="cpp-code-block"><span class="c">// ── Sort with custom comparator ──</span>
+<span class="f">sort</span>(v.<span class="f">begin</span>(), v.<span class="f">end</span>(), [](<span class="k">auto</span>& a, <span class="k">auto</span>& b){ <span class="k">return</span> a.second > b.second; });
+
+<span class="c">// ── Min-heap with pair ──</span>
+<span class="t">priority_queue</span>&lt;<span class="t">pair</span>&lt;<span class="t">int</span>,<span class="t">int</span>&gt;, <span class="t">vector</span>&lt;<span class="t">pair</span>&lt;<span class="t">int</span>,<span class="t">int</span>&gt;&gt;, <span class="t">greater</span>&lt;&gt;&gt; pq;
+
+<span class="c">// ── Dijkstra skeleton ──</span>
+<span class="t">vector</span>&lt;<span class="t">int</span>&gt; dist(n, INT_MAX); dist[src] = 0;
+pq.<span class="f">push</span>({0, src});
+<span class="k">while</span> (!pq.<span class="f">empty</span>()) {
+    <span class="k">auto</span> [d, u] = pq.<span class="f">top</span>(); pq.<span class="f">pop</span>();
+    <span class="k">if</span> (d > dist[u]) <span class="k">continue</span>; <span class="c">// stale entry</span>
+    <span class="k">for</span> (<span class="k">auto</span> [v, w] : adj[u])
+        <span class="k">if</span> (dist[u]+w &lt; dist[v]) { dist[v]=dist[u]+w; pq.<span class="f">push</span>({dist[v],v}); }
+}
+
+<span class="c">// ── Union-Find ──</span>
+<span class="t">vector</span>&lt;<span class="t">int</span>&gt; par(n), rnk(n,0);
+<span class="f">iota</span>(par.<span class="f">begin</span>(), par.<span class="f">end</span>(), 0); <span class="c">// par[i]=i</span>
+<span class="t">function</span>&lt;<span class="t">int</span>(<span class="t">int</span>)&gt; find = [&](<span class="t">int</span> x){ <span class="k">return</span> par[x]==x ? x : par[x]=<span class="f">find</span>(par[x]); };
+<span class="k">auto</span> unite = [&](<span class="t">int</span> a, <span class="t">int</span> b){
+    a=<span class="f">find</span>(a); b=<span class="f">find</span>(b); <span class="k">if</span>(a==b) <span class="k">return</span>;
+    <span class="k">if</span>(rnk[a]&lt;rnk[b]) swap(a,b); par[b]=a; <span class="k">if</span>(rnk[a]==rnk[b]) rnk[a]++;
+};
+
+<span class="c">// ── Fenwick Tree ──</span>
+<span class="t">vector</span>&lt;<span class="t">int</span>&gt; bit(n+1, 0);
+<span class="k">auto</span> upd = [&](<span class="t">int</span> i, <span class="t">int</span> d){ <span class="k">for</span>(i++;i&lt;=n;i+=i&amp;-i) bit[i]+=d; };
+<span class="k">auto</span> qry = [&](<span class="t">int</span> i) { <span class="t">int</span> s=0; <span class="k">for</span>(i++;i>0;i-=i&amp;-i) s+=bit[i]; <span class="k">return</span> s; };</div>
+  </div>
+</div>
+</section>
+
+<!-- GOOGLE STRATEGY -->
+<section id="strategy">
+<div class="container">
+  <div class="section-eyebrow">Interview Framework</div>
+  <h2 class="section-title">Google Problem-Solving Framework</h2>
+  <p class="section-sub">The exact mental process. Practice it until it becomes subconscious reflex.</p>
+
+  <div class="framework-steps">
+    <div class="fstep">
+      <div class="fstep-num">01</div>
+      <div class="fstep-content">
+        <h3>Understand the Problem (5 minutes — never skip)</h3>
+        <ul>
+          <li>Read twice. Paraphrase it out loud in one sentence.</li>
+          <li>Read the constraints. n≤20 → backtracking/bitmask. n≤1000 → O(n²). n≤10⁵ → O(n log n). n≤10⁹ → O(log n).</li>
+          <li>Write 2 concrete examples yourself. Include a tricky one (duplicates, negatives, edge).</li>
+          <li>Ask clarifying questions: "Can values be negative?" "Is input sorted?" "Can there be duplicates?"</li>
+          <li>Confirm: "So I need to find X, given Y, with these constraints — correct?"</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fstep">
+      <div class="fstep-num">02</div>
+      <div class="fstep-content">
+        <h3>Identify the Pattern (3 minutes)</h3>
+        <ul>
+          <li>What's the data structure? Array → check prefix/window/two-pointer. Tree → check DFS/BFS. Graph → check connectivity/path.</li>
+          <li>What's being asked? Exist? Count? Min/Max? All solutions? → each maps to a different approach.</li>
+          <li>Constraint clues: "contiguous" → window. "substring/subarray" → window or prefix. "subsequence" → LCS/DP. "shortest" → BFS/Dijkstra.</li>
+          <li>Trigger words: "k-th" → heap. "all permutations" → backtracking. "dependencies" → topo sort.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fstep">
+      <div class="fstep-num">03</div>
+      <div class="fstep-content">
+        <h3>Brute Force → Optimal (always state brute force first)</h3>
+        <ul>
+          <li>State brute force: "The naive approach is O(n²) because..." Even if obvious.</li>
+          <li>Identify the bottleneck: "The inner loop is O(n) — can we cache this?"</li>
+          <li>Optimize step by step with reasoning: O(n²) → hashmap → O(n). Or O(n) → binary search → O(log n).</li>
+          <li>Confirm optimal: "This should be O(n log n) time, O(n) space — which fits the constraints."</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fstep">
+      <div class="fstep-num">04</div>
+      <div class="fstep-content">
+        <h3>Write Clean C++ Code (15–25 minutes)</h3>
+        <ul>
+          <li>Meaningful names: left, right, maxSum, currWindow — never i/j/x as primary names.</li>
+          <li>Edge cases at top: if(nums.empty()) return 0; if(n==1) return nums[0];</li>
+          <li>Comment key logic only: "// shrink window when more than k distinct" — not every line.</li>
+          <li>Trace through your example manually after writing. Verify output matches expected.</li>
+          <li>Check off-by-one: binary search (lo+hi)/2 vs lo+(hi-lo)/2, ≤ vs &lt;, 0-indexed vs 1-indexed.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fstep">
+      <div class="fstep-num">05</div>
+      <div class="fstep-content">
+        <h3>Handle Follow-Ups Like a Senior Engineer</h3>
+        <ul>
+          <li>"What if the array is unsorted?" → "That breaks my approach because X. I'd need to sort first, adding O(n log n)."</li>
+          <li>"Can you do O(1) space?" → "Yes, by using two variables instead of the dp array. Here's how..."</li>
+          <li>"What if n = 10⁹?" → "Then we need O(log n) time — binary search on the answer might work..."</li>
+          <li>"What if there are duplicates?" → "Good catch. Let me check if my logic handles that... [check]... yes/no because..."</li>
+          <li>Never say "I don't know" and stop. Always say "Let me think... one approach might be..."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ALL PATTERNS -->
+<section id="patterns">
+<div class="container">
+  <div class="section-eyebrow">Complete Coverage</div>
+  <h2 class="section-title">All 47 Patterns — When Mastered</h2>
+  <p class="section-sub">Every pattern introduced, drilled, and tested across the 32 weeks.</p>
+  <div class="all-patterns">
+    <div class="ap-cell"><span class="ap-num">01</span><span class="ap-name">Linear Scan / Min-Max Track</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">02</span><span class="ap-name">Frequency Count (Hash Map)</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">03</span><span class="ap-name">Seen-Before (Hash Set)</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">04</span><span class="ap-name">Anagram Grouping (Sort Key)</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">05</span><span class="ap-name">Two Pointers — Opposite Ends</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">06</span><span class="ap-name">Two Pointers — Same Direction</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">07</span><span class="ap-name">Dutch National Flag</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">08</span><span class="ap-name">Backtracking (Choose-Explore-Unchoose)</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">09</span><span class="ap-name">Backtracking — Pruning</span><span class="ap-when">M1</span></div>
+    <div class="ap-cell"><span class="ap-num">10</span><span class="ap-name">Prefix Sum (1D)</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">11</span><span class="ap-name">Prefix Sum + HashMap (subarray count)</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">12</span><span class="ap-name">2D Prefix Sum</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">13</span><span class="ap-name">Sliding Window — Fixed</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">14</span><span class="ap-name">Sliding Window — Dynamic</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">15</span><span class="ap-name">Binary Search — Classic</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">16</span><span class="ap-name">Binary Search — Rotated Array</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">17</span><span class="ap-name">Binary Search on Answer (Parametric)</span><span class="ap-when">M2</span></div>
+    <div class="ap-cell"><span class="ap-num">18</span><span class="ap-name">Fast &amp; Slow Pointers (Floyd's)</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">19</span><span class="ap-name">In-Place Linked List Reversal</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">20</span><span class="ap-name">K-Group Reversal</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">21</span><span class="ap-name">Monotonic Stack — Decreasing (NGE)</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">22</span><span class="ap-name">Monotonic Stack — Increasing</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">23</span><span class="ap-name">Monotonic Deque (Sliding Window Max)</span><span class="ap-when">M3</span></div>
+    <div class="ap-cell"><span class="ap-num">24</span><span class="ap-name">Tree DFS — Top-Down</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">25</span><span class="ap-name">Tree DFS — Bottom-Up</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">26</span><span class="ap-name">Tree BFS — Level Order</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">27</span><span class="ap-name">BST Properties (Inorder = Sorted)</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">28</span><span class="ap-name">Trie Insert / Search / StartsWith</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">29</span><span class="ap-name">Trie + DFS (Word Search II)</span><span class="ap-when">M4</span></div>
+    <div class="ap-cell"><span class="ap-num">30</span><span class="ap-name">Graph BFS (Shortest Path Unweighted)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">31</span><span class="ap-name">Graph DFS (Connectivity, Flood Fill)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">32</span><span class="ap-name">Multi-Source BFS</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">33</span><span class="ap-name">Union-Find (Path Compression + Rank)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">34</span><span class="ap-name">Topological Sort — Kahn's BFS</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">35</span><span class="ap-name">Topological Sort — DFS (3-color)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">36</span><span class="ap-name">Dijkstra (Single-Source Shortest)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">37</span><span class="ap-name">Bellman-Ford (Negative Edges)</span><span class="ap-when">M5</span></div>
+    <div class="ap-cell"><span class="ap-num">38</span><span class="ap-name">Heap — Top-K Elements</span><span class="ap-when">M6</span></div>
+    <div class="ap-cell"><span class="ap-num">39</span><span class="ap-name">Heap — Two-Heap Median</span><span class="ap-when">M6</span></div>
+    <div class="ap-cell"><span class="ap-num">40</span><span class="ap-name">Greedy — Exchange Argument</span><span class="ap-when">M6</span></div>
+    <div class="ap-cell"><span class="ap-num">41</span><span class="ap-name">Segment Tree (Point Update, Range Query)</span><span class="ap-when">M6</span></div>
+    <div class="ap-cell"><span class="ap-num">42</span><span class="ap-name">Fenwick Tree (BIT)</span><span class="ap-when">M6</span></div>
+    <div class="ap-cell"><span class="ap-num">43</span><span class="ap-name">DP — Linear 1D (Fibonacci family)</span><span class="ap-when">M7</span></div>
+    <div class="ap-cell"><span class="ap-num">44</span><span class="ap-name">DP — State Machine (Stocks)</span><span class="ap-when">M7</span></div>
+    <div class="ap-cell"><span class="ap-num">45</span><span class="ap-name">DP — 0/1 and Unbounded Knapsack</span><span class="ap-when">M7</span></div>
+    <div class="ap-cell"><span class="ap-num">46</span><span class="ap-name">DP — LCS / Edit Distance (2D)</span><span class="ap-when">M7</span></div>
+    <div class="ap-cell"><span class="ap-num">47</span><span class="ap-name">DP — Bitmask / Interval / Tree</span><span class="ap-when">M7</span></div>
+  </div>
+</div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+<div class="container">
+  <div class="section-eyebrow">Curated Resources</div>
+  <h2 class="section-title">The Only Resources You Need</h2>
+  <p class="section-sub">Don't scatter. Use these. They're ranked by ROI for a working professional with limited time.</p>
+  <div class="resource-grid">
+    <div class="res-card">
+      <h4>🎯 Primary Practice</h4>
+      <ul>
+        <li><strong>LeetCode</strong> — main platform. Filter by "Google" tag. Track your pattern in notes.</li>
+        <li><strong>NeetCode.io</strong> — best pattern-based video solutions. Watch AFTER attempting.</li>
+        <li><strong>CSES Problem Set</strong> — structured algorithmic problems by topic.</li>
+        <li><strong>Codeforces</strong> — Div. 3/4 for speed, Div. 2 when comfortable.</li>
+      </ul>
+    </div>
+    <div class="res-card">
+      <h4>📚 Books (select one)</h4>
+      <ul>
+        <li><strong>CP Handbook</strong> (Antti Laaksonen) — free PDF, covers everything</li>
+        <li><strong>CLRS</strong> — reference only for algorithm proofs (don't read cover to cover)</li>
+        <li><strong>Algorithm Design Manual</strong> (Skiena) — best intuition building</li>
+        <li><strong>Effective Modern C++</strong> (Meyers) — for C++ best practices M4+</li>
+      </ul>
+    </div>
+    <div class="res-card">
+      <h4>🎥 Video Content</h4>
+      <ul>
+        <li><strong>NeetCode YouTube</strong> — all patterns explained with code</li>
+        <li><strong>William Fiset</strong> — graph algorithms visual masterclass</li>
+        <li><strong>Errichto</strong> — competitive programming and problem solving</li>
+        <li><strong>Abdul Bari</strong> — algorithms explained visually (beginner-friendly)</li>
+      </ul>
+    </div>
+    <div class="res-card">
+      <h4>🛠️ Tools + References</h4>
+      <ul>
+        <li><strong>cppreference.com</strong> — complete C++ STL reference</li>
+        <li><strong>visualgo.net</strong> — visual algorithm simulations</li>
+        <li><strong>cp-algorithms.com</strong> — detailed algorithm writeups with proofs</li>
+        <li><strong>learncpp.com</strong> — comprehensive C++ language tutorial</li>
+      </ul>
+    </div>
+    <div class="res-card">
+      <h4>🎙️ Mock Interviews</h4>
+      <ul>
+        <li><strong>Pramp.com</strong> — free peer mock interviews (use on Sundays)</li>
+        <li><strong>Interviewing.io</strong> — anonymous mocks with real FAANG engineers</li>
+        <li><strong>Exponent YouTube</strong> — Google interview recordings and walkthroughs</li>
+        <li><strong>LeetCode Premium</strong> — access company-tagged problems + past questions</li>
+      </ul>
+    </div>
+    <div class="res-card">
+      <h4>📋 Problem Sheets</h4>
+      <ul>
+        <li><strong>NeetCode 150</strong> — curated 150 pattern-based problems</li>
+        <li><strong>Striver's SDE Sheet</strong> — 180 problems with topic ordering</li>
+        <li><strong>LeetCode "Google" tag</strong> — filter by company + frequency</li>
+        <li><strong>Blind 75</strong> — minimum viable problem set for pattern coverage</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- MISTAKES -->
+<section id="mistakes">
+<div class="container">
+  <div class="section-eyebrow">What Kills Candidates</div>
+  <h2 class="section-title">Common Google Interview Mistakes</h2>
+  <p class="section-sub">Especially relevant for senior engineers — some of these are more common with experience, not less.</p>
+  <div class="mistakes-grid">
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Jumping straight to code</h4><p>Senior devs do this instinctively. They see the problem and start typing. The Google interviewer marks this as "doesn't think before acting."</p></div>
+      <div class="mistake-col good"><h4>✅ Spend 5 full minutes understanding</h4><p>Even if you've solved a similar problem before. Confirm constraints, write examples, check edge cases before a single line of code. Interviewers respect this process.</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Skipping brute force</h4><p>Jumping directly to the optimal solution without stating the naive approach first. The interviewer can't follow your thinking and can't give partial credit.</p></div>
+      <div class="mistake-col good"><h4>✅ Always state brute force first</h4><p>"The naive O(n²) approach would be... but we can optimize by..." This shows systematic thinking. Even Google expects and rewards this structured escalation.</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Silent coding</h4><p>10 minutes of silence while you code. The interviewer has no idea if you're on track or completely lost. This is the #1 signal of a failing interview.</p></div>
+      <div class="mistake-col good"><h4>✅ Narrate every decision</h4><p>"I'm using an unordered_map here because lookups are O(1) average. I'm initializing left=0, right=0 for the sliding window. The invariant I'm maintaining is..."</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Claiming code is correct without testing</h4><p>Writing code and saying "that should work" without tracing through an example. Senior engineers especially are prone to overconfidence here.</p></div>
+      <div class="mistake-col good"><h4>✅ Manually trace through your example</h4><p>After writing, take your own example from Step 1 and trace through the code step by step. Say the values out loud. Catch your own bugs before the interviewer does.</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Ignoring edge cases</h4><p>Not handling: empty array, n=1, all elements same, integer overflow (int overflow when multiplying two 10⁵ numbers), negative numbers.</p></div>
+      <div class="mistake-col good"><h4>✅ List edge cases before coding</h4><p>"Edge cases: empty input returns 0. Single element is trivially the answer. Overflow: I'll use long long since n can be 10⁵ and values 10⁴, product can be 10⁹ — within int range but I'll use long long to be safe."</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Using experience as a crutch</h4><p>With 7 YoE, there's temptation to rely on "I've seen this before" and skip steps. This leads to subtle errors and missed constraints specific to this variant.</p></div>
+      <div class="mistake-col good"><h4>✅ Treat every problem as new</h4><p>Your experience helps you recognize patterns faster — use that for the "identify pattern" step. But still follow the full framework. Discipline, not shortcuts, wins Google interviews.</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Freezing on follow-ups</h4><p>"I don't know" with silence. Follow-ups are designed to be hard — you're not expected to solve them completely. You're expected to think out loud.</p></div>
+      <div class="mistake-col good"><h4>✅ Structure your thinking aloud</h4><p>"Interesting. If n is now 10⁹, my O(n) solution would TLE. Let me think... One approach might be binary search on the answer since the function is monotonic. Another might be..."</p></div>
+    </div>
+    <div class="mistake-row">
+      <div class="mistake-col bad"><h4>❌ Messy variable names and no structure</h4><p>i, j, k, x, temp1, temp2. Functions that do 5 things. No comments on non-obvious logic. Hard to follow even for you, let alone the interviewer.</p></div>
+      <div class="mistake-col good"><h4>✅ Write like you're being code-reviewed</h4><p>left, right, windowSum, maxArea. Extract a helper function if logic is complex. Add one comment on the key invariant. "This loop maintains the invariant that window contains at most K distinct chars."</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FINAL -->
+<section style="padding:4rem 2rem">
+<div class="container" style="text-align:center;border:2px solid var(--border2);padding:4rem 3rem;background:var(--surface)">
+  <div class="section-eyebrow" style="justify-content:center;display:flex;margin-bottom:1rem">The Commitment</div>
+  <h2 class="section-title" style="margin-bottom:1.5rem">11 Hours/Week. 32 Weeks. 350+ Problems.<br>This is what Google-readiness looks like.</h2>
+  <p style="color:var(--muted);max-width:640px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.8">
+    You have 7 years of engineering experience. You think in systems, you've debugged production issues, you know what good code looks like. That's your edge — you'll learn patterns <em>faster</em> than a fresh grad, because you have context. What you need is the pattern vocabulary and the interview-specific communication skills. This plan gives you both.
+    <br><br>
+    The plan is calibrated so that you <em>never</em> have to choose between work and prep. 1 hour on weekdays is non-negotiable. Protect your weekends. In 8 months, you will look back and realize the 11 hours/week was the best investment you made.
+    <br><br>
+    <strong style="color:var(--accent)">Start this Monday. Week 1. Problem 1. Pattern notebook open.</strong>
+  </p>
+  <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+    <span class="tag-pill tag-green">47 Patterns</span>
+    <span class="tag-pill tag-blue">9 Topic Areas</span>
+    <span class="tag-pill tag-orange">350+ Problems</span>
+    <span class="tag-pill tag-gold">8 Monthly Mocks</span>
+    <span class="tag-pill tag-purple">11 hrs/week</span>
+    <span class="tag-pill tag-green">32 Weeks</span>
+    <span class="tag-pill tag-orange">C++ Mastery</span>
+    <span class="tag-pill tag-blue">Google-Ready</span>
+  </div>
+</div>
+</section>
+
+<footer>
+  <p><strong>8-Month DSA Mastery Plan — Working Professional Edition · C++</strong></p>
+  <p>Pattern-based learning · 11 hrs/week · Weekdays 1hr + Weekends 3hrs each</p>
+  <p>Topic-axis + Pattern-axis dual learning · Arrays → Strings → LL → Stacks → Trees → Graphs → Heaps → DP</p>
+  <p>47 patterns · 9 topic areas · 32 weeks · Google-level preparation</p>
+</footer>
+
+</body>
+</html>

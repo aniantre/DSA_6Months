@@ -1,0 +1,2153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Tracker — Google Prep · Starting Feb 23, 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap');
+
+:root {
+  --bg: #0c0c0f;
+  --bg1: #111116;
+  --bg2: #17171e;
+  --bg3: #1e1e28;
+  --border: #2a2a38;
+  --border2: #353548;
+  --text: #e2e2f0;
+  --muted: #6b6b88;
+  --dim: #3a3a52;
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.1);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.1);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.1);
+  --cyan: #22d3ee;
+  --cyan-dim: rgba(34,211,238,0.1);
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Cabinet Grotesk', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(12,12,15,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  display: flex; align-items: center; gap: 0;
+  height: 52px;
+}
+.tb-brand {
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: var(--green); letter-spacing: 2px;
+  padding-right: 1.5rem; border-right: 1px solid var(--border);
+  margin-right: 1rem; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.tb-brand::before {
+  content: '▶';
+  color: var(--green);
+  animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.tb-stats {
+  display: flex; align-items: center; gap: 0;
+  flex: 1; overflow-x: auto;
+}
+.tb-stat {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 1.25rem;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+.tb-stat:last-child { border-right: none; }
+.tb-stat .s-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase;
+}
+.tb-stat .s-val {
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+}
+.sv-green { color: var(--green); }
+.sv-amber { color: var(--amber); }
+.sv-blue { color: var(--blue); }
+.sv-purple { color: var(--purple); }
+.sv-red { color: var(--red); }
+.sv-cyan { color: var(--cyan); }
+
+.tb-date {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--muted); padding-left: 1rem;
+  white-space: nowrap;
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr 300px;
+  min-height: calc(100vh - 52px);
+}
+@media (max-width: 1100px) { .layout { grid-template-columns: 180px 1fr; } }
+@media (max-width: 780px) { .layout { grid-template-columns: 1fr; } }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 0;
+  position: sticky; top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+}
+.nav-section { padding: 0 1rem 1rem; }
+.nav-section-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 2px;
+  text-transform: uppercase; padding: 0 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.nav-btn {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 0.55rem 0.75rem;
+  background: none; border: none; border-radius: 6px;
+  color: var(--muted); cursor: pointer;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  text-align: left; transition: all 0.15s;
+  margin-bottom: 2px;
+}
+.nav-btn:hover { background: var(--bg2); color: var(--text); }
+.nav-btn.active { background: var(--green-dim); color: var(--green); }
+.nav-btn .nb-icon { width: 18px; text-align: center; font-size: 14px; flex-shrink: 0; }
+.nav-btn .nb-badge {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 9px;
+  background: var(--bg3); color: var(--muted);
+  padding: 1px 6px; border-radius: 10px;
+}
+.nav-btn.active .nb-badge { background: var(--green); color: #000; }
+
+.sidebar-progress { padding: 1rem; border-top: 1px solid var(--border); margin-top: auto; }
+.sp-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.sp-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 6px; }
+.sp-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 2px; transition: width 0.5s ease; }
+.sp-text { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+/* ── MAIN ── */
+.main { padding: 0; overflow-y: auto; }
+
+/* ── PANEL ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── TODAY PANEL ── */
+.today-header {
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg1);
+}
+.th-week-tag {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--green); letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.th-week-tag::before { content: ''; width: 20px; height: 1px; background: var(--green); }
+.th-title {
+  font-family: var(--sans); font-size: 1.6rem; font-weight: 800;
+  color: var(--text); line-height: 1.2; margin-bottom: 0.5rem;
+}
+.th-axes {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem;
+}
+.axis-chip {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px;
+  padding: 4px 10px; border-radius: 4px;
+  border: 1px solid;
+}
+.axis-topic { color: var(--green); border-color: rgba(34,197,94,0.25); background: var(--green-dim); }
+.axis-pattern { color: var(--blue); border-color: rgba(96,165,250,0.25); background: var(--blue-dim); }
+.axis-cpp { color: var(--purple); border-color: rgba(167,139,250,0.25); background: var(--purple-dim); }
+
+.today-body { padding: 1.5rem 2rem; }
+
+/* ── DAY TYPE STRIP ── */
+.day-type-strip {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 4px; margin-bottom: 1.5rem;
+}
+.dt-cell {
+  padding: 8px 4px; text-align: center;
+  border: 1px solid var(--border); border-radius: 4px;
+  cursor: pointer; transition: all 0.15s;
+}
+.dt-cell:hover { border-color: var(--border2); }
+.dt-cell.today-cell { border-color: var(--green); background: var(--green-dim); }
+.dt-cell.done-cell { border-color: var(--border); background: rgba(34,197,94,0.06); }
+.dt-cell.weekend-cell { background: rgba(245,158,11,0.04); }
+.dt-name { font-family: var(--mono); font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.dt-date { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text); margin: 3px 0; }
+.dt-cell.today-cell .dt-date { color: var(--green); }
+.dt-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); margin: 0 auto; }
+.dt-cell.done-cell .dt-dot { background: var(--green); }
+.dt-cell.today-cell .dt-dot { background: var(--green); box-shadow: 0 0 4px var(--green); }
+.dt-hours { font-family: var(--mono); font-size: 8px; color: var(--muted); margin-top: 2px; }
+.dt-cell.weekend-cell .dt-hours { color: var(--amber); }
+
+/* ── TASK SECTIONS ── */
+.task-section { margin-bottom: 1.5rem; }
+.ts-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 0.75rem;
+}
+.ts-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+}
+.ts-progress {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--green); margin-left: auto;
+}
+.ts-bar { flex: 1; height: 2px; background: var(--border); border-radius: 1px; }
+.ts-bar-fill { height: 100%; background: var(--green); border-radius: 1px; transition: width 0.3s; }
+
+/* ── TASK ITEM ── */
+.task-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 6px; margin-bottom: 6px;
+  background: var(--bg1); cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.task-item:hover { border-color: var(--border2); background: var(--bg2); }
+.task-item.done { border-color: rgba(34,197,94,0.2); background: rgba(34,197,94,0.04); }
+.task-item.done .task-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green); }
+
+.task-check {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 1.5px solid var(--border2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: all 0.2s;
+  background: var(--bg3);
+}
+.task-item.done .task-check {
+  background: var(--green); border-color: var(--green);
+}
+.task-check::after {
+  content: '✓';
+  color: #000; font-size: 11px; font-weight: 700;
+  opacity: 0;
+}
+.task-item.done .task-check::after { opacity: 1; }
+
+.task-content { flex: 1; min-width: 0; }
+.task-text { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+.task-meta {
+  display: flex; align-items: center; gap: 8px; margin-top: 4px;
+  flex-wrap: wrap;
+}
+.task-tag {
+  font-family: var(--mono); font-size: 9px;
+  padding: 1px 7px; border-radius: 3px; border: 1px solid;
+}
+.tt-easy { color: var(--green); border-color: rgba(34,197,94,0.3); background: var(--green-dim); }
+.tt-med { color: var(--amber); border-color: rgba(245,158,11,0.3); background: var(--amber-dim); }
+.tt-hard { color: var(--red); border-color: rgba(239,68,68,0.3); background: var(--red-dim); }
+.tt-learn { color: var(--blue); border-color: rgba(96,165,250,0.3); background: var(--blue-dim); }
+.tt-mock { color: var(--purple); border-color: rgba(167,139,250,0.3); background: var(--purple-dim); }
+.tt-cpp { color: var(--cyan); border-color: rgba(34,211,238,0.3); background: var(--cyan-dim); }
+.tt-rev { color: var(--amber); border-color: rgba(245,158,11,0.3); background: var(--amber-dim); }
+.task-time { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+
+/* ── PROBLEM LOG ── */
+.prob-log-area { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+.pla-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.pla-title { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.pla-count { font-family: var(--mono); font-size: 10px; color: var(--green); }
+.prob-input-row {
+  display: flex; gap: 8px; margin-bottom: 0.75rem;
+}
+.prob-input {
+  flex: 1; background: var(--bg2); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--mono); font-size: 12px;
+  padding: 8px 12px; border-radius: 5px; outline: none;
+}
+.prob-input:focus { border-color: var(--green); }
+.prob-select {
+  background: var(--bg2); border: 1px solid var(--border);
+  color: var(--muted); font-family: var(--mono); font-size: 11px;
+  padding: 8px 10px; border-radius: 5px; outline: none; cursor: pointer;
+}
+.prob-select:focus { border-color: var(--green); }
+.add-btn {
+  background: var(--green); color: #000;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;
+  transition: opacity 0.15s;
+}
+.add-btn:hover { opacity: 0.9; }
+.prob-list { display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow-y: auto; }
+.prob-entry {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 10px; background: var(--bg2); border-radius: 4px;
+  border: 1px solid var(--border);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+.prob-name { font-size: 12.5px; flex: 1; }
+.prob-diff { font-family: var(--mono); font-size: 9px; }
+.prob-del {
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: 14px; padding: 0 4px;
+}
+.prob-del:hover { color: var(--red); }
+
+/* ── WEEK PANEL ── */
+.week-panel { padding: 1.5rem 2rem; }
+.week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 1rem; }
+@media (max-width: 900px) { .week-grid { grid-template-columns: repeat(4, 1fr); } }
+.wg-card {
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg1); overflow: hidden;
+  transition: border-color 0.15s;
+}
+.wg-card:hover { border-color: var(--border2); }
+.wg-card.today-card { border-color: var(--green); }
+.wg-card.weekend-card { background: rgba(245,158,11,0.03); }
+.wg-header { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+.wg-day { font-family: var(--mono); font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.wg-date { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
+.wg-card.today-card .wg-date { color: var(--green); }
+.wg-hours { font-family: var(--mono); font-size: 9px; color: var(--amber); }
+.wg-tasks { padding: 8px 10px; }
+.wg-task {
+  font-size: 11px; padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 5px; color: var(--muted);
+}
+.wg-task:last-child { border-bottom: none; }
+.wg-task.checked { color: var(--muted); text-decoration: line-through; }
+.wg-task-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+.wg-completion {
+  padding: 6px 10px;
+  font-family: var(--mono); font-size: 9px; color: var(--green);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 6px;
+}
+.wg-comp-bar { flex: 1; height: 2px; background: var(--border); border-radius: 1px; }
+.wg-comp-fill { height: 100%; background: var(--green); border-radius: 1px; }
+
+/* ── MONTHLY GOALS ── */
+.goals-panel { padding: 1.5rem 2rem; }
+.month-section { margin-bottom: 2rem; }
+.ms-header {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg1); border: 1px solid var(--border);
+  border-radius: 8px 8px 0 0; cursor: pointer;
+  transition: background 0.15s;
+}
+.ms-header:hover { background: var(--bg2); }
+.ms-month-num {
+  font-family: var(--mono); font-size: 1.8rem; font-weight: 700;
+  color: var(--border2); line-height: 1;
+}
+.ms-info { flex: 1; }
+.ms-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.ms-subtitle { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
+.ms-dates { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+.ms-pct { font-family: var(--mono); font-size: 1.2rem; font-weight: 700; color: var(--green); }
+.ms-pct.locked { color: var(--dim); }
+.ms-arrow { font-family: var(--mono); font-size: 10px; color: var(--muted); transition: transform 0.2s; }
+.ms-header.open .ms-arrow { transform: rotate(90deg); }
+
+.ms-body { display: none; border: 1px solid var(--border); border-top: none; padding: 1rem 1.25rem; border-radius: 0 0 8px 8px; }
+.ms-body.open { display: block; }
+
+.goal-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 10px; border-radius: 5px; margin-bottom: 5px;
+  cursor: pointer; border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.goal-item:hover { background: var(--bg2); border-color: var(--border); }
+.goal-item.done-goal { background: var(--green-dim); border-color: rgba(34,197,94,0.2); }
+.goal-check {
+  width: 16px; height: 16px; border-radius: 3px;
+  border: 1.5px solid var(--border2); flex-shrink: 0;
+  margin-top: 2px; display: flex; align-items: center; justify-content: center;
+  background: var(--bg3); transition: all 0.2s;
+}
+.goal-item.done-goal .goal-check { background: var(--green); border-color: var(--green); }
+.goal-item.done-goal .goal-check::after { content: '✓'; color: #000; font-size: 10px; font-weight: 700; }
+.goal-text { font-size: 13px; line-height: 1.5; }
+.goal-item.done-goal .goal-text { color: var(--muted); }
+
+.ms-milestone-box {
+  margin-top: 1rem; padding: 0.75rem 1rem;
+  background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 6px;
+}
+.ms-milestone-title {
+  font-family: var(--mono); font-size: 9px; color: var(--amber);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.ms-problems-target {
+  font-family: var(--mono); font-size: 12px; color: var(--text);
+}
+.ms-problems-target span { color: var(--amber); font-weight: 700; }
+
+/* ── PATTERN PANEL ── */
+.patterns-panel { padding: 1.5rem 2rem; }
+.pattern-controls {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem;
+  align-items: center;
+}
+.filter-btn {
+  font-family: var(--mono); font-size: 10px;
+  padding: 4px 12px; border-radius: 4px;
+  border: 1px solid var(--border); background: var(--bg1);
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text); }
+.filter-btn.active { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+.pattern-stats {
+  margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--muted);
+}
+.pattern-stats span { color: var(--green); font-weight: 600; }
+
+.pattern-grid-area {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 6px;
+}
+.pat-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--bg1);
+  cursor: pointer; transition: all 0.15s;
+  user-select: none;
+}
+.pat-card:hover { border-color: var(--border2); background: var(--bg2); }
+.pat-card.mastered { border-color: rgba(34,197,94,0.3); background: var(--green-dim); }
+.pat-card.learning { border-color: rgba(245,158,11,0.3); background: var(--amber-dim); }
+.pat-card.locked { opacity: 0.4; cursor: default; }
+.pat-card.locked:hover { border-color: var(--border); background: var(--bg1); }
+
+.pat-status {
+  width: 20px; height: 20px; border-radius: 4px;
+  border: 1.5px solid var(--border2); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; transition: all 0.2s;
+}
+.pat-card.mastered .pat-status { background: var(--green); border-color: var(--green); color: #000; }
+.pat-card.learning .pat-status { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); }
+.pat-info { flex: 1; min-width: 0; }
+.pat-name { font-size: 12.5px; color: var(--text); }
+.pat-card.mastered .pat-name { color: var(--green); }
+.pat-meta { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.pat-month { font-family: var(--mono); font-size: 9px; color: var(--muted); }
+.pat-topic { font-family: var(--mono); font-size: 9px; color: var(--blue); }
+
+/* ── STATS PANEL ── */
+.stats-panel { padding: 1.5rem 2rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.stat-card {
+  background: var(--bg1); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1rem;
+}
+.stat-card .sc-num {
+  font-family: var(--mono); font-size: 1.8rem; font-weight: 700;
+  display: block; line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-card .sc-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px;
+}
+.stat-card .sc-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+.heatmap-section { margin-top: 2rem; }
+.hs-title { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+.heatmap { display: flex; gap: 3px; flex-wrap: wrap; }
+.hm-cell {
+  width: 14px; height: 14px; border-radius: 2px;
+  background: var(--bg2); cursor: pointer;
+  transition: transform 0.1s;
+  position: relative;
+}
+.hm-cell:hover { transform: scale(1.2); z-index: 1; }
+.hm-cell.hm-0 { background: var(--bg2); }
+.hm-cell.hm-1 { background: rgba(34,197,94,0.2); }
+.hm-cell.hm-2 { background: rgba(34,197,94,0.4); }
+.hm-cell.hm-3 { background: rgba(34,197,94,0.6); }
+.hm-cell.hm-4 { background: rgba(34,197,94,0.85); }
+.hm-cell.hm-today { box-shadow: 0 0 0 1.5px var(--green); }
+.hm-cell.hm-future { background: var(--bg1); opacity: 0.3; }
+
+/* ── RIGHT PANEL ── */
+.right-panel {
+  border-left: 1px solid var(--border);
+  padding: 1.5rem;
+  position: sticky; top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+}
+@media (max-width: 1100px) { .right-panel { display: none; } }
+
+.rp-section { margin-bottom: 2rem; }
+.rp-title {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 0.75rem; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Streak calendar */
+.streak-display {
+  text-align: center; padding: 1rem;
+  background: var(--bg2); border-radius: 8px; margin-bottom: 1rem;
+}
+.streak-num {
+  font-family: var(--mono); font-size: 3rem; font-weight: 700;
+  color: var(--green); display: block; line-height: 1;
+}
+.streak-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.streak-fire { font-size: 1.5rem; }
+
+/* Week preview */
+.week-mini { display: flex; flex-direction: column; gap: 4px; }
+.wm-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px; border-radius: 4px; border: 1px solid var(--border);
+  background: var(--bg2);
+}
+.wm-row.wm-today { border-color: var(--green); background: var(--green-dim); }
+.wm-day { font-family: var(--mono); font-size: 9px; color: var(--muted); width: 24px; }
+.wm-today .wm-day { color: var(--green); }
+.wm-task { font-size: 11px; color: var(--muted); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wm-today .wm-task { color: var(--text); }
+.wm-done-count { font-family: var(--mono); font-size: 9px; color: var(--green); }
+
+/* upcoming problems */
+.prob-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 10px;
+  padding: 3px 8px; border-radius: 3px; margin: 2px;
+  border: 1px solid; cursor: pointer;
+}
+.pc-easy { color: var(--green); border-color: rgba(34,197,94,0.25); background: var(--green-dim); }
+.pc-med { color: var(--amber); border-color: rgba(245,158,11,0.25); background: var(--amber-dim); }
+.pc-hard { color: var(--red); border-color: rgba(239,68,68,0.25); background: var(--red-dim); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--bg3); border: 1px solid var(--green);
+  color: var(--green); font-family: var(--mono); font-size: 12px;
+  padding: 10px 18px; border-radius: 6px;
+  transform: translateY(100px); opacity: 0;
+  transition: all 0.3s; z-index: 999;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── CONFETTI DOT ── */
+@keyframes confettiDrop {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(60px) rotate(360deg); opacity: 0; }
+}
+
+/* ── UTILITY ── */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.gap-2 { gap: 0.5rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.text-muted { color: var(--muted); }
+.text-green { color: var(--green); }
+.text-mono { font-family: var(--mono); }
+.divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+.empty-state {
+  text-align: center; padding: 3rem 2rem;
+  color: var(--muted); font-family: var(--mono); font-size: 12px;
+}
+.empty-state .es-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+
+/* ── PHASE BADGE ── */
+.phase-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 9px;
+  color: var(--amber); letter-spacing: 1.5px;
+  background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.25);
+  padding: 3px 10px; border-radius: 3px;
+}
+
+.not-started {
+  text-align: center; padding: 4rem 2rem;
+  border: 1px dashed var(--border); border-radius: 8px; margin: 2rem;
+}
+.ns-date { font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 0.5rem; }
+.ns-label { color: var(--muted); font-size: 13px; }
+
+/* Settings reset btn */
+.reset-btn {
+  background: none; border: 1px solid var(--red);
+  color: var(--red); font-family: var(--mono); font-size: 10px;
+  padding: 5px 12px; border-radius: 4px; cursor: pointer;
+  transition: all 0.15s; margin-top: 1rem;
+}
+.reset-btn:hover { background: var(--red-dim); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="tb-brand">DSA·TRACKER</div>
+  <div class="tb-stats" id="topStats">
+    <div class="tb-stat"><span class="s-label">Streak</span><span class="s-val sv-green" id="statStreak">0</span></div>
+    <div class="tb-stat"><span class="s-label">Week</span><span class="s-val sv-blue" id="statWeek">1</span></div>
+    <div class="tb-stat"><span class="s-label">Month</span><span class="s-val sv-purple" id="statMonth">1</span></div>
+    <div class="tb-stat"><span class="s-label">Tasks Today</span><span class="s-val sv-amber" id="statTasksToday">0/0</span></div>
+    <div class="tb-stat"><span class="s-label">Problems</span><span class="s-val sv-cyan" id="statProblems">0</span></div>
+    <div class="tb-stat"><span class="s-label">Patterns ✓</span><span class="s-val sv-green" id="statPatterns">0/47</span></div>
+  </div>
+  <div class="tb-date" id="topDate">—</div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="nav-section">
+      <div class="nav-section-label">Navigate</div>
+      <button class="nav-btn active" onclick="showPanel('today')" id="nav-today">
+        <span class="nb-icon">📅</span> Today
+        <span class="nb-badge" id="nb-today">0/0</span>
+      </button>
+      <button class="nav-btn" onclick="showPanel('week')" id="nav-week">
+        <span class="nb-icon">🗓️</span> This Week
+        <span class="nb-badge" id="nb-week">W1</span>
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals')" id="nav-goals">
+        <span class="nb-icon">🎯</span> Monthly Goals
+        <span class="nb-badge" id="nb-goals">M1</span>
+      </button>
+      <button class="nav-btn" onclick="showPanel('patterns')" id="nav-patterns">
+        <span class="nb-icon">🧩</span> Patterns
+        <span class="nb-badge" id="nb-patterns">0/47</span>
+      </button>
+      <button class="nav-btn" onclick="showPanel('stats')" id="nav-stats">
+        <span class="nb-icon">📊</span> Stats
+      </button>
+    </div>
+
+    <div class="nav-section" style="border-top:1px solid var(--border);padding-top:1rem">
+      <div class="nav-section-label">Months</div>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(1),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M1</span> Arrays + Strings
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(2),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M2</span> Window + BS
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(3),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M3</span> LL + Stacks
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(4),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M4</span> Trees + Tries
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(5),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M5</span> Graphs
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(6),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M6</span> Heaps + Greedy
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(7),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M7</span> Dynamic Prog.
+      </button>
+      <button class="nav-btn" onclick="showPanel('goals'); setTimeout(()=>scrollToMonth(8),100)" style="font-size:12px">
+        <span class="nb-icon" style="font-size:10px">M8</span> Google Sim.
+      </button>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="sp-label">Overall Progress</div>
+      <div class="sp-bar"><div class="sp-fill" id="overallBar" style="width:0%"></div></div>
+      <div class="sp-text" id="overallPct">Week 0 of 32 · 0%</div>
+      <button class="reset-btn" onclick="confirmReset()">↺ Reset All Data</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ─── TODAY PANEL ─── -->
+    <div class="panel active" id="panel-today">
+      <div id="todayContent"><!-- generated --></div>
+    </div>
+
+    <!-- ─── WEEK PANEL ─── -->
+    <div class="panel" id="panel-week">
+      <div class="week-panel">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+          <div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase">This Week</div>
+            <div style="font-size:1.3rem;font-weight:800" id="weekPanelTitle">Week 1</div>
+          </div>
+          <div class="phase-badge" id="weekPhaseBadge">Month 1 · Arrays</div>
+          <div style="margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)" id="weekCompPct">0% done</div>
+        </div>
+        <div class="week-grid" id="weekGrid"><!-- generated --></div>
+        <div id="weekPatterns" style="margin-top:1.5rem"></div>
+      </div>
+    </div>
+
+    <!-- ─── GOALS PANEL ─── -->
+    <div class="panel" id="panel-goals">
+      <div class="goals-panel" id="goalsContent"><!-- generated --></div>
+    </div>
+
+    <!-- ─── PATTERNS PANEL ─── -->
+    <div class="panel" id="panel-patterns">
+      <div class="patterns-panel">
+        <div style="margin-bottom:1rem">
+          <div style="font-size:1.3rem;font-weight:800;margin-bottom:0.25rem">Pattern Mastery Board</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted)">Click once = Learning · Click twice = Mastered · Locked patterns unlock at their month</div>
+        </div>
+        <div class="pattern-controls">
+          <button class="filter-btn active" onclick="filterPatterns('all', this)">All 47</button>
+          <button class="filter-btn" onclick="filterPatterns('mastered', this)">✓ Mastered</button>
+          <button class="filter-btn" onclick="filterPatterns('learning', this)">~ Learning</button>
+          <button class="filter-btn" onclick="filterPatterns('unlocked', this)">Unlocked</button>
+          <button class="filter-btn" onclick="filterPatterns('locked', this)">🔒 Locked</button>
+          <div class="pattern-stats">Mastered: <span id="masteredCount">0</span> / 47</div>
+        </div>
+        <div class="pattern-grid-area" id="patternGrid"><!-- generated --></div>
+      </div>
+    </div>
+
+    <!-- ─── STATS PANEL ─── -->
+    <div class="panel" id="panel-stats">
+      <div class="stats-panel">
+        <div style="font-size:1.3rem;font-weight:800;margin-bottom:1.25rem">Your Progress Stats</div>
+        <div class="stats-grid" id="statsGrid"><!-- generated --></div>
+        <div style="margin-top:1.5rem">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.75rem">8-Month Timeline</div>
+          <div id="timelineVis"></div>
+        </div>
+        <div class="heatmap-section">
+          <div class="hs-title">Activity Heatmap (First 16 Weeks)</div>
+          <div class="heatmap" id="heatmap"></div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:8px;font-family:var(--mono);font-size:9px;color:var(--muted)">
+            Less <div class="hm-cell hm-0"></div><div class="hm-cell hm-1"></div><div class="hm-cell hm-2"></div><div class="hm-cell hm-3"></div><div class="hm-cell hm-4"></div> More
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel">
+    <div class="rp-section">
+      <div class="rp-title">🔥 Streak</div>
+      <div class="streak-display">
+        <span class="streak-num" id="rpStreak">0</span>
+        <span class="streak-label">Day Streak <span class="streak-fire">🔥</span></span>
+      </div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center">
+        Best: <span id="rpBestStreak" style="color:var(--green)">0</span> days
+      </div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-title">📅 Week at a Glance</div>
+      <div class="week-mini" id="weekMini"><!-- generated --></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-title">📝 This Week's Problems</div>
+      <div id="weekProblems"><!-- generated --></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rp-title">⏱ Hours Invested</div>
+      <div style="font-family:var(--mono)">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--cyan)" id="rpHours">0</div>
+        <div style="font-size:9px;color:var(--muted);letter-spacing:1px">TOTAL HOURS</div>
+        <div style="margin-top:0.5rem;font-size:10px;color:var(--muted)" id="rpWeekHours">This week: 0/11 hrs</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA: 32-WEEK PLAN (Starting Feb 23, 2026 = Monday)
+// ═══════════════════════════════════════════════════════════
+const START_DATE = new Date(2026, 1, 23); // Feb 23, 2026
+
+const WEEKS = [
+  // ── MONTH 1: Arrays + Strings ──
+  {
+    week:1, month:1, topic:"Arrays + C++ Setup", pattern:"Linear Scan · Min/Max Tracking",
+    cpp:"vector, sort, auto, range-for",
+    days:{
+      Mon:{label:"Learn + Setup",tasks:["Set up C++ (VSCode/GCC). Compile your first program.","Study Big-O: understand O(1), O(n), O(n log n), O(n²)","Read about vector<int>: push_back, size, sort, []","Solve: Two Sum (easy) — understand hashmap approach"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Best Time to Buy/Sell Stock — timed 30 min","Solve: Contains Duplicate — timed 30 min","After each: write which PATTERN you used in a notebook"]},
+      Wed:{label:"Medium + C++",tasks:["C++ focus: unordered_map basics — insert, find, count","Solve: Single Number (XOR trick) — understand bitwise XOR","Review: Why does XOR work here? Write explanation."]},
+      Thu:{label:"Stretch",tasks:["Solve: Maximum Subarray (Kadane's) — timed 40 min","Understand: why does dp[i] = max(arr[i], dp[i-1]+arr[i]) work?","Read editorial of: Find the Duplicate Number (don't solve yet)"]},
+      Fri:{label:"Bridge",tasks:["Solve: Move Zeroes — explain two-pointer vs hashmap","Review all 5 problems solved this week: name each pattern","Write 1 paragraph on what Big-O means to you"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Product of Array Except Self — no division trick","Solve: Rotate Array — 3 approaches: brute, extra array, reverse","Solve: Merge Intervals — sort by start, merge overlapping","Solve: Find the Duplicate Number — Floyd's cycle detection preview"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Two Sum + Maximum Subarray — both timed 45min each","After mock: write what you'd do differently","Revision (90 min): re-read your notes, make flashcards for patterns","Log: How many problems solved this week? Target: 10+"]},
+    },
+    problems:["Two Sum","Best Time to Buy/Sell Stock","Contains Duplicate","Single Number","Move Zeroes","Maximum Subarray","Product of Array Except Self","Rotate Array","Merge Intervals","Find the Duplicate Number"],
+    patterns_unlocked:["Linear Scan / Min-Max Track","Frequency Count (Hash Map)","Seen-Before (Hash Set)"]
+  },
+  {
+    week:2, month:1, topic:"Strings + Hashing", pattern:"Frequency Map · Anagram Detection · Seen-Before",
+    cpp:"unordered_map, unordered_set, string ops",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: string internals — substr, find, stoi, to_string, s[i]","Study: unordered_map vs map — O(1) vs O(log n)","Practice: build a frequency map for a string — write code"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Valid Anagram — timed 30 min (two approaches: sort + freq)","Solve: Ransom Note — timed 20 min","Solve: First Unique Character — timed 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: unordered_map — operator[], find, count, erase, iteration","Solve: Isomorphic Strings — pattern: two-way mapping","Solve: Word Pattern — same two-way mapping pattern"]},
+      Thu:{label:"Stretch",tasks:["Solve: Group Anagrams — sort string as map key, 40 min","Solve: Top K Frequent Elements — bucket sort approach","Read: Subarray Sum Equals K — understand prefix sum + map trick"]},
+      Fri:{label:"Bridge",tasks:["Solve: Longest Consecutive Sequence — think: unordered_set lookup","Mix: pick 1 problem from Week 1 and solve it fresh","Pattern check: can you name all patterns learned so far?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Subarray Sum Equals K — hardest this week","Solve: Encode and Decode Strings — delimiter approach","Solve: Group Anagrams again without looking at your solution","Solve: Find All Anagrams in String — sliding window preview"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Group Anagrams + Subarray Sum Equals K","Revision: anagram detection methods — freq array vs sort key","Flashcards: add all string patterns to your deck","Competitive: try Codeforces Div.4 problem A + B"]},
+    },
+    problems:["Valid Anagram","Ransom Note","First Unique Character","Isomorphic Strings","Word Pattern","Group Anagrams","Top K Frequent Elements","Subarray Sum Equals K","Longest Consecutive Sequence","Encode and Decode Strings"],
+    patterns_unlocked:["Anagram Grouping (Sort Key)","Frequency Count (Hash Map)"]
+  },
+  {
+    week:3, month:1, topic:"Two Pointers on Arrays/Strings", pattern:"Two Pointers · Dutch National Flag · Palindrome",
+    cpp:"Sorting, passing vectors by ref, in-place ops",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Two Pointers — opposite ends vs same direction","Visual: draw left/right pointers on paper for Two Sum II","Understand: Dutch National Flag — 3-way partition (low, mid, high)"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Two Sum II Sorted Array — opposite ends, 20 min","Solve: Valid Palindrome — two pointers, 20 min","Solve: Remove Duplicates from Sorted Array — same direction, 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["Solve: Sort Colors (Dutch National Flag) — master this pattern","C++: swap(), in-place array modification safely","Trace Sort Colors on paper: [2,0,2,1,1,0] → step by step"]},
+      Thu:{label:"Stretch",tasks:["Solve: 3Sum — sort first, then outer loop + inner two-pointer, 45 min","Key insight: skip duplicates at both pointer levels — why?","Read: Container With Most Water — think before solving"]},
+      Fri:{label:"Bridge",tasks:["Solve: Container With Most Water — timed 35 min","Review: when does sorting before two-pointer work?","Mix: solve one Week 1 or Week 2 problem fresh"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Trapping Rain Water — hardest this week, 45 min","Solve: 3Sum Closest — variant of 3Sum","Solve: Squares of Sorted Array — two pointers from both ends","Solve: Backspace String Compare — edge case heavy"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): 3Sum + Container With Most Water","Revision: write two-pointer template from memory — both variants","Flashcards: add Dutch National Flag + palindrome patterns","Pattern journal: which problems so far are 'two pointer' type?"]},
+    },
+    problems:["Two Sum II","Valid Palindrome","Remove Duplicates","Sort Colors","3Sum","Container With Most Water","Trapping Rain Water","3Sum Closest","Squares of Sorted Array","Backspace String Compare"],
+    patterns_unlocked:["Two Pointers — Opposite Ends","Two Pointers — Same Direction","Dutch National Flag"]
+  },
+  {
+    week:4, month:1, topic:"Recursion + Backtracking", pattern:"Choose-Explore-Unchoose · Pruning · Subsets/Permutations",
+    cpp:"Recursion in C++, pass by ref, function<> for recursive lambda",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Recursion mechanics — call stack, base case, recursive case","Draw: recursion tree for fib(4) on paper","Study: Backtracking template — Choose → Explore → Unchoose"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Fibonacci (memoized) — implement top-down + bottom-up","Solve: Subsets — generate all 2^n subsets, 30 min","Trace: Subsets([1,2,3]) — draw the recursion tree"]},
+      Wed:{label:"Medium + C++",tasks:["C++: function<void(...)> for recursive lambdas","Solve: Permutations — all n! permutations, 35 min","Key: track 'used' elements — bool used[] or swap approach"]},
+      Thu:{label:"Stretch",tasks:["Solve: Combination Sum — allow reuse, 35 min","Solve: Subsets II — with duplicates, sort first, skip dupes","Understand: why sort + skip consecutive same-level dupes?"]},
+      Fri:{label:"Bridge",tasks:["Solve: Letter Combinations Phone — map digits to letters","Mix: revisit 3Sum and trace the two-pointer loop once more","Monthly reflection: what patterns are you most confident in?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Generate Parentheses — count open/close balance","Solve: Combination Sum II — no reuse, with duplicates","Solve: Permutations II — with duplicates","Attempt: N-Queens — draw the board, think pruning first"]},
+      Sun:{label:"Mock + Monthly Test",tasks:["MONTH-END MOCK (2 hrs): 3 problems — 1 easy + 1 medium + 1 hard","Problems: Two Sum + Group Anagrams + Generate Parentheses","Review: write all patterns learned in Month 1","LeetCode: join one Weekly Contest — target solving problem 1","Codeforces Div.3: attempt A + B + C","System Design (45 min): Read about what 'scalability' means"]},
+    },
+    problems:["Fibonacci (memoized)","Subsets","Permutations","Combination Sum","Subsets II","Combination Sum II","Permutations II","Letter Combinations","Generate Parentheses","N-Queens"],
+    patterns_unlocked:["Backtracking (Choose-Explore-Unchoose)","Backtracking — Pruning"]
+  },
+
+  // ── MONTH 2: Sliding Window + Binary Search ──
+  {
+    week:5, month:2, topic:"Prefix Sum (1D + 2D)", pattern:"Prefix Sum · Prefix+HashMap · Range Queries",
+    cpp:"vector<long long>, prefix array construction",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: prefix[i] = sum of arr[0..i-1]. Range sum in O(1).","Code: build prefix sum array from scratch","Study: prefix + hashmap pattern for 'subarray sum = K'"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Running Sum of 1D Array — warm up, 10 min","Solve: Range Sum Query - Immutable — build prefix, 20 min","Solve: Find Pivot Index — where left sum = right sum, 25 min"]},
+      Wed:{label:"Medium + C++",tasks:["Solve: Subarray Sum Equals K — prefix map approach, 35 min","C++: unordered_map<int,int> prefix_count; — count occurrences","Trace: why prefix[j] - prefix[i] = k means prefix[i] = prefix[j]-k?"]},
+      Thu:{label:"Stretch",tasks:["Solve: Continuous Subarray Sum — multiple of k variant","Solve: Count Number of Nice Subarrays — odd count prefix","Read: 2D prefix sum concept for matrix queries"]},
+      Fri:{label:"Bridge",tasks:["Solve: Product of Array Except Self — prefix + suffix product","Mix: revisit Subarray Sum = K and trace with a new example","Note: when is prefix sum better than sliding window?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Range Sum Query 2D - Immutable — 2D prefix","Solve: Number of Submatrices that Sum to Target","Solve: Minimum Size Subarray Sum — sliding window preview","Attempt: Maximum Sum Rectangle No Larger Than K"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Subarray Sum = K + Continuous Subarray Sum","Revision: derive prefix sum formula without notes","Flashcards: prefix + hashmap pattern","Codeforces: attempt Div.3 problem B or C"]},
+    },
+    problems:["Running Sum of 1D Array","Range Sum Query - Immutable","Find Pivot Index","Subarray Sum Equals K","Continuous Subarray Sum","Count Nice Subarrays","Product of Array Except Self","Range Sum Query 2D","Number of Submatrices Sum to Target","Min Size Subarray Sum"],
+    patterns_unlocked:["Prefix Sum (1D)","Prefix Sum + HashMap (subarray count)","2D Prefix Sum"]
+  },
+  {
+    week:6, month:2, topic:"Sliding Window", pattern:"Fixed Window · Dynamic Window · At-Most-K",
+    cpp:"deque for sliding window max",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: fixed window — slide right by 1, maintain size k","Study: dynamic window — right++ always, left++ when violated","Key: window state is usually a freq map or a sum variable"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Maximum Average Subarray I — fixed window, 20 min","Solve: Max Consecutive Ones III — dynamic window, 30 min","After each: explain why the pattern worked in 2 sentences"]},
+      Wed:{label:"Medium + C++",tasks:["Solve: Longest Substring Without Repeating Chars — 35 min","C++: deque<int> for sliding window max (Sliding Window Maximum)","Trace the deque approach on input [2,3,1,1,5,3,3,5] window=3"]},
+      Thu:{label:"Stretch",tasks:["Solve: Permutation in String — window with freq comparison, 35 min","Solve: Find All Anagrams in String — variant of above","Understand: 'exactly K' = 'at most K' - 'at most K-1'"]},
+      Fri:{label:"Bridge",tasks:["Solve: Fruit Into Baskets — at most 2 distinct chars","Mix: prefix sum vs sliding window — write when you'd use each","Revisit one Week 1–4 problem you found hardest"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Longest Repeating Character Replacement — shrink with condition","Solve: Subarray Product Less Than K — dynamic window","Solve: Minimum Window Substring — hardest sliding window","Attempt: Sliding Window Maximum — deque approach"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Longest Substring No Repeat + Min Window Substring","Revision: write both window templates (fixed + dynamic) from memory","Flashcards: dynamic shrink condition — what triggers left++?","LeetCode: contest — aim for 2 problems"]},
+    },
+    problems:["Maximum Average Subarray I","Max Consecutive Ones III","Longest Substring Without Repeating","Permutation in String","Find All Anagrams","Fruit Into Baskets","Longest Repeating Char Replace","Subarray Product Less Than K","Minimum Window Substring","Sliding Window Maximum"],
+    patterns_unlocked:["Sliding Window — Fixed","Sliding Window — Dynamic"]
+  },
+  {
+    week:7, month:2, topic:"Binary Search — Classic + Rotated", pattern:"Classic BS · Lower/Upper Bound · Rotated Array",
+    cpp:"lower_bound, upper_bound, mid overflow prevention",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: binary search template — lo=0, hi=n-1, mid=lo+(hi-lo)/2","Why mid=lo+(hi-lo)/2 and NOT (lo+hi)/2? (overflow!)","Study: lower_bound vs upper_bound — first >= x vs first > x"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Binary Search — classic, 10 min","Solve: First Bad Version — lo/hi convergence, 15 min","Solve: Guess Number Higher/Lower — same pattern, 15 min","Solve: Sqrt(x) — binary search on answer, 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: lower_bound(v.begin(), v.end(), x) — returns iterator","Solve: Find First and Last Position — lower + upper bound, 30 min","Trace: why is the ending condition (while lo <= hi) vs (while lo < hi)?"]},
+      Thu:{label:"Stretch",tasks:["Solve: Search in Rotated Sorted Array — check which half is sorted, 40 min","Solve: Find Minimum in Rotated Sorted Array — 35 min","Key insight: one half is always sorted — use that to decide direction"]},
+      Fri:{label:"Bridge",tasks:["Solve: Find Peak Element — move toward uphill, 25 min","Solve: Search a 2D Matrix — treat as 1D, 25 min","Mix: one sliding window problem from Week 6"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Search a 2D Matrix II — different approach needed","Solve: Search in Rotated Array II — with duplicates, edge case","Attempt: Find in Mountain Array — BS twice (ascending + descending)","Attempt: Median of Two Sorted Arrays — hardest, O(log min(m,n))"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Search in Rotated Array + Find First/Last Position","Revision: write BS template from memory with all 3 variants","Flashcards: when to use while lo<=hi vs lo<hi","Codeforces: attempt a problem requiring binary search"]},
+    },
+    problems:["Binary Search","First Bad Version","Guess Number","Sqrt(x)","Find First and Last Position","Search in Rotated Array","Find Minimum in Rotated","Find Peak Element","Search 2D Matrix","Median of Two Sorted Arrays"],
+    patterns_unlocked:["Binary Search — Classic","Binary Search — Rotated Array"]
+  },
+  {
+    week:8, month:2, topic:"Binary Search on Answer", pattern:"Parametric Search · Minimize Max · Maximize Min",
+    cpp:"feasibility functions, bool check(long long mid)",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: BS on answer — don't search in array, search the ANSWER value","Key: feasibility function must be MONOTONIC — if x works, x+1 works too","Template: lo=min_possible, hi=max_possible, check(mid)→bool"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Koko Eating Bananas — minimize eating speed, 35 min","Solve: Capacity to Ship Packages — minimize weight capacity, 35 min","For each: write the check(x) function separately, then binary search"]},
+      Wed:{label:"Medium + C++",tasks:["C++: write check() as a lambda capturing array: auto check=[&](long long x){...}","Solve: Minimum Days to Make Bouquets — classic BS on answer","Trace: draw lo, hi, mid progression for Koko Bananas"]},
+      Thu:{label:"Stretch",tasks:["Solve: Split Array Largest Sum — hard variant, 45 min","Solve: Minimum Time to Complete All Trips — 35 min","Read: Magnetic Force Between Two Balls — maximize minimum gap"]},
+      Fri:{label:"Bridge",tasks:["Solve: Magnetic Force Between Two Balls — 35 min","Monthly review: list all patterns in Month 2 from memory","Revisit: one Week 5–7 problem you're weakest on"]},
+      Sat:{label:"Deep Drill + Month-End",tasks:["Solve: Find Kth Smallest Pair Distance — hard, BS + sliding window","Solve: Cutting Ribbons — BS on answer, multitype","Solve: Smallest Divisor Given Threshold — verify check function","Month-end: solve one hard problem entirely on your own, no hints"]},
+      Sun:{label:"Month 2 Mock + Review",tasks:["MONTH-END MOCK (2 hrs): 3 problems — sliding window + BS + BS-on-answer","Review: write Month 2 patterns from memory — all 7","LeetCode: contest — aim for 2–3 problems","System Design (45 min): What is a cache? LRU vs LFU — read basics"]},
+    },
+    problems:["Koko Eating Bananas","Capacity to Ship Packages","Minimum Days Bouquets","Split Array Largest Sum","Min Time Complete Trips","Magnetic Force Two Balls","Find Kth Smallest Pair Distance","Cutting Ribbons","Smallest Divisor Threshold","Minimize Max Distance Gas"],
+    patterns_unlocked:["Binary Search on Answer (Parametric)"]
+  },
+
+  // ── MONTH 3: Linked Lists + Stacks ──
+  {
+    week:9, month:3, topic:"Linked Lists — Fast & Slow Pointers", pattern:"Floyd's Cycle Detection · Middle · Nth from End",
+    cpp:"ListNode struct, pointer -> operator, nullptr",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: ListNode struct — val + next. Traverse: while(node){...;node=node->next;}","Study: Fast/Slow pointers — fast moves 2x, slow moves 1x","Floyd's: they meet inside a cycle. After meeting, reset one to head, both move 1x → find cycle start"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Linked List Cycle — detect cycle, 20 min","Solve: Middle of Linked List — fast/slow, 15 min","Solve: Reverse Linked List — iterative (prev, curr, next), 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: ListNode* head = nullptr; — null checks on every access","Solve: Remove Nth Node from End — two pointers N apart, 30 min","Trace: remove 2nd from end of [1,2,3,4,5] — step by step"]},
+      Thu:{label:"Stretch",tasks:["Solve: Linked List Cycle II — find cycle START node, 40 min","Solve: Palindrome Linked List — find mid, reverse second half, compare","Understand: Happy Number as a LL cycle problem!"]},
+      Fri:{label:"Bridge",tasks:["Solve: Happy Number — fast/slow on number sequence, 25 min","Mix: one sliding window problem you found hard","Pattern check: can you explain Floyd's Cycle in 30 seconds?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Reorder List — find mid, reverse second half, merge","Solve: Find the Duplicate Number — LL cycle on array indices","Solve: Sort List — merge sort on linked list, O(n log n) O(1) space","Implement: LRU Cache — doubly linked list + hashmap"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Linked List Cycle II + Reorder List","Revision: write fast/slow template from memory","Flashcards: 3 scenarios where fast/slow pointers help","Codeforces: any Div.3 problem"]},
+    },
+    problems:["Linked List Cycle","Middle of Linked List","Reverse Linked List","Remove Nth from End","Linked List Cycle II","Palindrome Linked List","Happy Number","Reorder List","Find Duplicate Number","LRU Cache"],
+    patterns_unlocked:["Fast & Slow Pointers (Floyd's)","In-Place Linked List Reversal"]
+  },
+  {
+    week:10, month:3, topic:"Linked Lists — Reversal + Advanced", pattern:"In-Place Reversal · K-Group · Copy with Random Pointer",
+    cpp:"Dummy head node technique, smart pointer preview",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: in-place reversal — prev=null, curr=head, next=null","Trace [1→2→3→4→5] reversal step by step","Study: dummy head node — eliminates head-deletion edge cases"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Swap Nodes in Pairs — 30 min","Solve: Odd Even Linked List — two pointers, 30 min","Solve: Add Two Numbers — carry handling, 30 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: ListNode* dummy = new ListNode(0); dummy->next = head;","Solve: Copy List with Random Pointer — hashmap old→new, 35 min","Why dummy head? Write 2 problems where it helps"]},
+      Thu:{label:"Stretch",tasks:["Solve: Sort List — merge sort approach, 45 min","Solve: Rotate List — find tail, connect to head, 30 min","Solve: Intersection of Two Linked Lists — two pointer trick"]},
+      Fri:{label:"Bridge",tasks:["Mix: one Week 9 problem re-solved from memory","Solve: Add Two Numbers II — reverse + add + reverse","Pattern: when is hashmap vs pointer manipulation better?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Reverse Nodes in k-Group — hardest LL problem","Solve: Merge k Sorted Lists — min-heap approach preview","Solve: Flatten Multilevel Doubly Linked List","Revisit: LRU Cache if not fully solved yet"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Reverse Nodes in k-Group + Sort List","Revision: write reversal template with prev/curr/next from memory","Flashcards: dummy node trick — when and why","LeetCode: contest attempt"]},
+    },
+    problems:["Swap Nodes in Pairs","Odd Even Linked List","Add Two Numbers","Copy List Random Pointer","Sort List","Rotate List","Intersection Two Lists","Add Two Numbers II","Reverse Nodes in k-Group","Merge k Sorted Lists"],
+    patterns_unlocked:["K-Group Reversal"]
+  },
+  {
+    week:11, month:3, topic:"Stack + Monotonic Stack", pattern:"Valid Parens · Next Greater Element · Histogram",
+    cpp:"stack<T>, deque<T>, push/pop/top operations",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: stack (LIFO) — push, pop, top, empty","Study: monotonic DECREASING stack → finds NEXT GREATER element","Key: when new element breaks monotonicity → pop and PROCESS those elements"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Valid Parentheses — classic stack, 20 min","Solve: Min Stack — stack with running minimum, 25 min","Solve: Next Greater Element I — monotonic stack, 25 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: stack<int> st; st.push(x); st.top(); st.pop();","Solve: Daily Temperatures — indices in monotonic stack, 35 min","Trace: Daily Temperatures on [73,74,75,71,69,72,76,73] step by step"]},
+      Thu:{label:"Stretch",tasks:["Solve: Next Greater Element II — circular array (index % n), 35 min","Solve: Online Stock Span — backward looking, 35 min","Solve: Decode String — stack for nested brackets"]},
+      Fri:{label:"Bridge",tasks:["Solve: Asteroid Collision — simulation with stack, 30 min","Solve: Remove K Digits — monotonic + greedy, 35 min","Mix: one linked list problem from Week 9–10"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: 132 Pattern — tricky monotonic stack","Solve: Largest Rectangle in Histogram — hardest this week, 45 min","Solve: Maximal Rectangle — reduce to histogram problem","Attempt: Trapping Rain Water with stack (different from two-pointer)"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Daily Temperatures + Largest Rectangle Histogram","Revision: monotonic stack template — write both inc and dec variants","Flashcards: 'When to use monotonic stack vs two pointers?'","Codeforces: attempt C or D problem"]},
+    },
+    problems:["Valid Parentheses","Min Stack","Next Greater Element I","Daily Temperatures","Next Greater Element II","Online Stock Span","Decode String","Asteroid Collision","Remove K Digits","Largest Rectangle in Histogram"],
+    patterns_unlocked:["Monotonic Stack — Decreasing (NGE)","Monotonic Stack — Increasing"]
+  },
+  {
+    week:12, month:3, topic:"Queue + Deque + BFS Introduction", pattern:"BFS Level Order · Sliding Window Max (Deque) · Multi-source BFS",
+    cpp:"queue<T>, deque<T>, all push/pop operations",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: queue (FIFO) — push, pop, front, back","Study: deque — push_front, push_back, pop_front, pop_back — O(1) all","BFS template: queue + visited. Each level = one edge farther."]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Implement Queue Using Stacks — 25 min","Solve: Number of Recent Calls — sliding window with queue, 20 min","Solve: Design Circular Queue — 30 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: deque<int> dq; — used for sliding window max","Solve: Sliding Window Maximum — monotonic deque approach, 40 min","Trace the deque on [1,3,-1,-3,5,3,6,7] window=3"]},
+      Thu:{label:"Stretch",tasks:["Solve: Jump Game VI — DP + deque optimization, 45 min","Read: BFS on a grid — Rotting Oranges as preview","Understand: why deque instead of queue for monotonic window?"]},
+      Fri:{label:"Bridge",tasks:["Solve: Moving Average from Data Stream — queue, 20 min","Solve: Design Hit Counter — queue or sorted list, 25 min","Monthly reflection: Month 3 patterns — list all from memory"]},
+      Sat:{label:"Deep Drill + Month End",tasks:["Solve: Shortest Subarray with Sum >= K — hard deque problem","Solve: Rotting Oranges — BFS preview (multi-source)","Revisit: Monotonic Stack problems from Week 11","Month-end: attempt any hard problem without hints"]},
+      Sun:{label:"Month 3 Mock",tasks:["MONTH-END MOCK (2 hrs): 3 problems — LL + stack + deque/BFS","Full review: write Month 3 patterns — LL, stack, monotonic, queue/deque","LeetCode: contest — aim for 3 problems now","System Design (45 min): What is a message queue? Kafka basics intro"]},
+    },
+    problems:["Implement Queue Using Stacks","Number of Recent Calls","Design Circular Queue","Sliding Window Maximum","Jump Game VI","Moving Average Stream","Design Hit Counter","Shortest Subarray Sum >= K","Rotting Oranges","01 Matrix"],
+    patterns_unlocked:["Monotonic Deque (Sliding Window Max)"]
+  },
+
+  // ── MONTH 4: Trees + Tries ──
+  {
+    week:13, month:4, topic:"Binary Trees — DFS (Top-Down + Bottom-Up)", pattern:"Pre/In/Post DFS · Level-Order BFS · Path Problems",
+    cpp:"TreeNode struct, nullptr checks, recursion with references",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Top-Down DFS — pass info FROM parent TO children","Study: Bottom-Up DFS — combine results FROM children, return up","Key: when to use global variable vs return value from DFS"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Invert Binary Tree — 15 min","Solve: Maximum Depth Binary Tree — 20 min","Solve: Symmetric Tree — compare left and right subtrees, 25 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: void dfs(TreeNode* node, int depth, int& maxD) — pass by ref","Solve: Level Order Traversal — BFS with queue, 30 min","Trace: level order on a 5-node tree — show queue state at each step"]},
+      Thu:{label:"Stretch",tasks:["Solve: Binary Tree Diameter — bottom-up, at each node: L+R path, 35 min","Solve: Path Sum II — backtracking in tree, collect valid paths, 35 min","Solve: Right Side View — BFS, take last of each level"]},
+      Fri:{label:"Bridge",tasks:["Solve: Count Good Nodes — top-down with max-so-far, 25 min","Solve: Zigzag Level Order — BFS with alternating direction","Mix: one linked list problem solved fresh"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Binary Tree Maximum Path Sum — global max, bottom-up, 45 min","Solve: Flatten Binary Tree to Linked List — Morris-style","Solve: Populate Next Right Pointers — BFS or O(1) space","Attempt: Serialize and Deserialize Binary Tree — hard"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Binary Tree Diameter + Binary Tree Max Path Sum","Revision: top-down vs bottom-up — write both templates from memory","Flashcards: 3 problems where you used global variable in tree DFS","Codeforces: attempt problem D"]},
+    },
+    problems:["Invert Binary Tree","Max Depth BT","Symmetric Tree","Level Order Traversal","Binary Tree Diameter","Path Sum II","Right Side View","Count Good Nodes","Zigzag Level Order","Binary Tree Max Path Sum"],
+    patterns_unlocked:["Tree DFS — Top-Down","Tree DFS — Bottom-Up","Tree BFS — Level Order"]
+  },
+  {
+    week:14, month:4, topic:"Binary Trees — Advanced", pattern:"LCA · Tree Construction · Node-to-Root Paths",
+    cpp:"unordered_map for inorder index lookup",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: LCA algorithm — if root is p or q, return root. Recurse left+right. If both non-null, root is LCA.","Study: Build tree from preorder+inorder — preorder[0] is root, find in inorder to split","Practice: trace LCA on a 7-node tree"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Lowest Common Ancestor BT — 30 min","Solve: Path Sum III — prefix sum on root-to-leaf paths, 35 min","Solve: Sum Root to Leaf Numbers — accumulate number top-down"]},
+      Wed:{label:"Medium + C++",tasks:["C++: unordered_map<int,int> inorder_idx — O(1) position lookup","Solve: Construct BT from Preorder+Inorder — 40 min","Trace: construct tree from pre=[3,9,20,15,7] in=[9,3,15,20,7]"]},
+      Thu:{label:"Stretch",tasks:["Solve: Construct BT from Inorder+Postorder — variant, 35 min","Solve: Subtree of Another Tree — DFS on both trees","Solve: Flatten Binary Tree to Linked List — postorder approach"]},
+      Fri:{label:"Bridge",tasks:["Solve: Maximum Width of Binary Tree — BFS with positions (careful overflow!)","Mix: one stack problem from Week 11","Pattern: LCA vs BST LCA — what's different?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Binary Tree Cameras — tree DP with 3 states, hard","Solve: Distribute Coins in Binary Tree — return excess/needed","Attempt: All Nodes Distance K in Binary Tree — parent mapping","Attempt: Count Nodes in Complete Binary Tree — O(log²n)"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): LCA + Construct BT from Pre+Inorder","Revision: write LCA algorithm from memory — no notes","Flashcards: 3 problems where you built a hashmap during tree traversal","LeetCode: contest"]},
+    },
+    problems:["LCA Binary Tree","Path Sum III","Sum Root to Leaf Numbers","Construct BT Pre+Inorder","Construct BT In+Postorder","Subtree of Another Tree","Flatten BT to LL","Maximum Width BT","Binary Tree Cameras","Distribute Coins BT"],
+    patterns_unlocked:[]
+  },
+  {
+    week:15, month:4, topic:"Binary Search Tree", pattern:"Inorder=Sorted · Validate BST · Kth Smallest · BST Iterator",
+    cpp:"iterative inorder with stack",
+    days:{
+      Mon:{label:"Learn",tasks:["Key: inorder traversal of BST = sorted sequence — USE THIS!","Study: Validate BST — pass (minVal, maxVal) bounds down, NOT just parent","Study: BST LCA — compare with root: both left, both right, or current is LCA"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Search in BST — 10 min","Solve: Insert into BST — 20 min","Solve: Range Sum of BST — inorder-guided pruning, 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: iterative inorder with explicit stack<TreeNode*>","Solve: Validate BST — with bounds, 25 min (NOT parent check!)","Trace: why checking against parent is WRONG — construct counterexample"]},
+      Thu:{label:"Stretch",tasks:["Solve: Kth Smallest in BST — inorder DFS, count k steps, 25 min","Solve: BST Iterator — lazy inorder with stack, 30 min","Solve: Delete Node in BST — 3 cases, 35 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: LCA of BST — compare values, much simpler than generic LCA, 20 min","Solve: Balance a BST — inorder→array→build balanced","Mix: one tree DFS problem from Week 13"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Recover BST — find two swapped nodes in inorder, hard","Solve: Convert Sorted Array to BST — pick midpoint as root","Solve: Convert BST to Greater Tree — reverse inorder (right→left)","Attempt: Count of Smaller Numbers After Self — BST or BIT"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Validate BST + Kth Smallest in BST","Revision: BST properties — write 5 key properties from memory","Flashcards: BST validate (bounds) vs BST LCA (comparison)","Codeforces: attempt any problem"]},
+    },
+    problems:["Search in BST","Insert into BST","Range Sum BST","Validate BST","Kth Smallest BST","BST Iterator","Delete Node BST","LCA of BST","Balance a BST","Recover BST"],
+    patterns_unlocked:["BST Properties (Inorder = Sorted)"]
+  },
+  {
+    week:16, month:4, topic:"Trie (Prefix Tree)", pattern:"Trie Insert/Search/StartsWith · Trie+DFS Word Search II",
+    cpp:"TrieNode with children[26], unordered_map for generic",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: TrieNode — children[26] array (or unordered_map) + isEnd bool","Study: Insert — for each char, create child if null, advance, mark isEnd","Study: StartsWith vs Search — same except startsWith doesn't check isEnd"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Implement Trie (Prefix Tree) — implement from scratch, 35 min","Solve: Design Add and Search Words — '.' wildcard needs DFS, 35 min","Solve: Map Sum Pairs — trie with values, 30 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: struct TrieNode { TrieNode* children[26]{}; bool isEnd=false; };","Solve: Longest Word in Dictionary — BFS on trie, 30 min","Solve: Replace Words — find shortest root in trie, 30 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Maximum XOR of Two Numbers — binary trie, 40 min","Understand: to maximize XOR, at each bit choose opposite if available","Read: Word Search II — Trie + DFS on grid approach"]},
+      Fri:{label:"Bridge",tasks:["Attempt: Word Search II (Trie + DFS) — 45 min","Monthly review: Month 4 patterns — all tree patterns from memory","Mix: one BST problem from Week 15"]},
+      Sat:{label:"Deep Drill + Month End",tasks:["Solve: Word Search II — fully complete with Trie+DFS, 60 min","Solve: Concatenated Words — Trie + DP, 45 min","Attempt: Palindrome Pairs — Trie, hard","Month-end hard: pick any hard tree/trie problem, solve without hints"]},
+      Sun:{label:"Month 4 Mock",tasks:["MONTH-END MOCK (2 hrs): 3 problems — BT + BST + Trie","Full review: write ALL Month 4 patterns from memory","LeetCode: Weekly Contest — aim for 3 problems","System Design (45 min): Design a URL shortener — think about hash + redirect"]},
+    },
+    problems:["Implement Trie","Design Add Search Words","Map Sum Pairs","Longest Word Dictionary","Replace Words","Maximum XOR Two Numbers","Word Search II","Concatenated Words","Palindrome Pairs","Index Pairs of String"],
+    patterns_unlocked:["Trie Insert / Search / StartsWith","Trie + DFS (Word Search II)"]
+  },
+
+  // ── MONTH 5: Graphs ──
+  {
+    week:17, month:5, topic:"Graph BFS + DFS", pattern:"BFS Shortest Path · DFS Flood Fill · Multi-Source BFS",
+    cpp:"vector<vector<int>> adj, visited[], 4-direction grid",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: graph as adjacency list — vector<vector<int>> adj(n)","Study: BFS — queue + visited. Each dequeue = process + enqueue neighbors","Study: DFS — recursive or stack. Use for connectivity, flood fill"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Number of Islands — DFS flood fill, 30 min","Solve: Max Area of Island — return island size, 25 min","Solve: Flood Fill — DFS with old/new color, 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: int dx[]={0,0,1,-1}; int dy[]={1,-1,0,0}; — 4-direction grid","Solve: Clone Graph — BFS + hashmap (old→new), 35 min","Trace: BFS on graph [0→1,0→2,1→3] — show queue state"]},
+      Thu:{label:"Stretch",tasks:["Solve: Rotting Oranges — MULTI-SOURCE BFS, enqueue all rotten first, 40 min","Solve: 01 Matrix — multi-source BFS from all 0s, 35 min","Key: multi-source BFS = enqueue ALL sources at start, then BFS normally"]},
+      Fri:{label:"Bridge",tasks:["Solve: Pacific Atlantic Waterflow — BFS from both oceans, 40 min","Mix: one tree problem from Month 4","Pattern: when BFS vs DFS for graph problems?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Is Graph Bipartite — 2-coloring BFS, 35 min","Solve: Word Ladder — BFS on word states, 45 min","Solve: Open the Lock — BFS on state space","Attempt: Word Ladder II — BFS + DFS, very hard"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Number of Islands + Rotting Oranges","Revision: BFS template with grid and graph variants from memory","Flashcards: multi-source BFS setup — what's different?","Codeforces: graph problem attempt"]},
+    },
+    problems:["Number of Islands","Max Area of Island","Flood Fill","Clone Graph","Rotting Oranges","01 Matrix","Pacific Atlantic Waterflow","Is Graph Bipartite","Word Ladder","Surrounded Regions"],
+    patterns_unlocked:["Graph BFS (Shortest Path Unweighted)","Graph DFS (Connectivity, Flood Fill)","Multi-Source BFS"]
+  },
+  {
+    week:18, month:5, topic:"Union-Find (DSU)", pattern:"Path Compression · Union by Rank · Dynamic Connectivity",
+    cpp:"vector<int> parent, rank; iota for initialization",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: find(x) with PATH COMPRESSION — parent[x] = find(parent[x])","Study: union(a,b) by RANK — attach smaller rank to larger","Study: count components — start n, decrement on successful union"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Number of Provinces — DSU, 25 min","Solve: Graph Valid Tree — n-1 edges + no cycle via DSU, 25 min","Solve: Redundant Connection — first edge creating cycle, 30 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: write full DSU struct with find + union from memory","Solve: Number of Connected Components — DSU, 25 min","Solve: Find if Path Exists in Graph — DSU or BFS, 25 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Most Stones Removed Same Row/Column — DSU on (r, c+n), 40 min","Solve: Accounts Merge — DSU on email strings, 45 min","Understand: why DSU over BFS for dynamic connectivity?"]},
+      Fri:{label:"Bridge",tasks:["Solve: Satisfiability of Equality Equations — DSU with characters, 30 min","Mix: one BFS/DFS problem from Week 17","DSU check: time the find() call — near O(1) with both optimizations?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Making a Large Island — mark + BFS + DSU, 45 min","Solve: Number of Islands II — DSU with dynamic adds","Solve: Swim in Rising Water — binary search + BFS or DSU","Attempt: Minimum Spanning Tree (Kruskal's) — uses DSU!"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Redundant Connection + Accounts Merge","Revision: write DSU with find+union from memory in 5 min","Flashcards: path compression diagram — before/after find()","LeetCode: contest"]},
+    },
+    problems:["Number of Provinces","Graph Valid Tree","Redundant Connection","Number Connected Components","Find Path Exists","Most Stones Removed","Accounts Merge","Satisfiability Equality","Making Large Island","Number of Islands II"],
+    patterns_unlocked:["Union-Find (Path Compression + Rank)"]
+  },
+  {
+    week:19, month:5, topic:"Topological Sort", pattern:"Kahn's BFS (in-degree) · DFS 3-color · DAG Cycle Detection",
+    cpp:"vector<int> indegree, queue for Kahn's",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Kahn's BFS — compute in-degrees. Enqueue 0-indegree. Process: decrement neighbors, enqueue if 0.","Study: DFS 3-color — white(0)/gray(1)/black(2). Gray neighbor = cycle.","Cycle detection: in Kahn's, if result.size() < n → cycle exists"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Course Schedule — detect cycle in directed graph, 30 min","Solve: Course Schedule II — return topological order, 30 min","Trace: Kahn's on [[0,1],[0,2],[1,3],[2,3]] — show indegree updates"]},
+      Wed:{label:"Medium + C++",tasks:["C++: vector<int> indegree(n,0); for(auto& e: edges) indegree[e[1]]++;","Solve: Parallel Courses — Kahn's + track max level, 35 min","Solve: Find Eventual Safe States — reverse graph + in-degree"]},
+      Thu:{label:"Stretch",tasks:["Solve: Minimum Height Trees — find centroids via leaf-trimming, 40 min","Solve: Sequence Reconstruction — check if only one valid order, 40 min","Solve: Find All Possible Recipes — topo sort with external ingredients"]},
+      Fri:{label:"Bridge",tasks:["Attempt: Alien Dictionary — extract constraints from sorted word pairs, 45 min","Mix: one DSU problem from Week 18","Pattern: when does DAG appear in disguise?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Alien Dictionary — complete, 60 min","Solve: Sort Items by Groups — multi-level topo sort, 45 min","Solve: Largest Color Value in DAG — DP on DAG, 45 min","Attempt: Longest Increasing Path in Matrix — DFS + memoization"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Course Schedule II + Alien Dictionary","Revision: Kahn's algorithm from memory — pseudocode","Flashcards: topo sort vs DFS — which is easier to implement?","Codeforces: problem with ordering / dependency"]},
+    },
+    problems:["Course Schedule","Course Schedule II","Parallel Courses","Find Eventual Safe States","Minimum Height Trees","Sequence Reconstruction","Find All Possible Recipes","Alien Dictionary","Sort Items by Groups","Longest Inc Path Matrix"],
+    patterns_unlocked:["Topological Sort — Kahn's BFS","Topological Sort — DFS (3-color)"]
+  },
+  {
+    week:20, month:5, topic:"Shortest Paths — Dijkstra + Bellman-Ford + Floyd", pattern:"Dijkstra · Bellman-Ford · Floyd-Warshall · 0-1 BFS",
+    cpp:"priority_queue for Dijkstra, adjacency with weights",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Dijkstra — min-heap with (dist, node). Stale entry check: if d > dist[u] continue.","Study: Bellman-Ford — relax ALL edges n-1 times. Negative cycle: n-th relax still updates.","Study: Floyd-Warshall — dp[i][j][k] = min(dp[i][j][k-1], dp[i][k][k-1]+dp[k][j][k-1])"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Network Delay Time — Dijkstra from source, 35 min","Solve: Path with Minimum Effort — modified Dijkstra, max edge, 35 min","Solve: Path with Max Probability — max-heap, multiply probabilities, 30 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: vector<pair<int,int>> adj[n]; — (neighbor, weight)","auto [d, u] = pq.top(); pq.pop(); — structured bindings","Solve: Cheapest Flights Within K Stops — Bellman-Ford, 40 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Find the City (Floyd-Warshall) — all pairs, 40 min","Solve: Minimum Cost to Connect All Points — Prim's/Kruskal's MST, 40 min","Understand: 0-1 BFS — deque: 0-weight edges to front, 1-weight to back"]},
+      Fri:{label:"Bridge",tasks:["Solve: Minimum Weighted Subgraph with Required Paths — 3 Dijkstra, 45 min","Monthly review: Month 5 patterns — list all graph patterns from memory","Mix: any Week 17–19 problem"]},
+      Sat:{label:"Deep Drill + Month End",tasks:["Solve: Shortest Path Obstacles Elimination — BFS with state, 45 min","Solve: K-th Shortest Path — Yen's or modified Dijkstra","Solve: Reachable Nodes in Subdivided Graph","Month-end: timed sprint — 2 hard graph problems in 90 min"]},
+      Sun:{label:"Month 5 Mock",tasks:["MONTH-END MOCK (2 hrs): 3 graph problems — BFS + DSU + Dijkstra","Full review: write ALL Month 5 patterns from memory","LeetCode: contest — aim for 3 problems","System Design (45 min): Design a distributed key-value store — consistent hashing"]},
+    },
+    problems:["Network Delay Time","Path Min Effort","Path Max Probability","Cheapest Flights K Stops","Find the City","Min Cost Connect Points","Shortest Path Obstacles Elim","Min Weighted Subgraph","K-th Shortest Path","Reachable Nodes Graph"],
+    patterns_unlocked:["Dijkstra (Single-Source Shortest)","Bellman-Ford (Negative Edges)"]
+  },
+
+  // ── MONTH 6: Heaps + Greedy + Seg Tree ──
+  {
+    week:21, month:6, topic:"Heap / Priority Queue", pattern:"Top-K · Two-Heap Median · Merge K Sorted · Task Scheduling",
+    cpp:"priority_queue custom comparator, pair sorting",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Top-K smallest — max-heap of size K. If new < top, replace.","Study: Two-heap median — max-heap left half, min-heap right half","Study: Merge K sorted — min-heap with (val, listIdx, elemIdx)"]},
+      Tue:{label:"Easy+Medium Drill",tasks:["Solve: Last Stone Weight — max-heap simulation, 20 min","Solve: Kth Largest Element — min-heap size K, 25 min","Solve: K Closest Points to Origin — min-heap on distance, 25 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: priority_queue<int, vector<int>, greater<int>> minHeap;","Custom: auto cmp=[](pair<int,int> a, pair<int,int> b){return a.first>b.first;};","Solve: Top K Frequent Words — PQ with custom lexicographic order, 35 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Reorganize String — max-heap by frequency, 35 min","Solve: Task Scheduler — frequency + cooldown calculation, 40 min","Solve: Merge k Sorted Lists — min-heap approach, 40 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Kth Smallest in Sorted Matrix — min-heap BFS, 35 min","Mix: one graph problem from Month 5","PQ check: can you write min-heap and max-heap without notes?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Find Median from Data Stream — two-heap, 45 min","Solve: Sliding Window Median — two-heap + lazy deletion, hard","Solve: IPO — two PQs: available + locked, 40 min","Attempt: Find K Pairs Smallest Sums — min-heap"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Find Median Data Stream + Task Scheduler","Revision: two-heap median invariant — write balance condition","Flashcards: PQ custom comparator syntax in C++","LeetCode: contest"]},
+    },
+    problems:["Last Stone Weight","Kth Largest Element","K Closest Points","Top K Frequent Words","Reorganize String","Task Scheduler","Merge k Sorted Lists","Kth Smallest Sorted Matrix","Find Median Data Stream","Sliding Window Median"],
+    patterns_unlocked:["Heap — Top-K Elements","Heap — Two-Heap Median","Heap — Merge K Sorted"]
+  },
+  {
+    week:22, month:6, topic:"Greedy Algorithms", pattern:"Sort by End Time · Jump Game · Exchange Argument · Gas Station",
+    cpp:"std::sort with lambda, interval sorting",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: greedy correctness — local optimal leads to global optimal (exchange argument)","Study: activity selection — sort by END time, greedily pick non-overlapping","Study: jump game — track max_reach; if i > max_reach → stuck"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Assign Cookies — sort both, two pointers, 20 min","Solve: Lemonade Change — greedy simulation, 20 min","Solve: Jump Game — track max reachable index, 20 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: sort(intervals.begin(), intervals.end(), [](auto& a, auto& b){return a[1]<b[1];});","Solve: Non-overlapping Intervals — sort by end, count removed, 30 min","Solve: Minimum Arrows to Burst Balloons — sort by end, 30 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Jump Game II — min jumps, track current range end, 35 min","Solve: Gas Station — if total gas >= total cost → solution exists, 30 min","Solve: Partition Labels — for each char, find last occurrence, 30 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Queue Reconstruction by Height — sort taller first, insert by k, 35 min","Solve: Candy — two pass greedy (left-right + right-left), 35 min","Mix: one heap problem from Week 21"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Course Schedule III — max-heap + greedy, 45 min","Solve: Minimum Cost to Connect Ropes — always merge cheapest two (heap)","Solve: Largest Number — custom sort comparator trick","Attempt: IPO if not fully solved last week"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Non-overlapping Intervals + Course Schedule III","Revision: when does greedy FAIL? Write 2 counterexamples.","Flashcards: jump game pattern — reach farthest","Codeforces: greedy problem attempt"]},
+    },
+    problems:["Assign Cookies","Lemonade Change","Jump Game","Non-overlapping Intervals","Min Arrows Burst Balloons","Jump Game II","Gas Station","Partition Labels","Queue Reconstruction Height","Course Schedule III"],
+    patterns_unlocked:["Greedy — Exchange Argument"]
+  },
+  {
+    week:23, month:6, topic:"Segment Tree + Fenwick Tree", pattern:"Point Update + Range Query · Count Inversions · 2D BIT",
+    cpp:"BIT update/query functions, segment tree build",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Fenwick Tree — update(i,d): while i<=n: tree[i]+=d, i+=i&-i","Study: BIT query(i): while i>0: s+=tree[i], i-=i&-i; return s","Note: BIT is 1-indexed! Always +1 when converting from 0-indexed"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Range Sum Query - Mutable — BIT implementation, 40 min","Solve: Range Sum Query 2D - Mutable — 2D BIT, 45 min","Implement BIT from scratch — without notes, in 15 min"]},
+      Wed:{label:"Hard + C++",tasks:["C++: auto upd=[&](int i,int d){for(i++;i<=n;i+=i&-i) bit[i]+=d;};","Solve: Count of Smaller Numbers After Self — BIT + coordinate compression, 45 min","Trace: count smaller on [5,2,6,1] step by step"]},
+      Thu:{label:"Stretch",tasks:["Solve: Count of Range Sum — hard, merge sort or BIT, 45 min","Solve: Reverse Pairs — merge sort or BIT, 45 min","Understand: why merge sort also solves inversion count problems?"]},
+      Fri:{label:"Bridge",tasks:["Solve: Number of Longest Increasing Subsequence — BIT + DP, 45 min","Mix: one greedy problem from Week 22","When is BIT better than segment tree? Write your answer."]},
+      Sat:{label:"Deep Drill",tasks:["Solve: My Calendar III — segment tree or sorted map, 45 min","Solve: Falling Squares — coordinate compression + segment tree","Solve: Rectangle Area II — sweep line + segment tree","Review: count inversions via merge sort (no BIT) as alternative"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Count Smaller + My Calendar III","Revision: write BIT update AND query from memory in 3 min","Flashcards: BIT vs prefix sum — when to use each","LeetCode: contest"]},
+    },
+    problems:["Range Sum Query Mutable","Range Sum Query 2D Mutable","Count Smaller Numbers After Self","Count of Range Sum","Reverse Pairs","Number of LIS","My Calendar III","Falling Squares","Rectangle Area II","Count Inversions"],
+    patterns_unlocked:["Segment Tree (Point Update, Range Query)","Fenwick Tree (BIT)"]
+  },
+  {
+    week:24, month:6, topic:"Advanced Backtracking", pattern:"Hard Backtracking · Trie+BT · Expression Building",
+    cpp:"bitmask tracking, string building by reference",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: hard backtracking — combine Trie pruning with DFS","Study: expression evaluation in backtracking — track current value","Key: for expression operators, track prev_term to handle multiplication correctly"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Word Search — DFS + visited matrix, 35 min","Solve: Palindrome Partitioning — backtracking + isPalindrome check, 35 min","Solve: Restore IP Addresses — 4 segments, range validation, 30 min"]},
+      Wed:{label:"Hard + C++",tasks:["C++: pass result by reference, current string by reference","Solve: Remove Invalid Parentheses — BFS on states or backtracking, 40 min","Solve: Letter Tile Possibilities — count distinct arrangements, 35 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Expression Add Operators — backtrack with currentVal + prevTerm, 45 min","Solve: Beautiful Arrangement — check divisibility, backtrack, 35 min","Solve: Strobogrammatic Number II — recursive build outward, 35 min"]},
+      Fri:{label:"Bridge + Month End",tasks:["Monthly review: list ALL Month 6 patterns from memory","Solve: 24 Game — try all orderings of 4 numbers and 4 operators","Mix: any hard problem from Month 1–5 you want to revisit"]},
+      Sat:{label:"Deep Drill + Month End",tasks:["Solve: Zuma Game — interval DP or backtracking, 60 min","Solve: N-Queens II — count solutions only, optimize with bitmask","Month-end sprint: 2 hard problems in 90 min — no hints","Self-assessment: which patterns are you still shaky on?"]},
+      Sun:{label:"Month 6 Mock",tasks:["MONTH-END MOCK (2 hrs): 3 problems — heap + greedy + backtracking","Full review: ALL Month 6 patterns from memory","LeetCode: contest — aim for 3–4 problems","System Design (45 min): Design a rate limiter — token bucket vs sliding window"]},
+    },
+    problems:["Word Search","Palindrome Partitioning","Restore IP Addresses","Remove Invalid Parentheses","Letter Tile Possibilities","Expression Add Operators","Beautiful Arrangement","Strobogrammatic Number II","24 Game","Zuma Game"],
+    patterns_unlocked:[]
+  },
+
+  // ── MONTH 7: Dynamic Programming ──
+  {
+    week:25, month:7, topic:"DP Foundations + 1D Linear DP", pattern:"Linear DP · House Robber · State Machine (Stocks)",
+    cpp:"dp array vs rolling variables, space optimization",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: DP = overlapping subproblems + optimal substructure","4 steps: 1)Define dp[i] 2)Recurrence 3)Base cases 4)Fill order","State machine DP: draw state diagram FIRST, then code transitions"]},
+      Tue:{label:"Easy Drill",tasks:["Solve: Climbing Stairs — 20 min (can you do O(1) space?)","Solve: Min Cost Climbing Stairs — 20 min","Solve: House Robber — 25 min (rolling 2 variables!)"]},
+      Wed:{label:"Medium + C++",tasks:["C++: int prev2=0, prev1=0; for(auto x:nums){int curr=max(prev1, prev2+x); prev2=prev1; prev1=curr;}","Solve: House Robber II — circular: max(rob[0..n-2], rob[1..n-1]), 35 min","Solve: Decode Ways — careful edge cases (leading zeros), 35 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Best Time Buy/Sell w/ Cooldown — 3 states: rest/hold/sold, 40 min","Solve: Best Time Buy/Sell w/ Fee — 2 states, 30 min","Solve: Coin Change — dp[amount] = min coins, 35 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Word Break — dp[i] = can we form s[0..i-1]?, 35 min","Mix: one graph problem from Month 5","State machine: can you explain stocks with cooldown using a state diagram?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Best Time Buy/Sell III (2 transactions) — 5 states or 2 arrays, 45 min","Solve: Best Time Buy/Sell IV (k transactions) — generalize, 45 min","Solve: Coin Change II — count ways, inner loop order matters!, 35 min","Solve: Paint House III — 3D DP, 40 min"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Coin Change + Best Time Stocks Cooldown","Revision: draw state machine for stocks with cooldown — without notes","Flashcards: bottom-up vs top-down — when to use each?","LeetCode: contest"]},
+    },
+    problems:["Climbing Stairs","Min Cost Climbing Stairs","House Robber","House Robber II","Decode Ways","Coin Change","Coin Change II","Best Time Stocks Cooldown","Word Break","Best Time Stocks IV"],
+    patterns_unlocked:["DP — Linear 1D (Fibonacci family)","DP — State Machine (Stocks)"]
+  },
+  {
+    week:26, month:7, topic:"Knapsack DP + LIS", pattern:"0/1 Knapsack · Unbounded Knapsack · LIS O(n log n)",
+    cpp:"2D dp array, rolling array optimization",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: 0/1 Knapsack — dp[i][w], each item used once. Inner loop BACKWARD for 1D.","Study: Unbounded Knapsack — each item reusable. Inner loop FORWARD.","LIS O(n log n): patience sort with tails array + binary search"]},
+      Tue:{label:"Medium Drill",tasks:["Solve: Partition Equal Subset Sum — 0/1 Knapsack variant, 35 min","Solve: Target Sum — count ways (knapsack count), 35 min","Solve: Longest Increasing Subsequence — O(n²) first, then O(n log n), 40 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: for(int i=n-1;i>=0;i--) for(int w=target;w>=nums[i];w--) dp[w]=max(dp[w], dp[w-nums[i]]+1);","Solve: Ones and Zeroes — 2D knapsack, 40 min","Solve: Last Stone Weight II — partition into two halves, 35 min"]},
+      Thu:{label:"Stretch",tasks:["Solve: Longest Divisible Subset — LIS variant with division check, 40 min","Solve: Maximum Length of Pair Chain — LIS on intervals, 35 min","Solve: Number of LIS — count all longest sequences, 40 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Uncrossed Lines — exactly same as LCS! 30 min","Mix: one heap problem from Week 21","Knapsack check: can you identify 0/1 vs unbounded in 1 minute?"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Russian Doll Envelopes — sort + LIS, 45 min","Solve: Count Square Submatrices with All Ones — DP, 35 min","Solve: Profitable Schemes — 2D knapsack, 45 min","Solve: Number Dice Rolls with Target — 2D DP, 35 min"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Partition Equal Subset Sum + Russian Doll Envelopes","Revision: LIS O(n log n) — write patience sort from memory","Flashcards: forward vs backward inner loop — when each?","Codeforces: DP problem attempt"]},
+    },
+    problems:["Partition Equal Subset Sum","Target Sum","Longest Increasing Subsequence","Ones and Zeroes","Last Stone Weight II","Longest Divisible Subset","Number of LIS","Uncrossed Lines","Russian Doll Envelopes","Count Square Submatrices"],
+    patterns_unlocked:["DP — 0/1 and Unbounded Knapsack"]
+  },
+  {
+    week:27, month:7, topic:"LCS + Edit Distance + Grid DP", pattern:"LCS dp[i][j] · Edit Distance · Min Path Sum · Maximal Square",
+    cpp:"2D dp, space optimization to O(n)",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: LCS — if chars match: dp[i][j]=dp[i-1][j-1]+1. Else: max(left, top).","Study: Edit Distance — if match: dp[i-1][j-1]. Else: 1+min(left, top, diag).","Study: Grid DP — dp[i][j] depends on dp[i-1][j] and dp[i][j-1]"]},
+      Tue:{label:"Easy+Medium Drill",tasks:["Solve: Unique Paths — dp[i][j]=dp[i-1][j]+dp[i][j-1], 20 min","Solve: Minimum Path Sum — grid DP, 25 min","Solve: Longest Common Subsequence — 35 min"]},
+      Wed:{label:"Medium + C++",tasks:["C++: optimize LCS to O(n) space with rolling row — prev[] and curr[]","Solve: Delete Operations for Two Strings — LCS variant, 30 min","Solve: Edit Distance — 35 min (test on 'horse'→'ros')"]},
+      Thu:{label:"Stretch",tasks:["Solve: Distinct Subsequences — count ways s contains t, 40 min","Solve: Maximal Square — dp[i][j]=min(3 neighbors)+1, 35 min","Solve: Interleaving String — 2D DP, 40 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Triangle — min path from top to bottom, 30 min","Solve: Minimum ASCII Delete Sum — LCS variant, 30 min","Mix: one knapsack problem from Week 26"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Dungeon Game — work backwards! dp[i][j] = min health needed, 45 min","Solve: Cherry Pickup — simultaneous paths, DP with 3D state, 60 min","Solve: Unique Paths II — with obstacles, 25 min","Review: edit distance space optimization — O(n) rolling row"]},
+      Sun:{label:"Mock + Revision",tasks:["MOCK (90 min): Edit Distance + Maximal Square","Revision: LCS vs Edit Distance — write both recurrences from memory","Flashcards: when to work BACKWARDS in DP? (Dungeon Game, stocks IV)","LeetCode: contest"]},
+    },
+    problems:["Unique Paths","Min Path Sum","Longest Common Subsequence","Delete Op Two Strings","Edit Distance","Distinct Subsequences","Maximal Square","Interleaving String","Triangle","Dungeon Game"],
+    patterns_unlocked:["DP — LCS / Edit Distance (2D)","DP — Grid Paths"]
+  },
+  {
+    week:28, month:7, topic:"Interval DP + Tree DP + Bitmask DP", pattern:"Burst Balloons · Tree DP · Bitmask dp[mask][i]",
+    cpp:"bitmask enumeration, submask iteration",
+    days:{
+      Mon:{label:"Learn",tasks:["Study: Interval DP — for len in 2..n: for l in 0..n-len: r=l+len-1. Try all split points k.","Study: Tree DP — post-order, combine children results at each node","Study: Bitmask DP — state = which elements are 'used'. dp[mask][last]"]},
+      Tue:{label:"Medium+Hard Drill",tasks:["Solve: Palindromic Substrings — dp[l][r] = is palindrome, 30 min","Solve: House Robber III — tree DP: at each node return (rob, skip), 35 min","Solve: Palindrome Partitioning II — min cuts, interval DP, 40 min"]},
+      Wed:{label:"Hard + C++",tasks:["C++: for(int mask=0;mask<(1<<n);mask++) for(int i=0;i<n;i++) if(mask>>i&1) {...}","Solve: Burst Balloons — dp[l][r] = k is LAST balloon in range, 45 min","Trace: Burst Balloons on [1,2,3] — why k is last not first?"]},
+      Thu:{label:"Stretch",tasks:["Solve: Strange Printer — dp[l][r] = min turns to print s[l..r], 45 min","Solve: Shortest Path Visiting All Nodes — bitmask BFS, 45 min","Solve: Binary Tree Cameras — 3-state tree DP (covered/not/has-camera), 40 min"]},
+      Fri:{label:"Bridge",tasks:["Solve: Maximize Score After N Operations — bitmask DP, 45 min","Monthly review: ALL DP patterns — list from memory","Mix: one interval/tree DP problem you found hardest"]},
+      Sat:{label:"Deep Drill + Month End",tasks:["Solve: Number of Ways to Wear Hats — bitmask DP, 50 min","Solve: Stickers to Spell Word — bitmask BFS/DP, 50 min","Solve: Remove Boxes — very hard interval DP, 60 min","Month-end: attempt any DP hard you haven't solved yet"]},
+      Sun:{label:"Month 7 Mock",tasks:["MONTH-END MOCK (2 hrs): 3 DP problems — linear + 2D + interval/bitmask","Full review: ALL 7 DP patterns from memory, with recurrence","LeetCode: contest — aim for 4 problems","System Design (45 min): Design a chat system — WebSockets, fan-out, message queue"]},
+    },
+    problems:["Palindromic Substrings","House Robber III","Palindrome Partitioning II","Burst Balloons","Strange Printer","Shortest Path Visiting All Nodes","Binary Tree Cameras","Maximize Score N Ops","Number Ways Wear Hats","Remove Boxes"],
+    patterns_unlocked:["DP — Bitmask / Interval / Tree"]
+  },
+
+  // ── MONTH 8: Google Simulation ──
+  {
+    week:29, month:8, topic:"Mixed Pattern Integration", pattern:"Cross-pattern problems — Identify the combination",
+    cpp:"All C++ techniques combined",
+    days:{
+      Mon:{label:"Integration Hard",tasks:["Solve: Frog Jump — DP + HashSet for allowed jump sizes, 45 min","Before coding: name the PATTERN COMBINATION — then code","Pattern log: write what two patterns you combined"]},
+      Tue:{label:"Integration Hard",tasks:["Solve: Bus Routes — BFS on route sets, 45 min","Solve: Number of Atoms — Stack + sorted map, 45 min","For each: state the pattern blend before writing a line of code"]},
+      Wed:{label:"Integration Hard",tasks:["Solve: Race Car — BFS or DP on (position, speed) states, 50 min","Solve: Max Sum of Rectangle No Larger Than K — prefix + sorted set, 45 min"]},
+      Thu:{label:"Google Tagged",tasks:["Solve: Text Justification — pure simulation, 45 min","Solve: Minimum Window Subsequence — DP or two-pointer, 45 min","Both are common Google phone screen problems"]},
+      Fri:{label:"Bridge",tasks:["Solve: Concatenated Words — Trie + DP combination, 45 min","Weakness review: which topics from Months 1–7 feel shakiest?","Make a list: top 5 patterns to review this month"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Jump Game VI — Deque DP, 40 min","Solve: Count Submatrices with Sum K — 2D prefix, 40 min","Solve: Max Points on a Line — hashing rational slopes, 45 min","Attempt: Word Ladder II — BFS + DFS, 60 min"]},
+      Sun:{label:"Mock + Review",tasks:["MOCK (90 min): two hard mixed-pattern problems, timed strictly","Review: identify the pattern combo for each problem after mock","Codeforces Div.2: full contest attempt","Weakness drill: solve 2 problems in your weakest pattern"]},
+    },
+    problems:["Frog Jump","Bus Routes","Number of Atoms","Race Car","Max Sum Rectangle <= K","Text Justification","Min Window Subsequence","Concatenated Words","Jump Game VI","Max Points on Line"],
+    patterns_unlocked:[]
+  },
+  {
+    week:30, month:8, topic:"Google-Tagged Problem Bank", pattern:"Reported in Google phone/onsite rounds",
+    cpp:"Clean code, edge case handling, follow-up readiness",
+    days:{
+      Mon:{label:"Google Tagged",tasks:["Solve: Count Different Palindromic Subsequences — DP, 50 min","Solve: Strobogrammatic Number II — recursive build, 40 min"]},
+      Tue:{label:"Google Tagged",tasks:["Solve: Smallest Good Base — math + binary search, 45 min","Solve: Stone Game VII — interval DP, 40 min"]},
+      Wed:{label:"Google Tagged",tasks:["Solve: Cherry Pickup II — 3D DP two people same grid, 50 min","Solve: Number of Music Playlists — DP with constraints, 45 min"]},
+      Thu:{label:"Google Tagged",tasks:["Solve: Find Shortest Superstring — bitmask DP + Hamiltonian, 60 min","Solve: Largest Color Value in DAG — topo sort + DP, 50 min"]},
+      Fri:{label:"Review + Weak Areas",tasks:["Re-solve your 3 hardest problems from this month without notes","Write: for each, what pattern did you miss first time?","Identify: one pattern area still shaky, schedule extra drills"]},
+      Sat:{label:"Deep Drill",tasks:["Solve: Make Array Strictly Increasing — DP + binary search, 50 min","Solve: Minimum Difficulty of Job Schedule — 2D DP, 45 min","Solve: Painting Grid with 3 Colors — DP with valid row transitions, 50 min","Solve: Count Vowels Permutation — matrix exponentiation or DP, 40 min"]},
+      Sun:{label:"Mock + Strategy",tasks:["MOCK (90 min): 2 hard Google-tagged problems, full interview simulation","After mock: review EVERY step of Google problem-solving framework","Re-read: 8 interview mistakes — check which you still make","LeetCode: Weekly Contest — track rank, aim top 20%"]},
+    },
+    problems:["Count Palindromic Subsequences","Strobogrammatic Number II","Smallest Good Base","Stone Game VII","Cherry Pickup II","Number Music Playlists","Find Shortest Superstring","Largest Color Value DAG","Make Array Strictly Increasing","Min Difficulty Job Schedule"],
+    patterns_unlocked:[]
+  },
+  {
+    week:31, month:8, topic:"Mock Interview Blitz", pattern:"Full simulation — 3 complete mock sessions",
+    cpp:"Speak complexity, write clean code, handle follow-ups",
+    days:{
+      Mon:{label:"Prep",tasks:["Pick 5 problems from Months 1–7 you're least confident on","Re-solve all 5, timed 30 min each, absolutely no hints","Write post-mortem: what did you miss?"]},
+      Tue:{label:"MOCK #1",tasks:["MOCK SESSION (90 min): 2 problems — Arrays/DP mix, 45 min each","Strict: think aloud entire time. No silence > 30 seconds.","After: score yourself — pattern ID, brute→optimal, code quality, follow-up"]},
+      Wed:{label:"Drill Weakness",tasks:["Fix every weakness found in Mock #1","Solve 2–3 problems in your weakest identified area","Review Google problem-solving framework — step by step"]},
+      Thu:{label:"MOCK #2",tasks:["MOCK SESSION (90 min): 2 problems — Trees/Graphs mix, 45 min each","Focus: edge cases stated BEFORE coding, not after","After: score yourself on all 5 criteria"]},
+      Fri:{label:"Drill + Review",tasks:["Fix weaknesses from Mock #2","Codeforces Div.2: attempt B + C problems in contest format","Review: system design — 5 key systems (URL shortener, rate limiter, KV store, chat, autocomplete)"]},
+      Sat:{label:"MOCK #3 (Big One)",tasks:["MOCK SESSION (2.5 hrs): 4 problems — full onsite simulation","Format: 1 easy (20 min), 2 medium (40 min each), 1 hard (50 min)","Score on ALL criteria. Identify the ONE thing to fix."]},
+      Sun:{label:"Deep Debrief",tasks:["Debrief ALL 3 mocks: patterns, where you got stuck, timing","Fix the ONE thing identified in Mock #3","Re-read: common Google interview mistakes — especially senior engineer ones","Plan Week 32: what final problems to focus on?"]},
+    },
+    problems:["2 problems from Mock #1","2 problems from Mock #2","4 problems from Mock #3","3 Codeforces problems","System design: URL shortener","System design: rate limiter"],
+    patterns_unlocked:[]
+  },
+  {
+    week:32, month:8, topic:"Final Review + Mental Prep", pattern:"Consolidation — 47 patterns mastered",
+    cpp:"All patterns — final template review",
+    days:{
+      Mon:{label:"Re-solve Mistakes",tasks:["Re-solve: your top 5 'mistakes' from any mock in Month 8","If stuck after 20 min → look up approach, immediately re-implement without looking","Write: why did you get it wrong the first time?"]},
+      Tue:{label:"Pattern Templates",tasks:["Write from memory (no notes): Binary Search, Sliding Window, Two Pointers templates","Write from memory: BFS, DFS, Dijkstra, Union-Find templates","Write from memory: Backtracking, 0/1 Knapsack, LCS templates"]},
+      Wed:{label:"Re-solve Mistakes",tasks:["Re-solve: 3 problems from Months 4–5 (Trees + Graphs) you found hardest","Focus on clean code, correct complexity analysis, clear variable names","Practice explaining your approach out loud to yourself"]},
+      Thu:{label:"Final Mock",tasks:["FINAL MOCK (2.5 hrs): 4 problems — full Google onsite simulation","After: honest self-assessment — are you consistently performing at the level you need?","Identify any last-minute gaps and address Friday"]},
+      Fri:{label:"Final Gaps",tasks:["Address any gap from the Thursday mock","Light review: all 47 pattern names and which month they come from","Rest: no new hard problems today. Protect your mental energy."]},
+      Sat:{label:"Light Review",tasks:["Flashcard review: all patterns — 30 min","Read: Google interview tips and mental preparation (30 min)","System design: review 5 designs one more time quickly","Rest early. Sleep 8 hours before any interview."]},
+      Sun:{label:"Ready.",tasks:["You started Feb 23, 2026. You've now completed 32 weeks.","You've solved 350+ problems. You know 47 patterns.","You've done 8+ full mock interviews.","Trust your preparation. You are ready for Google. 🎯"]},
+    },
+    problems:["5 re-solved mistake problems","3 hard problems from Months 4–5","4 final mock problems","Pattern template writing","System design review","Mental preparation"],
+    patterns_unlocked:[]
+  }
+];
+
+const MONTHLY_GOALS = [
+  {
+    month:1, title:"Arrays, Strings, Recursion", dates:"Feb 23 – Mar 22, 2026",
+    goals:[
+      "Solve any easy problem in under 10 minutes consistently",
+      "Identify hashing patterns and two-pointer patterns on sight",
+      "Write backtracking template (choose-explore-unchoose) from memory",
+      "Comfortable with vector, unordered_map, string in C++ without googling",
+      "40+ problems attempted, 30+ solved independently (no hints)",
+      "Maintain a pattern notebook — every problem labeled with its pattern",
+      "Complete 1 LeetCode weekly contest (solve at least problem 1)",
+      "Complete 1 Codeforces Div.3/4 contest (solve A+B problems)"
+    ],
+    milestone:"44 problems · Patterns: Linear Scan, Hashing, Two Pointers, Backtracking",
+    target_problems:44
+  },
+  {
+    month:2, title:"Sliding Window + Binary Search", dates:"Mar 23 – Apr 19, 2026",
+    goals:[
+      "Identify fixed vs dynamic sliding window instantly without hesitation",
+      "Write binary search on answer (parametric search) from scratch",
+      "Prefix sum + hashmap: count subarray sums in O(n)",
+      "~90 total problems attempted, 70+ solved",
+      "Codeforces: solved a Div.3 C-level problem",
+      "Complete Month 1+2 pattern review — name all 10 patterns",
+      "LeetCode: solved 2 problems in one weekly contest",
+      "System Design: understand what caching and CDN are at high level"
+    ],
+    milestone:"90 total problems · Patterns: Prefix Sum, Sliding Window, Binary Search (all 3 variants)",
+    target_problems:90
+  },
+  {
+    month:3, title:"Linked Lists, Stacks, Queues", dates:"Apr 20 – May 17, 2026",
+    goals:[
+      "Implement linked list reversal (iterative) without looking at notes",
+      "Monotonic stack: identify increasing vs decreasing direction correctly every time",
+      "Write Floyd's cycle detection from memory in under 3 minutes",
+      "~135 total problems attempted",
+      "Comfortable with stack<>, queue<>, deque<> — all operations",
+      "LRU Cache: implement from scratch (doubly linked list + hashmap)",
+      "Monotonic stack: solved Largest Rectangle in Histogram correctly",
+      "Codeforces: rating improving, attempting D-level problems"
+    ],
+    milestone:"135 total problems · Patterns: Fast/Slow, LL Reversal, Monotonic Stack, Deque",
+    target_problems:135
+  },
+  {
+    month:4, title:"Trees + Tries", dates:"May 18 – Jun 14, 2026",
+    goals:[
+      "Tree DFS: immediately know top-down vs bottom-up for any tree problem",
+      "Implement Trie with insert/search/startsWith from scratch in < 15 min",
+      "BST: validate with bounds (minVal, maxVal), NOT parent comparison",
+      "~180 total problems attempted",
+      "Solved Binary Tree Maximum Path Sum independently",
+      "Completed Word Search II (Trie + DFS) — the hardest Trie problem",
+      "BST Iterator: lazy inorder with explicit stack",
+      "LeetCode: consistently solving 2–3 problems per weekly contest"
+    ],
+    milestone:"180 total problems · Patterns: Tree DFS (both), Tree BFS, BST, Trie, Trie+DFS",
+    target_problems:180
+  },
+  {
+    month:5, title:"Graphs + Shortest Paths", dates:"Jun 15 – Jul 12, 2026",
+    goals:[
+      "Dijkstra: implement with priority_queue from memory in < 15 min",
+      "Union-Find with path compression + rank — correctly from memory in < 10 min",
+      "Topological sort: both Kahn's and DFS 3-color, both from memory",
+      "~230 total problems attempted",
+      "Solved Alien Dictionary — the hardest topological sort problem",
+      "Codeforces: solved a Div.2 C problem involving graphs",
+      "BFS/DFS: 4-directional grid traversal feels completely natural",
+      "System Design: understand consistent hashing and distributed systems basics"
+    ],
+    milestone:"230 total problems · Patterns: BFS, DFS, Multi-BFS, DSU, TopoSort, Dijkstra, Bellman-Ford",
+    target_problems:230
+  },
+  {
+    month:6, title:"Heaps, Greedy, Segment Tree", dates:"Jul 13 – Aug 9, 2026",
+    goals:[
+      "Two-heap median: implement with correct balance invariant from memory",
+      "Greedy: correctly identify exchange argument proof for 3 problems",
+      "BIT (Fenwick Tree): write update and query from memory in < 5 min",
+      "~280 total problems attempted",
+      "Completed hard backtracking: Expression Add Operators or equivalent",
+      "LeetCode: consistently finishing top 25% in weekly contests",
+      "Segment Tree: lazy propagation understood (even if not memorized)",
+      "System Design: rate limiter design with token bucket vs sliding window"
+    ],
+    milestone:"280 total problems · Patterns: Heap (all 3), Greedy, BIT, Segment Tree, Hard BT",
+    target_problems:280
+  },
+  {
+    month:7, title:"Dynamic Programming — Full Spectrum", dates:"Aug 10 – Sep 6, 2026",
+    goals:[
+      "Solve Coin Change, LCS, Edit Distance from scratch — no hints, < 30 min each",
+      "Identify knapsack type (0/1 vs unbounded) in under 2 minutes",
+      "State machine DP: draw state diagram then code directly for stock problems",
+      "~340 total problems attempted",
+      "Bitmask DP: solved TSP-style problem (Shortest Path Visiting All Nodes)",
+      "Burst Balloons solved — the hardest interval DP",
+      "LCS space optimization: O(n) space with rolling array",
+      "LeetCode: scoring 3+ problems in weekly contests regularly"
+    ],
+    milestone:"340 total problems · Patterns: Linear DP, State Machine, Knapsack, LCS, Grid, Interval, Tree, Bitmask DP",
+    target_problems:340
+  },
+  {
+    month:8, title:"Google Simulation Sprint", dates:"Sep 7 – Oct 4, 2026",
+    goals:[
+      "Any medium problem solved in under 25 minutes consistently",
+      "Most hard problems: identify approach within 10 min, code within 40 min",
+      "Completed 3 full mock interview sessions in Week 31",
+      "350+ total problems solved over 8 months",
+      "Pattern recognition: name the pattern for any problem in < 3 minutes",
+      "Write clean, bug-free C++ code with meaningful variable names",
+      "Handle follow-up questions with structured reasoning",
+      "LeetCode rating: 1800+ or consistent top 20% in weekly contests"
+    ],
+    milestone:"350+ total problems · All 47 patterns mastered · Google-Ready",
+    target_problems:350
+  }
+];
+
+const ALL_PATTERNS = [
+  {id:1,name:"Linear Scan / Min-Max Track",month:1,topic:"Arrays"},
+  {id:2,name:"Frequency Count (Hash Map)",month:1,topic:"Strings"},
+  {id:3,name:"Seen-Before (Hash Set)",month:1,topic:"Strings"},
+  {id:4,name:"Anagram Grouping (Sort Key)",month:1,topic:"Strings"},
+  {id:5,name:"Two Pointers — Opposite Ends",month:1,topic:"Arrays"},
+  {id:6,name:"Two Pointers — Same Direction",month:1,topic:"Arrays"},
+  {id:7,name:"Dutch National Flag",month:1,topic:"Arrays"},
+  {id:8,name:"Backtracking (Choose-Explore-Unchoose)",month:1,topic:"Recursion"},
+  {id:9,name:"Backtracking — Pruning",month:1,topic:"Recursion"},
+  {id:10,name:"Prefix Sum (1D)",month:2,topic:"Arrays"},
+  {id:11,name:"Prefix Sum + HashMap (subarray count)",month:2,topic:"Arrays"},
+  {id:12,name:"2D Prefix Sum",month:2,topic:"Arrays"},
+  {id:13,name:"Sliding Window — Fixed",month:2,topic:"Subarrays"},
+  {id:14,name:"Sliding Window — Dynamic",month:2,topic:"Subarrays"},
+  {id:15,name:"Binary Search — Classic",month:2,topic:"Search"},
+  {id:16,name:"Binary Search — Rotated Array",month:2,topic:"Search"},
+  {id:17,name:"Binary Search on Answer (Parametric)",month:2,topic:"Search"},
+  {id:18,name:"Fast & Slow Pointers (Floyd's)",month:3,topic:"Linked Lists"},
+  {id:19,name:"In-Place Linked List Reversal",month:3,topic:"Linked Lists"},
+  {id:20,name:"K-Group Reversal",month:3,topic:"Linked Lists"},
+  {id:21,name:"Monotonic Stack — Decreasing (NGE)",month:3,topic:"Stack"},
+  {id:22,name:"Monotonic Stack — Increasing",month:3,topic:"Stack"},
+  {id:23,name:"Monotonic Deque (Sliding Window Max)",month:3,topic:"Queue"},
+  {id:24,name:"Tree DFS — Top-Down",month:4,topic:"Trees"},
+  {id:25,name:"Tree DFS — Bottom-Up",month:4,topic:"Trees"},
+  {id:26,name:"Tree BFS — Level Order",month:4,topic:"Trees"},
+  {id:27,name:"BST Properties (Inorder = Sorted)",month:4,topic:"BST"},
+  {id:28,name:"Trie Insert / Search / StartsWith",month:4,topic:"Trie"},
+  {id:29,name:"Trie + DFS (Word Search II)",month:4,topic:"Trie"},
+  {id:30,name:"Graph BFS (Shortest Path Unweighted)",month:5,topic:"Graphs"},
+  {id:31,name:"Graph DFS (Connectivity, Flood Fill)",month:5,topic:"Graphs"},
+  {id:32,name:"Multi-Source BFS",month:5,topic:"Graphs"},
+  {id:33,name:"Union-Find (Path Compression + Rank)",month:5,topic:"Graphs"},
+  {id:34,name:"Topological Sort — Kahn's BFS",month:5,topic:"Graphs"},
+  {id:35,name:"Topological Sort — DFS (3-color)",month:5,topic:"Graphs"},
+  {id:36,name:"Dijkstra (Single-Source Shortest)",month:5,topic:"Graphs"},
+  {id:37,name:"Bellman-Ford (Negative Edges)",month:5,topic:"Graphs"},
+  {id:38,name:"Heap — Top-K Elements",month:6,topic:"Heap"},
+  {id:39,name:"Heap — Two-Heap Median",month:6,topic:"Heap"},
+  {id:40,name:"Heap — Merge K Sorted",month:6,topic:"Heap"},
+  {id:41,name:"Greedy — Exchange Argument",month:6,topic:"Greedy"},
+  {id:42,name:"Segment Tree (Point Update, Range Query)",month:6,topic:"Adv. DS"},
+  {id:43,name:"Fenwick Tree (BIT)",month:6,topic:"Adv. DS"},
+  {id:44,name:"DP — Linear 1D (Fibonacci family)",month:7,topic:"DP"},
+  {id:45,name:"DP — State Machine (Stocks)",month:7,topic:"DP"},
+  {id:46,name:"DP — 0/1 and Unbounded Knapsack",month:7,topic:"DP"},
+  {id:47,name:"DP — LCS / Edit Distance (2D)",month:7,topic:"DP"},
+  {id:48,name:"DP — Grid Paths",month:7,topic:"DP"},
+  {id:49,name:"DP — Bitmask / Interval / Tree",month:7,topic:"DP"}
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE (localStorage)
+// ═══════════════════════════════════════════════════════════
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('dsaTracker') || '{}'); } catch(e) { return {}; }
+}
+function saveState(s) { localStorage.setItem('dsaTracker', JSON.stringify(s)); }
+let STATE = loadState();
+if (!STATE.tasks) STATE.tasks = {};
+if (!STATE.goals) STATE.goals = {};
+if (!STATE.patterns) STATE.patterns = {};
+if (!STATE.problems) STATE.problems = [];
+if (!STATE.streak) STATE.streak = 0;
+if (!STATE.bestStreak) STATE.bestStreak = 0;
+if (!STATE.lastActiveDay) STATE.lastActiveDay = null;
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+function getDaysSinceStart() {
+  const now = new Date(); now.setHours(0,0,0,0);
+  const start = new Date(START_DATE); start.setHours(0,0,0,0);
+  return Math.floor((now - start) / 86400000);
+}
+function getWeekNum() { return Math.max(1, Math.min(32, Math.floor(getDaysSinceStart()/7) + 1)); }
+function getMonthNum() { return Math.max(1, Math.min(8, Math.floor(getDaysSinceStart()/28) + 1)); }
+function getDateForDay(dayOffset) {
+  const d = new Date(START_DATE);
+  d.setDate(d.getDate() + dayOffset);
+  return d;
+}
+function getWeekStart(weekNum) { return (weekNum-1)*7; }
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+function formatDateFull(d) {
+  return d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'});
+}
+function getDayOfWeek(d) {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return days[d.getDay()];
+}
+function getTaskKey(weekNum, dayName, taskIdx) {
+  return `w${weekNum}_${dayName}_t${taskIdx}`;
+}
+function isTaskDone(weekNum, dayName, taskIdx) {
+  return !!STATE.tasks[getTaskKey(weekNum, dayName, taskIdx)];
+}
+function toggleTask(weekNum, dayName, taskIdx) {
+  const key = getTaskKey(weekNum, dayName, taskIdx);
+  STATE.tasks[key] = !STATE.tasks[key];
+  saveState(STATE);
+  updateStreak();
+  refreshAll();
+}
+function isGoalDone(monthNum, goalIdx) {
+  return !!STATE.goals[`m${monthNum}_g${goalIdx}`];
+}
+function toggleGoal(monthNum, goalIdx) {
+  const key = `m${monthNum}_g${goalIdx}`;
+  STATE.goals[key] = !STATE.goals[key];
+  saveState(STATE);
+  refreshAll();
+}
+function getPatternStatus(patId) {
+  return STATE.patterns[`p${patId}`] || 0; // 0=locked/unknown, 1=learning, 2=mastered
+}
+function cyclePattern(patId, monthUnlocked) {
+  const currentWeek = getWeekNum();
+  const unlockWeek = (monthUnlocked-1)*4 + 1;
+  if (currentWeek < unlockWeek) return; // still locked
+  const cur = getPatternStatus(patId);
+  STATE.patterns[`p${patId}`] = (cur + 1) % 3;
+  saveState(STATE);
+  renderPatternGrid();
+  updateTopStats();
+}
+function getWeekTaskCompletion(weekNum) {
+  const week = WEEKS[weekNum-1];
+  if (!week) return {done:0, total:0};
+  let done=0, total=0;
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  dayNames.forEach(day => {
+    const tasks = week.days[day]?.tasks || [];
+    tasks.forEach((_, i) => {
+      total++;
+      if (isTaskDone(weekNum, day, i)) done++;
+    });
+  });
+  return {done, total};
+}
+function getTodayTaskCompletion() {
+  const dayOffset = getDaysSinceStart();
+  if (dayOffset < 0) return {done:0, total:0};
+  const weekNum = getWeekNum();
+  const week = WEEKS[weekNum-1];
+  if (!week) return {done:0, total:0};
+  const d = new Date(); 
+  const dayName = getDayOfWeek(d);
+  const dayMap = {'Mon':'Mon','Tue':'Tue','Wed':'Wed','Thu':'Thu','Fri':'Fri','Sat':'Sat','Sun':'Sun'};
+  const dn = dayMap[dayName] || 'Mon';
+  const tasks = week.days[dn]?.tasks || [];
+  let done=0;
+  tasks.forEach((_,i) => { if(isTaskDone(weekNum, dn, i)) done++; });
+  return {done, total: tasks.length};
+}
+function updateStreak() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayStr = today.toISOString().slice(0,10);
+  const {done, total} = getTodayTaskCompletion();
+  if (done > 0) {
+    if (STATE.lastActiveDay !== todayStr) {
+      const yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
+      const yStr = yesterday.toISOString().slice(0,10);
+      if (STATE.lastActiveDay === yStr) {
+        STATE.streak++;
+      } else if (!STATE.lastActiveDay) {
+        STATE.streak = 1;
+      } else {
+        STATE.streak = 1;
+      }
+      STATE.lastActiveDay = todayStr;
+      STATE.bestStreak = Math.max(STATE.bestStreak, STATE.streak);
+      saveState(STATE);
+    }
+  }
+}
+function getTotalProblems() { return STATE.problems.length; }
+function getMasteredCount() { return Object.values(STATE.patterns).filter(v=>v===2).length; }
+function getTotalHours() {
+  const dayOffset = getDaysSinceStart();
+  if (dayOffset < 0) return 0;
+  const weeks = Math.min(dayOffset/7, 32);
+  return Math.round(weeks * 11);
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: TOP STATS
+// ═══════════════════════════════════════════════════════════
+function updateTopStats() {
+  const weekNum = getWeekNum();
+  const monthNum = getMonthNum();
+  const {done, total} = getTodayTaskCompletion();
+  const totalProbs = getTotalProblems();
+  const mastered = getMasteredCount();
+  const streak = STATE.streak;
+  const dayOffset = getDaysSinceStart();
+  const pct = Math.round((Math.max(0,dayOffset) / 224) * 100);
+
+  document.getElementById('statStreak').textContent = streak + '🔥';
+  document.getElementById('statWeek').textContent = dayOffset < 0 ? 'Soon' : `W${weekNum}`;
+  document.getElementById('statMonth').textContent = dayOffset < 0 ? 'Soon' : `M${monthNum}`;
+  document.getElementById('statTasksToday').textContent = `${done}/${total}`;
+  document.getElementById('statProblems').textContent = totalProbs;
+  document.getElementById('statPatterns').textContent = `${mastered}/49`;
+  document.getElementById('topDate').textContent = formatDateFull(new Date());
+
+  document.getElementById('nb-today').textContent = `${done}/${total}`;
+  document.getElementById('nb-week').textContent = dayOffset < 0 ? 'Soon' : `W${weekNum}`;
+  document.getElementById('nb-goals').textContent = dayOffset < 0 ? 'M1' : `M${monthNum}`;
+  document.getElementById('nb-patterns').textContent = `${mastered}/49`;
+  document.getElementById('rpStreak').textContent = streak;
+  document.getElementById('rpBestStreak').textContent = STATE.bestStreak;
+
+  document.getElementById('overallBar').style.width = Math.min(100, pct) + '%';
+  document.getElementById('overallPct').textContent = `Week ${Math.min(32, weekNum)} of 32 · ${Math.min(100,pct)}%`;
+  document.getElementById('rpHours').textContent = getTotalHours();
+  const weekHours = dayOffset < 0 ? 0 : Math.min(11, (dayOffset % 7) + 1);
+  document.getElementById('rpWeekHours').textContent = `This week: ~${weekHours}/11 hrs`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: TODAY PANEL
+// ═══════════════════════════════════════════════════════════
+function renderToday() {
+  const dayOffset = getDaysSinceStart();
+  const container = document.getElementById('todayContent');
+
+  if (dayOffset < 0) {
+    const daysUntil = Math.abs(dayOffset);
+    container.innerHTML = `
+      <div class="not-started">
+        <div class="ns-date">Feb 23, 2026</div>
+        <div class="ns-label">Your journey starts in <strong style="color:var(--green)">${daysUntil} day${daysUntil!==1?'s':''}</strong>.<br>
+        Open this tracker on February 23rd. Everything is ready for you.<br><br>
+        Use this time to set up your C++ environment and bookmark NeetCode.io.</div>
+      </div>`;
+    renderWeekMini();
+    return;
+  }
+
+  const weekNum = Math.min(32, getWeekNum());
+  const week = WEEKS[weekNum-1];
+  if (!week) { container.innerHTML = '<div class="empty-state"><span class="es-icon">🎉</span>You\'ve completed the 8-month plan!</div>'; return; }
+
+  const today = new Date();
+  const dayName = getDayOfWeek(today);
+  const dayData = week.days[dayName];
+
+  // Build week strip
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekStartOffset = getWeekStart(weekNum);
+  let stripHtml = '';
+  dayNames.forEach((dn, i) => {
+    const d = getDateForDay(weekStartOffset + i);
+    const isToday = i === dayNames.indexOf(dayName) && getDaysSinceStart() >= weekStartOffset && getDaysSinceStart() < weekStartOffset+7;
+    const {done: wDone, total: wTotal} = (() => {
+      const tasks = week.days[dn]?.tasks || [];
+      let done=0; tasks.forEach((_,idx) => { if(isTaskDone(weekNum, dn, idx)) done++; });
+      return {done, total:tasks.length};
+    })();
+    const allDone = wTotal > 0 && wDone === wTotal;
+    const isWeekend = dn === 'Sat' || dn === 'Sun';
+    const hoursMap = {Mon:'1hr',Tue:'1hr',Wed:'1hr',Thu:'1hr',Fri:'1hr',Sat:'3hrs',Sun:'3hrs'};
+    stripHtml += `<div class="dt-cell ${isToday?'today-cell':''} ${allDone&&!isToday?'done-cell':''} ${isWeekend?'weekend-cell':''}">
+      <div class="dt-name">${dn}</div>
+      <div class="dt-date">${d.getDate()}</div>
+      <div class="dt-dot"></div>
+      <div class="dt-hours">${hoursMap[dn]}</div>
+    </div>`;
+  });
+
+  // Build tasks
+  const tasks = dayData?.tasks || [];
+  const taskTypes = {Mon:'learn',Tue:'med',Wed:'cpp',Thu:'hard',Fri:'med',Sat:'med',Sun:'mock'};
+  const tagMap = {Mon:'tt-learn',Tue:'tt-med',Wed:'tt-cpp',Thu:'tt-hard',Fri:'tt-med',Sat:'tt-med',Sun:'tt-mock'};
+  const timeMap = {Mon:'1hr',Tue:'1hr',Wed:'1hr',Thu:'1hr',Fri:'1hr',Sat:'3hrs',Sun:'3hrs'};
+  let tasksDone = 0;
+  let tasksHtml = tasks.map((t, i) => {
+    const done = isTaskDone(weekNum, dayName, i);
+    if(done) tasksDone++;
+    const isProb = t.toLowerCase().includes('solve');
+    const isLearn = t.toLowerCase().includes('study') || t.toLowerCase().includes('read') || t.toLowerCase().includes('understand');
+    const isMock = t.toLowerCase().includes('mock');
+    const isCpp = t.toLowerCase().includes('c++');
+    let tagClass = tagMap[dayName] || 'tt-learn';
+    if(isProb) tagClass = t.toLowerCase().includes('hard')||t.toLowerCase().includes('attempt')?'tt-hard':'tt-med';
+    if(isLearn) tagClass = 'tt-learn';
+    if(isMock) tagClass = 'tt-mock';
+    if(isCpp) tagClass = 'tt-cpp';
+    const tagLabel = isProb?(t.toLowerCase().includes('attempt')?'hard':isLearn?'learn':'solve'):isLearn?'learn':isMock?'mock':isCpp?'c++':'task';
+    return `<div class="task-item ${done?'done':''}" onclick="toggleTask(${weekNum},'${dayName}',${i})">
+      <div class="task-check"></div>
+      <div class="task-content">
+        <div class="task-text">${t}</div>
+        <div class="task-meta">
+          <span class="task-tag ${tagClass}">${tagLabel}</span>
+          <span class="task-time">${timeMap[dayName]}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const pct = tasks.length ? Math.round((tasksDone/tasks.length)*100) : 0;
+
+  // Problems log
+  const todayProblems = STATE.problems.filter(p => p.date === new Date().toISOString().slice(0,10));
+  let probLogHtml = todayProblems.map((p, i) => {
+    const allIdx = STATE.problems.indexOf(p);
+    return `<div class="prob-entry">
+      <span class="prob-name">${p.name}</span>
+      <span class="prob-diff" style="color:${p.diff==='easy'?'var(--green)':p.diff==='medium'?'var(--amber)':'var(--red)'}">
+        ${p.diff.toUpperCase()}
+      </span>
+      <button class="prob-del" onclick="deleteProblem(${allIdx})">×</button>
+    </div>`;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="today-header">
+      <div class="th-week-tag">Week ${weekNum} · Month ${week.month} · Day ${dayOffset+1}</div>
+      <div class="th-title">${dayData?.label || dayName} — ${week.topic}</div>
+      <div class="th-axes">
+        <div class="axis-chip axis-topic">📊 ${week.topic}</div>
+        <div class="axis-chip axis-pattern">🔵 ${week.pattern}</div>
+        <div class="axis-chip axis-cpp">⚙️ ${week.cpp}</div>
+      </div>
+    </div>
+    <div class="today-body">
+      <div class="day-type-strip">${stripHtml}</div>
+      <div class="task-section">
+        <div class="ts-header">
+          <span class="ts-label">Today's Tasks</span>
+          <div class="ts-bar"><div class="ts-bar-fill" style="width:${pct}%"></div></div>
+          <span class="ts-progress">${tasksDone}/${tasks.length} · ${pct}%</span>
+        </div>
+        ${tasksHtml || '<div class="empty-state"><span class="es-icon">✅</span>No tasks defined</div>'}
+      </div>
+
+      <div class="prob-log-area">
+        <div class="pla-header">
+          <div class="pla-title">Today's Problems Solved</div>
+          <div class="pla-count">${todayProblems.length} today · ${STATE.problems.length} total</div>
+        </div>
+        <div class="prob-input-row">
+          <input class="prob-input" id="probInput" placeholder="Problem name (e.g. Two Sum)..." onkeydown="if(event.key==='Enter')addProblem()">
+          <select class="prob-select" id="probDiff">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <button class="add-btn" onclick="addProblem()">+ Log</button>
+        </div>
+        <div class="prob-list">${probLogHtml || '<div style="font-family:var(--mono);font-size:11px;color:var(--muted);padding:8px">No problems logged today</div>'}</div>
+      </div>
+    </div>`;
+
+  renderWeekMini();
+  renderWeekProblems(weekNum);
+}
+
+function addProblem() {
+  const name = document.getElementById('probInput')?.value?.trim();
+  const diff = document.getElementById('probDiff')?.value;
+  if (!name) return;
+  STATE.problems.push({name, diff, date: new Date().toISOString().slice(0,10)});
+  saveState(STATE);
+  document.getElementById('probInput').value = '';
+  showToast(`✓ "${name}" logged!`);
+  renderToday();
+  updateTopStats();
+}
+
+function deleteProblem(idx) {
+  STATE.problems.splice(idx, 1);
+  saveState(STATE);
+  renderToday();
+  updateTopStats();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: WEEK MINI (right panel)
+// ═══════════════════════════════════════════════════════════
+function renderWeekMini() {
+  const dayOffset = getDaysSinceStart();
+  if (dayOffset < 0) { document.getElementById('weekMini').innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--muted)">Starts Feb 23</div>'; return; }
+  const weekNum = Math.min(32, getWeekNum());
+  const week = WEEKS[weekNum-1];
+  if (!week) return;
+  const today = getDayOfWeek(new Date());
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const labelMap = {Mon:'Learn',Tue:'Drill',Wed:'Medium',Thu:'Stretch',Fri:'Bridge',Sat:'Deep Drill',Sun:'Mock+Rev'};
+  let html = '';
+  dayNames.forEach(dn => {
+    const isToday = dn === today;
+    const tasks = week.days[dn]?.tasks || [];
+    let done = 0; tasks.forEach((_,i) => { if(isTaskDone(weekNum,dn,i)) done++; });
+    html += `<div class="wm-row ${isToday?'wm-today':''}">
+      <span class="wm-day">${dn.slice(0,2)}</span>
+      <span class="wm-task">${week.days[dn]?.label || labelMap[dn]}</span>
+      <span class="wm-done-count">${done}/${tasks.length}</span>
+    </div>`;
+  });
+  document.getElementById('weekMini').innerHTML = html;
+}
+
+function renderWeekProblems(weekNum) {
+  const week = WEEKS[weekNum-1];
+  if (!week) return;
+  let html = week.problems.map(p => {
+    const isEasy = p.toLowerCase().includes('easy') || ['Two Sum','Binary Search','Invert Binary Tree','Climbing Stairs','Valid Palindrome','Reverse Linked List'].includes(p);
+    const isHard = p.toLowerCase().includes('hard') || ['N-Queens','Median of Two Sorted Arrays','Serialize and Deserialize Binary Tree','Burst Balloons','Alien Dictionary','Trapping Rain Water'].includes(p);
+    const cls = isHard ? 'pc-hard' : isEasy ? 'pc-easy' : 'pc-med';
+    return `<span class="prob-chip ${cls}">• ${p}</span>`;
+  }).join('');
+  document.getElementById('weekProblems').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: WEEK PANEL
+// ═══════════════════════════════════════════════════════════
+function renderWeekPanel() {
+  const dayOffset = getDaysSinceStart();
+  const weekNum = dayOffset < 0 ? 1 : Math.min(32, getWeekNum());
+  const week = WEEKS[weekNum-1];
+  if (!week) return;
+  const today = getDayOfWeek(new Date());
+  const weekStartOffset = getWeekStart(weekNum);
+  document.getElementById('weekPanelTitle').textContent = `Week ${weekNum} of 32`;
+  document.getElementById('weekPhaseBadge').textContent = `Month ${week.month} · ${week.topic}`;
+
+  const {done, total} = getWeekTaskCompletion(weekNum);
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('weekCompPct').textContent = `${pct}% done (${done}/${total} tasks)`;
+
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const hoursMap = {Mon:'1hr',Tue:'1hr',Wed:'1hr',Thu:'1hr',Fri:'1hr',Sat:'3hrs',Sun:'3hrs'};
+
+  let html = '';
+  dayNames.forEach((dn, i) => {
+    const d = getDateForDay(weekStartOffset + i);
+    const isToday = dn === today && dayOffset >= weekStartOffset && dayOffset < weekStartOffset+7;
+    const isWeekend = dn === 'Sat' || dn === 'Sun';
+    const tasks = week.days[dn]?.tasks || [];
+    let done = 0; tasks.forEach((_,idx) => { if(isTaskDone(weekNum,dn,idx)) done++; });
+    const dp = tasks.length ? Math.round(done/tasks.length*100) : 0;
+
+    const taskHtml = tasks.slice(0,4).map((t, idx) => {
+      const td = isTaskDone(weekNum, dn, idx);
+      return `<div class="wg-task ${td?'checked':''}" onclick="toggleTask(${weekNum},'${dn}',${idx})" style="cursor:pointer">
+        <div class="wg-task-dot" style="background:${td?'var(--green)':'var(--border)'}"></div>
+        ${t.length > 55 ? t.slice(0,52)+'...' : t}
+      </div>`;
+    }).join('') + (tasks.length > 4 ? `<div class="wg-task" style="color:var(--muted);font-size:10px">+${tasks.length-4} more...</div>` : '');
+
+    html += `<div class="wg-card ${isToday?'today-card':''} ${isWeekend?'weekend-card':''}">
+      <div class="wg-header">
+        <div class="wg-day">${dn}</div>
+        <div class="wg-date">${formatDate(d)}</div>
+        <div class="wg-hours">${hoursMap[dn]}</div>
+      </div>
+      <div class="wg-tasks">${taskHtml}</div>
+      <div class="wg-completion">
+        <div class="wg-comp-bar"><div class="wg-comp-fill" style="width:${dp}%"></div></div>
+        ${done}/${tasks.length}
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('weekGrid').innerHTML = html;
+
+  document.getElementById('weekPatterns').innerHTML = `
+    <div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:1rem">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.75rem">This Week's Patterns to Master</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${week.patterns_unlocked.map(p=>`<span class="axis-chip axis-pattern" style="font-size:11px">🔵 ${p}</span>`).join('')}
+        ${week.patterns_unlocked.length===0?'<span style="font-family:var(--mono);font-size:11px;color:var(--muted)">Pattern refinement week — review and strengthen all previous patterns</span>':''}
+      </div>
+      <div style="margin-top:0.75rem;font-family:var(--mono);font-size:9px;color:var(--muted)">
+        ⚙️ C++ focus: ${week.cpp}
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: MONTHLY GOALS
+// ═══════════════════════════════════════════════════════════
+function renderGoals() {
+  const currentMonth = getMonthNum();
+  const dayOffset = getDaysSinceStart();
+  let html = '';
+  MONTHLY_GOALS.forEach(m => {
+    const isLocked = dayOffset < 0 ? true : m.month > currentMonth + 1;
+    const isCurrent = m.month === currentMonth;
+    const donGoals = m.goals.filter((_,i) => isGoalDone(m.month, i)).length;
+    const pct = Math.round(donGoals/m.goals.length*100);
+    const statusClass = isLocked ? 'locked' : '';
+
+    let goalsHtml = m.goals.map((g, i) => {
+      const done = isGoalDone(m.month, i);
+      return `<div class="goal-item ${done?'done-goal':''}" onclick="${isLocked?'':'toggleGoal('+m.month+','+i+')'}">
+        <div class="goal-check"></div>
+        <div class="goal-text">${g}</div>
+      </div>`;
+    }).join('');
+
+    html += `<div class="month-section" id="month-section-${m.month}">
+      <div class="ms-header ${isCurrent?'open':''}" onclick="toggleMonthSection(${m.month})">
+        <div class="ms-month-num">M${m.month}</div>
+        <div class="ms-info">
+          <div class="ms-title">${m.title}</div>
+          <div class="ms-subtitle">${m.milestone.split('·')[0]}</div>
+          <div class="ms-dates">${m.dates}</div>
+        </div>
+        <div class="ms-pct ${isLocked?'locked':''}">${isLocked ? '🔒' : pct+'%'}</div>
+        <div class="ms-arrow">▶</div>
+      </div>
+      <div class="ms-body ${isCurrent?'open':''}" id="ms-body-${m.month}">
+        ${isLocked ? '<div class="empty-state"><span class="es-icon">🔒</span>Unlocks when you reach this month</div>' : goalsHtml}
+        <div class="ms-milestone-box">
+          <div class="ms-milestone-title">Month ${m.month} Milestone</div>
+          <div class="ms-problems-target">${m.milestone.replace(/(\d+\+?\s+(?:total\s+)?problems)/i, '<span>$1</span>')}</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px">Target: <span style="color:var(--amber)">${m.target_problems}+ problems solved by end of month</span></div>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('goalsContent').innerHTML = html;
+}
+
+function toggleMonthSection(month) {
+  const header = document.querySelector(`#month-section-${month} .ms-header`);
+  const body = document.getElementById(`ms-body-${month}`);
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function scrollToMonth(month) {
+  const el = document.getElementById(`month-section-${month}`);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  // open it
+  const body = document.getElementById(`ms-body-${month}`);
+  const header = document.querySelector(`#month-section-${month} .ms-header`);
+  if (body && !body.classList.contains('open')) {
+    body.classList.add('open');
+    header.classList.add('open');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: PATTERN GRID
+// ═══════════════════════════════════════════════════════════
+let currentFilter = 'all';
+function filterPatterns(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPatternGrid();
+}
+
+function renderPatternGrid() {
+  const currentWeek = Math.max(1, getWeekNum());
+  const dayOffset = getDaysSinceStart();
+  let mastered = 0;
+  let html = '';
+  ALL_PATTERNS.forEach(p => {
+    const unlockWeek = (p.month-1)*4 + 1;
+    const isUnlocked = dayOffset >= 0 && currentWeek >= unlockWeek;
+    const status = isUnlocked ? getPatternStatus(p.id) : -1;
+    if (status === 2) mastered++;
+
+    const statusClass = status === 2 ? 'mastered' : status === 1 ? 'learning' : status === 0 ? '' : 'locked';
+    const statusIcon = status === 2 ? '✓' : status === 1 ? '~' : '';
+    const statusTitle = status === 2 ? 'MASTERED' : status === 1 ? 'LEARNING' : status === 0 ? 'Click to mark learning' : '🔒 M'+p.month;
+
+    if (currentFilter === 'mastered' && status !== 2) return;
+    if (currentFilter === 'learning' && status !== 1) return;
+    if (currentFilter === 'unlocked' && !isUnlocked) return;
+    if (currentFilter === 'locked' && isUnlocked) return;
+
+    html += `<div class="pat-card ${statusClass}" onclick="cyclePattern(${p.id}, ${p.month})" title="${statusTitle}">
+      <div class="pat-status">${statusIcon}</div>
+      <div class="pat-info">
+        <div class="pat-name">${p.name}</div>
+        <div class="pat-meta">
+          <span class="pat-month">M${p.month}</span>
+          <span class="pat-topic">· ${p.topic}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('patternGrid').innerHTML = html || '<div class="empty-state"><span class="es-icon">🔍</span>No patterns match this filter</div>';
+  document.getElementById('masteredCount').textContent = mastered;
+  document.getElementById('statPatterns').textContent = `${mastered}/49`;
+  document.getElementById('nb-patterns').textContent = `${mastered}/49`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER: STATS
+// ═══════════════════════════════════════════════════════════
+function renderStats() {
+  const dayOffset = getDaysSinceStart();
+  const totalProbs = getTotalProblems();
+  const mastered = getMasteredCount();
+  const weekNum = dayOffset < 0 ? 0 : Math.min(32, getWeekNum());
+  const pct = Math.round((Math.max(0,dayOffset)/224)*100);
+  const diffCounts = {easy:0, medium:0, hard:0};
+  STATE.problems.forEach(p => { if(diffCounts[p.diff]!==undefined) diffCounts[p.diff]++; });
+
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><span class="sc-num" style="color:var(--green)">${totalProbs}</span><span class="sc-label">Problems Solved</span><div class="sc-sub">${diffCounts.easy}E · ${diffCounts.medium}M · ${diffCounts.hard}H</div></div>
+    <div class="stat-card"><span class="sc-num" style="color:var(--amber)">${STATE.streak}</span><span class="sc-label">Day Streak</span><div class="sc-sub">Best: ${STATE.bestStreak} days</div></div>
+    <div class="stat-card"><span class="sc-num" style="color:var(--blue)">${weekNum}</span><span class="sc-label">Week Progress</span><div class="sc-sub">${pct}% complete</div></div>
+    <div class="stat-card"><span class="sc-num" style="color:var(--purple)">${mastered}</span><span class="sc-label">Patterns Mastered</span><div class="sc-sub">of 49 total</div></div>
+    <div class="stat-card"><span class="sc-num" style="color:var(--cyan)">${getTotalHours()}</span><span class="sc-label">Est. Hours</span><div class="sc-sub">at 11hrs/week pace</div></div>
+    <div class="stat-card"><span class="sc-num" style="color:var(--red)">${Math.max(0,224-dayOffset)}</span><span class="sc-label">Days Remaining</span><div class="sc-sub">to Oct 4, 2026</div></div>
+  `;
+
+  // Timeline
+  let tlHtml = '';
+  MONTHLY_GOALS.forEach((m, i) => {
+    const done = m.goals.filter((_,j)=>isGoalDone(m.month,j)).length;
+    const pct = Math.round(done/m.goals.length*100);
+    const isCurrent = m.month === getMonthNum() && dayOffset >= 0;
+    tlHtml += `<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:6px">
+      <div style="font-family:var(--mono);font-size:9px;color:${isCurrent?'var(--green)':'var(--muted)'};width:18px;text-align:right">M${m.month}</div>
+      <div style="flex:1;height:6px;background:var(--bg2);border-radius:3px">
+        <div style="height:100%;width:${pct}%;background:${isCurrent?'var(--green)':'var(--border2)'};border-radius:3px;transition:width 0.5s"></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);width:90px">${m.title.split('+')[0].trim()}</div>
+      <div style="font-family:var(--mono);font-size:9px;color:${pct===100?'var(--green)':'var(--muted)'};width:28px">${pct}%</div>
+    </div>`;
+  });
+  document.getElementById('timelineVis').innerHTML = tlHtml;
+
+  // Heatmap (112 days = 16 weeks)
+  let hmHtml = '';
+  for (let i = 0; i < 112; i++) {
+    const d = getDateForDay(i);
+    const ds = d.toISOString().slice(0,10);
+    const isPast = i < dayOffset;
+    const isToday = i === dayOffset;
+    const isFuture = i > dayOffset;
+    const weekNum = Math.floor(i/7)+1;
+    const dayName = getDayOfWeek(d);
+    const week = WEEKS[weekNum-1];
+    let completedTasks = 0;
+    let totalTasks = 0;
+    if (week && week.days[dayName]) {
+      totalTasks = week.days[dayName].tasks.length;
+      week.days[dayName].tasks.forEach((_,idx) => { if(isTaskDone(weekNum,dayName,idx)) completedTasks++; });
+    }
+    const pct = totalTasks ? completedTasks/totalTasks : 0;
+    const level = isFuture ? 'hm-future' : pct >= 1 ? 'hm-4' : pct >= 0.75 ? 'hm-3' : pct >= 0.5 ? 'hm-2' : pct > 0 ? 'hm-1' : 'hm-0';
+    hmHtml += `<div class="hm-cell ${level} ${isToday?'hm-today':''}" title="${formatDate(d)}: ${completedTasks}/${totalTasks} tasks"></div>`;
+  }
+  document.getElementById('heatmap').innerHTML = hmHtml;
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if(name==='week') renderWeekPanel();
+  if(name==='goals') renderGoals();
+  if(name==='patterns') renderPatternGrid();
+  if(name==='stats') renderStats();
+}
+
+// ═══════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════════════════════
+// REFRESH ALL
+// ═══════════════════════════════════════════════════════════
+function refreshAll() {
+  updateTopStats();
+  const activePanel = document.querySelector('.panel.active')?.id?.replace('panel-','');
+  if(activePanel==='today') renderToday();
+  else if(activePanel==='week') renderWeekPanel();
+  else if(activePanel==='goals') renderGoals();
+  else if(activePanel==='patterns') renderPatternGrid();
+  else if(activePanel==='stats') renderStats();
+}
+
+function confirmReset() {
+  if(confirm('Reset ALL progress? This cannot be undone.')) {
+    localStorage.removeItem('dsaTracker');
+    STATE = {tasks:{},goals:{},patterns:{},problems:[],streak:0,bestStreak:0,lastActiveDay:null};
+    showToast('Progress reset. Starting fresh!');
+    refreshAll();
+    renderToday();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+updateStreak();
+updateTopStats();
+renderToday();
+</script>
+</body>
+</html>

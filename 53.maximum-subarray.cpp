@@ -3,6 +3,7 @@
  *
  * [53] Maximum Subarray
  */
+//"max sub array --> a subarray which have maximum sun and return that max sum
 
 // @lc code=start
 class Solution
